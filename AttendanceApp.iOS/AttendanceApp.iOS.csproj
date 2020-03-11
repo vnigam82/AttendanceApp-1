@@ -152,6 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error.png" />
+    <BundleResource Include="Resources\password.png" />
+    <BundleResource Include="Resources\username.png" />
+    <BundleResource Include="Resources\email.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />
@@ -217,4 +220,7 @@
     <BundleResource Include="Resources\xf_checkbox_unselected%403x.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\loginbg.png" />
+  </ItemGroup>
 </Project>

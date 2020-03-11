@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AttendanceApp.CustomViews.LoginRoundShapeViews"
+             BackgroundColor="{ StaticResource backgroundColor}">
+    <ContentView.Content>
+        <StackLayout
+            HorizontalOptions="EndAndExpand"
+            Orientation="Horizontal"
+            VerticalOptions="Start">
+            <BoxView
+                BackgroundColor="{StaticResource MainThemeColor}"
+                CornerRadius="25"
+                HeightRequest="50"
+                VerticalOptions="Center"
+                WidthRequest="50" />
+            <BoxView
+                BackgroundColor="{StaticResource MainThemeColor}"
+                CornerRadius="50"
+                HeightRequest="100"
+                WidthRequest="100" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

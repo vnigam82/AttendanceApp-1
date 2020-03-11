@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AttendanceApp.Views.Login"
+             xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             BackgroundColor="{StaticResource backgroundColor}"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <Grid
+            x:Name="mainlayout"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Margin="10,0"
+                d:Text="LOGIN"
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="Start"
+                Text="LOGIN"
+                TextColor="Black"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <customviews:LoginRoundShapeViews
+                Grid.Row="0"
+                Margin="0,20,-50,20"
+                HorizontalOptions="EndAndExpand" />
+            <customviews:LoginRoundShapeViews
+                Grid.Row="2"
+                Margin="-50,20,0,20"
+                HorizontalOptions="StartAndExpand"
+                Rotation="180"
+                VerticalOptions="End" />
+            <ui:MaterialCard
+                Grid.Row="1"
+                        Padding="5,10"
+                Margin="20,0"
+                        BackgroundColor="White"
+                        CornerRadius="1"
+                        Elevation="10"
+                HasShadow="False"
+                        VerticalOptions="CenterAndExpand">
+                        <StackLayout Padding="0" Spacing="0">
+                            <ui:MaterialTextField
+                                AlwaysShowUnderline="True"
+                                BackgroundColor="White"
+                                ErrorColor="Red"
+                                ErrorText="{Binding EmailError}"
+                                HasError="{Binding HasEmailError}"
+                                HelperText="{Binding EmailError}"
+                                InputType="Email"
+                                LeadingIcon="email"
+                                LeadingIconTintColor="{StaticResource MainThemeColor}"
+                                Placeholder="Email"
+                                PlaceholderColor="DarkGray"
+                                Text="{Binding Email}"
+                                TintColor="{StaticResource MainThemeColor}"
+                                UnderlineColor="LightGray" />
+                            <ui:MaterialTextField
+                                Margin="0"
+                                AlwaysShowUnderline="True"
+                                BackgroundColor="White"
+                                ErrorColor="Red"
+                                ErrorText="{Binding PasswordError}"
+                                HasError="{Binding HasPasswordError}"
+                                HelperText="{Binding PasswordError}"
+                                InputType="Password"
+                                LeadingIcon="password"
+                                LeadingIconTintColor="{StaticResource MainThemeColor}"
+                                Placeholder="Password"
+                                PlaceholderColor="DarkGray"
+                                Text="{Binding Password}"
+                                TintColor="{StaticResource MainThemeColor}"
+                                UnderlineColor="LightGray" />
+                            <StackLayout
+                                Padding="0"
+                                Orientation="Horizontal"
+                                Spacing="0">
+                                <ui:MaterialCheckbox
+                                    HorizontalOptions="Start"
+                                    HorizontalSpacing="10"
+                                    IsSelected="{Binding Rememberme}"
+                                    Text="Remember me" />
+                                <ui:MaterialButton
+                                    BackgroundColor="{StaticResource MainThemeColor}"
+                                    Command="{Binding LoginCommand}"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="Login"
+                                    TextColor="White" />
+                            </StackLayout>
+                        </StackLayout>
+                    </ui:MaterialCard>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>
