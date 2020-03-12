@@ -19,5 +19,6 @@
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="CustomViews\" />
+    <Folder Include="ShellFiles\" />
   </ItemGroup>
 </Project>

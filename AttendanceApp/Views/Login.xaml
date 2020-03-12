@@ -38,6 +38,15 @@
                 HorizontalOptions="StartAndExpand"
                 Rotation="180"
                 VerticalOptions="End" />
+            <StackLayout Orientation="Horizontal" Grid.Row="2"
+                         Margin="10,0"
+                               HorizontalOptions="EndAndExpand">
+                <Label Text="English" VerticalOptions="CenterAndExpand"/>
+                <Switch ThumbColor="{StaticResource MainThemeColor}"
+                        VerticalOptions="CenterAndExpand"
+                        />
+            </StackLayout>
+            
             <ui:MaterialCard
                 Grid.Row="1"
                         Padding="5,10"

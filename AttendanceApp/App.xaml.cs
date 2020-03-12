@@ -1,4 +1,5 @@
 ﻿using System;
+using AttendanceApp.ShellFiles;
 using AttendanceApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,8 @@ namespace AttendanceApp
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            MainPage = new Login();
+            //MainPage = new Login();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()
