@@ -21,4 +21,7 @@
     <Folder Include="CustomViews\" />
     <Folder Include="ShellFiles\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\ReasonRequest.cs" />
+  </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@
             RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -33,12 +34,12 @@
                 Margin="0,20,-50,20"
                 HorizontalOptions="EndAndExpand" />
             <customviews:LoginRoundShapeViews
-                Grid.Row="2"
+                Grid.Row="3"
                 Margin="-50,20,0,20"
                 HorizontalOptions="StartAndExpand"
                 Rotation="180"
                 VerticalOptions="End" />
-            <StackLayout Orientation="Horizontal" Grid.Row="2"
+            <StackLayout Orientation="Horizontal" Grid.Row="3"
                          Margin="10,0"
                                HorizontalOptions="EndAndExpand">
                 <Label Text="English" VerticalOptions="CenterAndExpand"/>
@@ -46,16 +47,21 @@
                         VerticalOptions="CenterAndExpand"
                         />
             </StackLayout>
-            
+            <Image Source="samplelogo"
+                   Grid.Row="1"
+                   HorizontalOptions="Center"
+                   WidthRequest="120"
+                   VerticalOptions="Start"
+                   HeightRequest="120"/>
             <ui:MaterialCard
-                Grid.Row="1"
+                Grid.Row="2"
                         Padding="5,10"
-                Margin="20,0"
+                Margin="{OnPlatform iOS='20,30',Android='20'}"
                         BackgroundColor="White"
                         CornerRadius="1"
                         Elevation="10"
                 HasShadow="False"
-                        VerticalOptions="CenterAndExpand">
+                        VerticalOptions="StartAndExpand">
                         <StackLayout Padding="0" Spacing="0">
                             <ui:MaterialTextField
                                 AlwaysShowUnderline="True"

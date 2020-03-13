@@ -155,6 +155,15 @@
     <BundleResource Include="Resources\password.png" />
     <BundleResource Include="Resources\username.png" />
     <BundleResource Include="Resources\email.png" />
+    <BundleResource Include="Resources\samplelogo.png" />
+    <BundleResource Include="Resources\logo1.jpeg" />
+    <BundleResource Include="Resources\checkin.png" />
+    <BundleResource Include="Resources\reason.png" />
+    <BundleResource Include="Resources\home.png" />
+    <BundleResource Include="Resources\leave.png" />
+    <BundleResource Include="Resources\homewhite.png" />
+    <BundleResource Include="Resources\back.png" />
+    <BundleResource Include="Resources\hamburger.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />
