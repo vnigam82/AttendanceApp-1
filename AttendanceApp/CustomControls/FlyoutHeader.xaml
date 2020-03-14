@@ -1,16 +1,79 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
              x:Class="AttendanceApp.CustomControls.FlyoutHeader"
              HeightRequest="200">
-    <Grid BackgroundColor="Black">
-        <Image Aspect="AspectFill" 
-               Source="loginbg.png" 
-               Opacity="0.6" />
-        <Label Text="Animals" 
-               TextColor="White" 
+    <AbsoluteLayout BackgroundColor="#A0000000">
+        <Image Aspect="Fill"
+               AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}" />
+        <Grid RowSpacing="5"
+              ColumnSpacing="0"
+              Margin="20"
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <AbsoluteLayout
+                         Padding="0"
+                         Grid.Column="0"
+                WidthRequest="100"
+                         Grid.Row="0">
+                <Image Aspect="AspectFit"
+               Source="profile"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       WidthRequest="80"
+                       HeightRequest="80"/>
+                <ImageButton BackgroundColor="Transparent"
+                             Source="edit"
+                             x:Name="btnEditProfile"
+                             Clicked="btnEditProfile_Clicked"
+                             AbsoluteLayout.LayoutBounds="1,1"
+                             AbsoluteLayout.LayoutFlags="PositionProportional"
+                             HorizontalOptions="EndAndExpand"
+                             VerticalOptions="EndAndExpand"
+                             WidthRequest="20"
+                             HeightRequest="20"/>
+            </AbsoluteLayout>
+            <ImageButton BackgroundColor="Transparent"
+                             Source="settingswhite.png"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                         Aspect="AspectFill"
+                         Grid.Column="1"
+                         Grid.Row="0"
+                         VerticalOptions="Start"
+                         HorizontalOptions="EndAndExpand"/>
+        <Label Text="Vivek Kumar Nigam" 
+               TextColor="White"
+               Grid.Column="0"
+               Grid.Row="1"
+               Margin="0,10,0,0"
+               Grid.ColumnSpan="2"
                FontAttributes="Bold" 
-               HorizontalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
                VerticalTextAlignment="Center" />
+            <Label Text="viveklpu2011@gmail.com" 
+               TextColor="White"
+               Grid.Column="0"
+               Grid.Row="2"
+               Grid.ColumnSpan="2"
+                   FontSize="Small"
+               FontAttributes="Bold" 
+               HorizontalTextAlignment="Start"
+                   VerticalOptions="Start"
+               VerticalTextAlignment="Start" />
     </Grid>
+    </AbsoluteLayout>
+    
 </ContentView>

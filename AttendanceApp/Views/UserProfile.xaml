@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+             x:Class="AttendanceApp.Views.UserProfile">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   Aspect="Fill"/>
+        <Grid RowSpacing="0"
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+              ColumnSpacing="0"
+              x:Name="mainlayout">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <customviews:HeaderView IsBackVisible="True"
+                                    IsMenuVisible="False"
+                                    HeaderTitle="Profile"
+                                    IsHomeVisible="True"
+                                    Grid.Row="0"/>
+            <BoxView Grid.Row="0"
+                     HeightRequest="1"
+                     BackgroundColor="White"
+                     VerticalOptions="End"/>
+            </Grid>
+            </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

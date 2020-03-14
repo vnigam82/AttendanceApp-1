@@ -20,7 +20,8 @@ namespace AttendanceApp
         public static void RegisterViewModels(INavigation navigation)
         {
             ServiceContainer.Register(() => new DashboardViewModel(navigation));
-            
+            ServiceContainer.Register(() => new HeaderViewModel(navigation));
+
         }
         protected override void OnStart()
         {

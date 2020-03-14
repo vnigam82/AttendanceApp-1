@@ -6,23 +6,43 @@
        xmlns:controls="clr-namespace:AttendanceApp.CustomControls"
        Title="AttendanceApp"
              x:Class="AttendanceApp.ShellFiles.AppShell"
-       FlyoutHeaderBehavior="CollapseOnScroll"
+       FlyoutHeaderBehavior="Scroll"
+       
+       FlyoutVerticalScrollMode="Auto"
        xmlns:pages="clr-namespace:AttendanceApp.Views"
        >
-    
+   
     <Shell.FlyoutHeader>
-        <controls:FlyoutHeader />    
+        <controls:FlyoutHeader/>    
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Home" Icon="home.png">
         <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}"/>
     </FlyoutItem>
-    <FlyoutItem Title="CheckIn/CheckOut" Icon="checkin.png">
+    <FlyoutItem Title="About us" Icon="aboutus.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:AboutUs}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="CheckIn/CheckOut" Icon="checkinmenu.png">
         <ShellContent ContentTemplate="{DataTemplate pages:CheckinCheckout}"/>
     </FlyoutItem>
-    <FlyoutItem Title="Leave Request" Icon="leave.png">
+    <FlyoutItem Title="Leave Request" Icon="leavereasonmenu.png">
         <ShellContent ContentTemplate="{DataTemplate pages:LeaveRequest}"/>
     </FlyoutItem>
-    <FlyoutItem Title="Reason Request" Icon="reason.png">
+    <FlyoutItem Title="Reason Request" Icon="reasonmenu.png">
         <ShellContent ContentTemplate="{DataTemplate pages:ReasonRequest}"/>
     </FlyoutItem>
+    <FlyoutItem Title="Unjustified Violations" Icon="violationmenu.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:UnjustifiedViolations}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="My Attendance" Icon="attendancemenu.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:MyAttendance}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Approve Reasons" Icon="approvereasonmenu.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Approve Leaves" Icon="approveleavesmenu.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}"/>
+    </FlyoutItem>
+    
+    <MenuItem Text="Logout"
+              IconImageSource="logout.png" />
 </Shell>

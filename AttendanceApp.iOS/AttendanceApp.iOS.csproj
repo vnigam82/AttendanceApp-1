@@ -171,6 +171,18 @@
     <BundleResource Include="Resources\approvereasonwhite.png" />
     <BundleResource Include="Resources\approveleavewhite.png" />
     <BundleResource Include="Resources\checkinwhite.png" />
+    <BundleResource Include="Resources\approvereasonmenu.png" />
+    <BundleResource Include="Resources\attendancemenu.png" />
+    <BundleResource Include="Resources\checkinmenu.png" />
+    <BundleResource Include="Resources\leavereasonmenu.png" />
+    <BundleResource Include="Resources\reasonmenu.png" />
+    <BundleResource Include="Resources\violationmenu.png" />
+    <BundleResource Include="Resources\approveleavesmenu.png" />
+    <BundleResource Include="Resources\edit.png" />
+    <BundleResource Include="Resources\settingswhite.png" />
+    <BundleResource Include="Resources\logout.png" />
+    <BundleResource Include="Resources\aboutus.png" />
+    <BundleResource Include="Resources\profile.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />
