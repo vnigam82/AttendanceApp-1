@@ -14,6 +14,7 @@ namespace AttendanceApp.CustomViews
             btnBack.IsVisible = IsBackVisible;
             btnHome.IsVisible = IsHomeVisible;
             btnMenu.IsVisible = IsMenuVisible;
+            btnArabicBack.IsVisible = IsArabicBackVisible;
             lblTitle.Text = HeaderTitle;
         }
         protected override void OnPropertyChanged(string propertyName = null)
@@ -34,6 +35,14 @@ namespace AttendanceApp.CustomViews
             if (propertyName == IsMenuVisibleProperty.PropertyName)
             {
                 btnMenu.IsVisible = IsMenuVisible;
+            }
+            if (propertyName == HeaderBackgroundColorProperty.PropertyName)
+            {
+                menuBackground.BackgroundColor = HeaderBackgroundColor;
+            }
+            if (propertyName == IsArabicBackVisibleProperty.PropertyName)
+            {
+                btnArabicBack.IsVisible = IsArabicBackVisible;
             }
         }
         #region Bindable Property
@@ -62,6 +71,18 @@ namespace AttendanceApp.CustomViews
                false,
                BindingMode.TwoWay);
 
+        public static readonly BindableProperty HeaderBackgroundColorProperty =
+               BindableProperty.Create(nameof(HeaderBackgroundColor),
+               typeof(Color), typeof(HeaderView),
+               Color.Transparent,
+               BindingMode.TwoWay);
+
+        public static readonly BindableProperty IsArabicBackVisibleProperty =
+               BindableProperty.Create(nameof(IsArabicBackVisible),
+               typeof(bool), typeof(HeaderView),
+               false,
+               BindingMode.TwoWay);
+
         #endregion
 
         #region Property
@@ -84,6 +105,16 @@ namespace AttendanceApp.CustomViews
         {
             get => (bool)GetValue(IsHomeVisibleProperty);
             set => SetValue(IsHomeVisibleProperty, value);
+        }
+        public Color HeaderBackgroundColor
+        {
+            get => (Color)GetValue(HeaderBackgroundColorProperty);
+            set => SetValue(HeaderBackgroundColorProperty, value);
+        }
+        public bool IsArabicBackVisible
+        {
+            get => (bool)GetValue(IsArabicBackVisibleProperty);
+            set => SetValue(IsArabicBackVisibleProperty, value);
         }
         #endregion
     }

@@ -20,8 +20,19 @@
     <Folder Include="Views\" />
     <Folder Include="CustomViews\" />
     <Folder Include="ShellFiles\" />
+    <Folder Include="MarkupExtensions\" />
+    <Folder Include="Images\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\loginbg.png" />
+    <None Remove="Images\bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\loginbg.png" />
+    <EmbeddedResource Include="Images\bg.jpg" />
   </ItemGroup>
 </Project>

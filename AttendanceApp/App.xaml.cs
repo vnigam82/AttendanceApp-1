@@ -1,5 +1,7 @@
 ﻿using System;
+using AttendanceApp.Helpers;
 using AttendanceApp.ShellFiles;
+using AttendanceApp.ViewModels;
 using AttendanceApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +17,11 @@ namespace AttendanceApp
             //MainPage = new Login();
             MainPage = new AppShell();
         }
-
+        public static void RegisterViewModels(INavigation navigation)
+        {
+            ServiceContainer.Register(() => new DashboardViewModel(navigation));
+            
+        }
         protected override void OnStart()
         {
             // Handle when your app starts

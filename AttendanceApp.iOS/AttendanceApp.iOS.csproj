@@ -164,6 +164,13 @@
     <BundleResource Include="Resources\homewhite.png" />
     <BundleResource Include="Resources\back.png" />
     <BundleResource Include="Resources\hamburger.png" />
+    <BundleResource Include="Resources\violationswhite.png" />
+    <BundleResource Include="Resources\reasonwhite.png" />
+    <BundleResource Include="Resources\leaveswhite.png" />
+    <BundleResource Include="Resources\attendancewhite.png" />
+    <BundleResource Include="Resources\approvereasonwhite.png" />
+    <BundleResource Include="Resources\approveleavewhite.png" />
+    <BundleResource Include="Resources\checkinwhite.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />

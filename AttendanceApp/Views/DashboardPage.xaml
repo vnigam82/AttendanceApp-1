@@ -2,10 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions" xmlns:flv="clr-namespace:AttendanceApp" xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Class="AttendanceApp.Views.DashboardPage"
-             BackgroundColor="{StaticResource MainThemeColor}">
+             >
     <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   Aspect="Fill"/>
         <Grid RowSpacing="0"
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
               ColumnSpacing="0"
               x:Name="mainlayout">
             <Grid.RowDefinitions>
@@ -13,11 +22,59 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <customviews:HeaderView IsBackVisible="False"
-                                    HeaderTitle="Dashboard"
+                                    HeaderTitle="Ganter TA System"
                                     IsMenuVisible="True"
                                     Grid.Row="0"/>
-            <StackLayout Grid.Row="1"
-                         BackgroundColor="White"/>
-        </Grid>
+            <BoxView Grid.Row="0"
+                     HeightRequest="1"
+                     BackgroundColor="White"
+                     VerticalOptions="End"/>
+            <StackLayout Grid.Row="1">
+                <Image Source="samplelogo.png"
+                       WidthRequest="120"
+                       HeightRequest="100"
+                       Aspect="Fill"
+                       HorizontalOptions="CenterAndExpand"
+                       Margin="0,20"/>
+                <flv:FlowListView Margin="0,5"
+                                  VerticalScrollBarVisibility="Never"
+                                  BackgroundColor="Transparent"
+                    FlowColumnCount="{OnIdiom Phone='2',
+                                              Tablet='4'}"
+                    FlowItemTappedCommand="{Binding ItemTappedCommand}"
+                    FlowItemsSource="{Binding DashboardMenuItems}"
+                    HasUnevenRows="True"
+                    SeparatorVisibility="Default">
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate>
+                            <ui:MaterialCard Margin="10"
+                                             BorderColor="White"
+                                             HasShadow="False"
+                                             CornerRadius="10"
+                                             BackgroundColor="Transparent"
+                                             HeightRequest="100">
+                                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="50"
+                                        Source="{Binding Image}"
+                                        WidthRequest="50" />
+                                    <Label
+                                        HorizontalOptions="Fill"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Name}"
+                                        TextColor="White"
+                                        FontSize="Small"
+                                        VerticalOptions="EndAndExpand"
+                                        VerticalTextAlignment="Start" />
+                                </StackLayout>
+                            </ui:MaterialCard>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+                </flv:FlowListView>
+                </StackLayout>
+
+            </Grid>
+            </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
