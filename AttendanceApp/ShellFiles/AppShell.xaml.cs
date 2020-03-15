@@ -30,7 +30,7 @@ namespace AttendanceApp.ShellFiles
             routes.Add("reasonrequest", typeof(ReasonRequest));
             routes.Add("unjustifiedviolations", typeof(UnjustifiedViolations));
             routes.Add("userprofile", typeof(UserProfile));
-
+            routes.Add("changepassword", typeof(ChangePassword));
             foreach (var item in routes)
             {
                 Routing.RegisterRoute(item.Key, item.Value);

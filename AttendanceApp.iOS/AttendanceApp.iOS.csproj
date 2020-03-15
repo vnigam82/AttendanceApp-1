@@ -183,6 +183,9 @@
     <BundleResource Include="Resources\logout.png" />
     <BundleResource Include="Resources\aboutus.png" />
     <BundleResource Include="Resources\profile.png" />
+    <BundleResource Include="Resources\passwordwhite.png" />
+    <BundleResource Include="success.json" />
+    <BundleResource Include="error.json" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />

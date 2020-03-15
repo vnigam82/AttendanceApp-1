@@ -21,7 +21,8 @@ namespace AttendanceApp
         {
             ServiceContainer.Register(() => new DashboardViewModel(navigation));
             ServiceContainer.Register(() => new HeaderViewModel(navigation));
-
+            ServiceContainer.Register(() => new UserProfileViewModel(navigation));
+            ServiceContainer.Register(() => new ResetPasswordViewModel(navigation));
         }
         protected override void OnStart()
         {

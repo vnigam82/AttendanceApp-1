@@ -7,17 +7,16 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace AttendanceApp.Views
 {
-    public partial class UserProfile : ContentPage
+    public partial class ChangePassword : ContentPage
     {
-        UserProfileViewModel _userProfileViewmodel;
-        public UserProfile()
+        ResetPasswordViewModel _resetPasswordViewModel;
+        public ChangePassword()
         {
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
-
-            _userProfileViewmodel = ServiceContainer.Resolve<UserProfileViewModel>();
+            _resetPasswordViewModel = ServiceContainer.Resolve<ResetPasswordViewModel>();
             //_userProfileViewmodel.AddDashboardMenuItems();
-            BindingContext = _userProfileViewmodel;
+            BindingContext = _resetPasswordViewModel;
         }
         protected override void OnAppearing()
         {

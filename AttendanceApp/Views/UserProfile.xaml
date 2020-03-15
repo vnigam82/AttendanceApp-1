@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Class="AttendanceApp.Views.UserProfile">
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -10,6 +13,10 @@
                    AbsoluteLayout.LayoutBounds="0,0,1,1"
                    AbsoluteLayout.LayoutFlags="All"
                    Aspect="Fill"/>
+            <BoxView BackgroundColor="#f9fbfc"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                     Margin="0,300,0,0"/>
         <Grid RowSpacing="0"
               AbsoluteLayout.LayoutBounds="0,0,1,1"
                    AbsoluteLayout.LayoutFlags="All"
@@ -28,6 +35,199 @@
                      HeightRequest="1"
                      BackgroundColor="White"
                      VerticalOptions="End"/>
+            <StackLayout Spacing="0"
+                         Padding="0"
+                         Margin="0,80"
+                  Grid.Row="1">
+                <Grid RowSpacing="0"
+                  ColumnSpacing="0"
+                  >
+                
+                <ui:MaterialCard Padding="5,10"
+                Margin="{OnPlatform iOS='30,50',Android='30,50'}"
+                        BackgroundColor="{StaticResource backgroundColor}"
+                        CornerRadius="8"
+                        Elevation="10"
+                HasShadow="False"
+                        VerticalOptions="StartAndExpand">
+                    <StackLayout HorizontalOptions="CenterAndExpand"
+                                 Margin="0,50,0,0">
+                        <Label Text="Vivek Kumar Nigam"
+                               FontSize="Large"
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"/>
+                        <Label Text="viveklpu2011@gmail.com"
+                               FontSize="Small"
+                               TextColor="{StaticResource MainThemeColor}"
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"/>
+                        <Label Text="Position"
+                               FontSize="Large"
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"/>
+                        <Grid RowSpacing="10"
+                              Margin="5,10"
+                              HorizontalOptions="FillAndExpand"
+                              ColumnSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                   Grid.Row="0"
+                                   Text="Direct Manager"
+                                   FontSize="Small"/>
+                            <Label Grid.Column="1"
+                                   Grid.Row="0"
+                                   HorizontalOptions="EndAndExpand"
+                                   HorizontalTextAlignment="End"
+                                   Text="Vacation Balance"
+                                   FontSize="Small"/>
+                            <Label Grid.Column="0"
+                                   Grid.Row="1"
+                                   TextColor="{StaticResource MainThemeColor}"
+                                   Text="Visual Studio"
+                                   FontSize="Small"/>
+                            <Label Grid.Column="1"
+                                   Grid.Row="1"
+                                   TextColor="{StaticResource MainThemeColor}"
+                                   HorizontalOptions="EndAndExpand"
+                                   HorizontalTextAlignment="End"
+                                   Text="0"
+                                   FontSize="Small"/>
+                        </Grid>
+                    </StackLayout>
+                </ui:MaterialCard>
+                <ffimageloading:CachedImage HorizontalOptions="Center"
+                                            VerticalOptions="Start"
+			                                WidthRequest="100"
+                                            HeightRequest="100"
+			                                DownsampleToViewSize="true"
+			                                Source="samplelogo.png">
+                    <ffimageloading:CachedImage.Transformations>
+				<fftransformations:CircleTransformation BorderHexColor="#32b2e6"
+                                             BorderSize="4"/>
+                        
+			</ffimageloading:CachedImage.Transformations>
+                    
+		</ffimageloading:CachedImage>
+            </Grid>
+                <Label Text="More Settings"
+                       FontSize="Small"
+                       TextColor="Gray"
+                       Margin="{OnPlatform iOS='30,0,0,10',Android='30,0,0,10'}"/>
+                <ScrollView Margin="{OnPlatform iOS='30,0',Android='30,0'}"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
+                     <ui:MaterialCard Padding="10"
+                        BackgroundColor="{StaticResource backgroundColor}"
+                        CornerRadius="8"
+                        Elevation="10"
+                HasShadow="False"
+                        VerticalOptions="StartAndExpand">
+                         <StackLayout Spacing="0"
+                                      Padding="0">
+                             <Grid ColumnSpacing="10"
+                               RowSpacing="0">
+                             <Grid.ColumnDefinitions>
+                                 <ColumnDefinition Width="Auto"/>
+                                 <ColumnDefinition Width="*"/>
+                                 <ColumnDefinition Width="Auto"/>
+                             </Grid.ColumnDefinitions>
+                            
+                             <BoxView Grid.Column="0"
+                                      BackgroundColor="#2584f0"
+                                      WidthRequest="40"
+                                      Margin="0,10,0,10"
+                                      HeightRequest="40"
+                                      CornerRadius="20"/>
+                             <Image HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Source="settingswhite.png"
+                                    WidthRequest="20"
+                                    Grid.Column="0"
+                                    HeightRequest="20"/>
+                             <Label Text="Configuration Settings"
+                                    Grid.Column="1"
+                                    FontSize="Medium"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    />
+                             <Label Text=">"
+                                    Grid.Column="2"
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    />
+                             <BoxView Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      BackgroundColor="LightGray"
+                                      HeightRequest="1"
+                                      VerticalOptions="EndAndExpand"/>
+                                 
+                             
+                         </Grid>
+
+                             <Grid ColumnSpacing="10"
+                               RowSpacing="0">
+                             <Grid.ColumnDefinitions>
+                                 <ColumnDefinition Width="Auto"/>
+                                 <ColumnDefinition Width="*"/>
+                                 <ColumnDefinition Width="Auto"/>
+                             </Grid.ColumnDefinitions>
+                            
+                             
+                                 
+                             <BoxView Grid.Column="0"
+                                      BackgroundColor="#32e2a1"
+                                      WidthRequest="40"
+                                      Margin="0,10,0,10"
+                                      HeightRequest="40"
+                                      CornerRadius="20"/>
+                             <Image HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Source="passwordwhite.png"
+                                    WidthRequest="20"
+                                    Grid.Column="0"
+                                    HeightRequest="20"/>
+                             <Label Text="Change Password"
+                                    Grid.Column="1"
+                                    FontSize="Medium"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    />
+                             <Label Text=">"
+                                    Grid.Column="2"
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    />
+                             <BoxView Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      BackgroundColor="LightGray"
+                                      HeightRequest="1"
+                                      VerticalOptions="EndAndExpand"/>
+                                 <Grid.GestureRecognizers>
+                                     <TapGestureRecognizer Command="{Binding NavigateChangePasswordCommand}"/>
+                                 </Grid.GestureRecognizers>
+                         </Grid>
+                         </StackLayout>
+                         
+                         </ui:MaterialCard>
+                </ScrollView>
+            </StackLayout>
+            
             </Grid>
             </AbsoluteLayout>
     </ContentPage.Content>
