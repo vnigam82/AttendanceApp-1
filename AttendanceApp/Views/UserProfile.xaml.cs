@@ -18,6 +18,11 @@ namespace AttendanceApp.Views
             _userProfileViewmodel = ServiceContainer.Resolve<UserProfileViewModel>();
             //_userProfileViewmodel.AddDashboardMenuItems();
             BindingContext = _userProfileViewmodel;
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) => {
+                configView.IsOpen = !configView.IsOpen;
+            };
+            grdConfiguration.GestureRecognizers.Add(tapGestureRecognizer);
         }
         protected override void OnAppearing()
         {

@@ -236,6 +236,14 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\editmagenta.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\tickmagenta.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

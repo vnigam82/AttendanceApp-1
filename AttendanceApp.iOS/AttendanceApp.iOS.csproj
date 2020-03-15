@@ -186,6 +186,8 @@
     <BundleResource Include="Resources\passwordwhite.png" />
     <BundleResource Include="success.json" />
     <BundleResource Include="error.json" />
+    <BundleResource Include="Resources\editmagenta.png" />
+    <BundleResource Include="Resources\tickmagenta.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />

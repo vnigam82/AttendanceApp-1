@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material" xmlns:toggle="clr-namespace:AttendanceApp.CustomControls"
+             x:Class="AttendanceApp.CustomViews.ConfigurationView">
+    <ContentView.Content>
+        <Grid BackgroundColor="#A04c4c4c">
+            <Grid BackgroundColor="White"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="EndAndExpand"
+                  RowSpacing="10"
+                  ColumnSpacing="0"
+                         Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0"
+                       Source="reason"
+                       Grid.Row="0"
+                       WidthRequest="20"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       HeightRequest="20"
+                       Aspect="AspectFit"/>
+                <Label Text="Configurations"
+                       FontSize="16"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       TextColor="Black"
+                       Margin="30,0,0,20"
+                       HorizontalTextAlignment="Start"
+                       HorizontalOptions="StartAndExpand"
+                       FontAttributes="Bold"/>
+                <BoxView Grid.Row="0"
+                       Grid.Column="0"
+                         Grid.ColumnSpan="3"
+                         HeightRequest="1"
+                         VerticalOptions="EndAndExpand"
+                         HorizontalOptions="FillAndExpand"
+                         BackgroundColor="LightGray"/>
+                <Label Text="Configuration URL"
+                       FontSize="Medium"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       TextColor="Gray"
+                       HorizontalOptions="StartAndExpand"/>
+                <ui:MaterialTextField Grid.Column="0"
+                                      Grid.Row="2"
+                                      Grid.ColumnSpan="2"
+                                      BackgroundColor="White"
+                                      FloatingPlaceholderEnabled="False"
+                                      IsEnabled="False"
+                                      x:Name="txtUrl"
+                                      Placeholder="https://configurations.me"
+                                      HeightRequest="50"
+                                      PlaceholderColor="Black"
+                                      InputType="Url"
+                                      />
+                <toggle:ToggleButton WidthRequest="25"
+                                        HeightRequest="25"
+                                        CheckedImage="tickmagenta.png"
+                                     Grid.Column="2"
+                                     HorizontalOptions="EndAndExpand"
+                                     
+                                      Grid.Row="2"
+                                        Checked="{Binding ToggleChecked}"
+                                        UnCheckedImage="editmagenta.png"
+                                        BackgroundColor="Transparent"
+                                        x:Name="toggleediturl"/>
+                <Label Text="Language"
+                       FontSize="Medium"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="0,10"
+                       TextColor="Gray"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="StartAndExpand"/>
+                <Label Text="English"
+                       FontSize="Small"
+                       Margin="0,10"
+                       Grid.Row="3"
+                       Grid.Column="1"
+                       VerticalOptions="CenterAndExpand"
+                       TextColor="{StaticResource MainThemeColor}"
+                       HorizontalOptions="StartAndExpand"/>
+                <Switch ThumbColor="{StaticResource MainThemeColor}"
+                        VerticalOptions="StartAndExpand"
+                        Margin="10,10,0,0"
+                        HorizontalOptions="EndAndExpand"
+                        Grid.Row="3"
+                       Grid.Column="2"
+                        />
+                <ui:MaterialButton Text="Close"
+                                   BackgroundColor="{StaticResource MainThemeColor}"
+                                   Grid.Row="4"
+                                   Grid.Column="2"
+                                   Clicked="CloseButton_Clicked"
+                                   HorizontalOptions="EndAndExpand"
+                                   TextColor="White"
+                                   Margin="0,30"/>
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
