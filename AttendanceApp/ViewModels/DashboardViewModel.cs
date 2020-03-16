@@ -9,6 +9,7 @@ namespace AttendanceApp.ViewModels
     {
         private INavigation _navigation;
         private ObservableCollection<DashboardMenuModel> _dashboardItems = new ObservableCollection<DashboardMenuModel>();
+        CheckinCheckoutViewModel checkinviewmodel; 
         public DashboardViewModel(INavigation navigation)
         {
             this._navigation = navigation;
@@ -50,11 +51,14 @@ namespace AttendanceApp.ViewModels
                 {
                     var result = data as DashboardMenuModel;
 
-
-                    //if (result.Id == 1)
-                    //{
-                    //    Xamarin.Forms.Shell.Current.GoToAsync("carwash");
-                    //}
+                    if (result.Id == 1)
+                    {
+                        
+                        Xamarin.Forms.Shell.Current.GoToAsync("checkincheckout");
+                        checkinviewmodel = new CheckinCheckoutViewModel(_navigation);
+                        checkinviewmodel.IsShowMenuButton = false;
+                        checkinviewmodel.IsShowBack = true;
+                    }
                     //if (result.Id == 2)
                     //{
                     //    Xamarin.Forms.Shell.Current.GoToAsync("twoWheelerParking");

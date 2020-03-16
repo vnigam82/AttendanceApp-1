@@ -52,12 +52,12 @@
                         VerticalOptions="StartAndExpand">
                     <StackLayout HorizontalOptions="CenterAndExpand"
                                  Margin="0,50,0,0">
-                        <Label Text="Vivek Kumar Nigam"
+                        <Label Text="Test"
                                FontSize="Large"
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"
                                FontAttributes="Bold"/>
-                        <Label Text="viveklpu2011@gmail.com"
+                        <Label Text="Test"
                                FontSize="Small"
                                TextColor="{StaticResource MainThemeColor}"
                                HorizontalOptions="CenterAndExpand"

@@ -1,5 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AttendanceApp.Views.CheckinCheckout">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="AttendanceApp.Views.CheckinCheckout">
     <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   Aspect="Fill"/>
+            <BoxView BackgroundColor="#f9fbfc"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                     Margin="0,300,0,0"/>
+        <Grid RowSpacing="0"
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+              ColumnSpacing="0"
+              x:Name="mainlayout">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <customviews:HeaderView IsBackVisible="{Binding IsShowBack}"
+                                    IsMenuVisible="{Binding IsShowMenuButton}"
+                                    x:Name="headerView"
+                                    HeaderTitle="Check In/Check Out"
+                                    IsHomeVisible="True"
+                                    Grid.Row="0"/>
+            <BoxView Grid.Row="0"
+                     HeightRequest="1"
+                     BackgroundColor="White"
+                     VerticalOptions="End"/>
+            <StackLayout Spacing="0"
+                         Padding="0"
+                         Margin="0,80"
+                  Grid.Row="1">
+                <ui:MaterialCard
+                Margin="30"
+                        BackgroundColor="{StaticResource backgroundColor}"
+                        CornerRadius="8"
+                        Elevation="10"
+                HasShadow="False"
+                        VerticalOptions="StartAndExpand">
+                    
+                    </ui:MaterialCard>
+                </StackLayout>
+            </Grid>
+              </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
