@@ -81,6 +81,9 @@
     <Compile Include="Renderer\FlowListViewInternalCellRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\BorderlessDatePickerRenderer.cs" />
+    <Compile Include="Renderer\BorderlessTimePickerRenderer.cs" />
+    <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -241,6 +244,10 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\tickmagenta.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\rightarrow.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using AttendanceApp.Models;
 using AttendanceApp.ServiceConfigration;
 using Xamarin.Forms;
 
@@ -46,6 +48,31 @@ namespace AttendanceApp.ViewModels
                     OnPropertyChanged(nameof(IsShowMenuButton));
                 }
             }
+        }
+
+        private ObservableCollection<MenuModel> _menuItems = new ObservableCollection<MenuModel>();
+        public ObservableCollection<MenuModel> MenuItems
+        {
+            get
+            {
+                return _menuItems;
+            }
+            set
+            {
+                if (_menuItems != value)
+                {
+                    _menuItems = value;
+                    OnPropertyChanged(nameof(MenuItems));
+                }
+            }
+        }
+
+        public void AddMenuItems()
+        {
+
+            MenuItems.Add(new MenuModel { Id = 1, Name = "Coming (Check IN)", ImageName = "checkinwhite.png", GridColor = GridColorUtil.StoreColor });
+            MenuItems.Add(new MenuModel { Id = 2, Name = "Reasons", ImageName = "reasonwhite.png", GridColor = GridColorUtil.ManualsColor });
+            MenuItems.Add(new MenuModel { Id = 3, Name = "Leaving (Check Out)", ImageName = "leaveswhite.png", GridColor = GridColorUtil.AnnouncementsColor });
         }
     }
 }

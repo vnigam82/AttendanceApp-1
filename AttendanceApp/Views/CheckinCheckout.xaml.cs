@@ -15,7 +15,7 @@ namespace AttendanceApp.Views
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
             _checkincheckoutViewmodel = ServiceContainer.Resolve<CheckinCheckoutViewModel>();
-            //_checkincheckoutViewmodel.AddDashboardMenuItems();
+            _checkincheckoutViewmodel.AddMenuItems();
             BindingContext = _checkincheckoutViewmodel;
             //headerView.BindingContext = _checkincheckoutViewmodel;
         }

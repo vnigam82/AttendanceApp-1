@@ -64,7 +64,11 @@ namespace AttendanceApp.ShellFiles
                     Shell.Current.GoToAsync("checkincheckout");
                     break;
 
-                case "aboutus":
+                    case "reasonrequest":
+                    Shell.Current.GoToAsync("reasonrequest");
+                    break;
+                    
+                    case "aboutus":
                     Shell.Current.GoToAsync("aboutus");
                     break;
             }

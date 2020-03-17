@@ -24,6 +24,7 @@ namespace AttendanceApp
             ServiceContainer.Register(() => new UserProfileViewModel(navigation));
             ServiceContainer.Register(() => new ResetPasswordViewModel(navigation));
             ServiceContainer.Register(() => new CheckinCheckoutViewModel(navigation));
+            ServiceContainer.Register(() => new ReasonRequestViewModel(navigation));
         }
         protected override void OnStart()
         {

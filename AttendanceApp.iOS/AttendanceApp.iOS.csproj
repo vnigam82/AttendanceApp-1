@@ -67,6 +67,9 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\BorderlessDatePickerRenderer.cs" />
+    <Compile Include="Renderer\BorderlessTimePickerRenderer.cs" />
+    <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -188,6 +191,7 @@
     <BundleResource Include="error.json" />
     <BundleResource Include="Resources\editmagenta.png" />
     <BundleResource Include="Resources\tickmagenta.png" />
+    <BundleResource Include="Resources\rightarrow.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />

@@ -1,62 +1,112 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-    x:Class="AttendanceApp.Views.CheckinCheckout"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-    xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
-    xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
-    xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+             xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
+             x:Class="AttendanceApp.Views.CheckinCheckout">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <Image
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
-                Aspect="Fill"
-                Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}" />
-            <BoxView
-                Margin="0,300,0,0"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="#f9fbfc" />
-            <Grid
-                x:Name="mainlayout"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
-                ColumnSpacing="0"
-                RowSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <customviews:HeaderView
+            <Image Source="{local:EmbeddedImage AttendanceApp.Images.bg.jpg}"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   Aspect="Fill"/>
+            <BoxView BackgroundColor="#f9fbfc"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                     Margin="0,300,0,0"/>
+        <Grid RowSpacing="0" 
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+              ColumnSpacing="0"
+              x:Name="mainlayout">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <customviews:HeaderView
                     x:Name="headerView"
                     Grid.Row="0"
                     HeaderTitle="Check In/Check Out"
                     IsBackVisible="{x:Static appshell:AppShell.back}"
                     IsHomeVisible="True"
                     IsMenuVisible="{Binding IsShowMenuButton}" />
-                <BoxView
-                    Grid.Row="0"
-                    BackgroundColor="White"
-                    HeightRequest="1"
-                    VerticalOptions="End" />
-                <StackLayout
-                    Grid.Row="1"
-                    Margin="0,80"
-                    Padding="0"
-                    Spacing="0">
-                    <ui:MaterialCard
-                        Margin="30"
+            <BoxView Grid.Row="0"
+                     HeightRequest="1"
+                     BackgroundColor="White"
+                     VerticalOptions="End"/>
+            <StackLayout Spacing="0"
+                         Padding="0"
+                         Margin="0,80"
+                  Grid.Row="1">
+                <ui:MaterialCard
+                Margin="30"
                         BackgroundColor="{StaticResource backgroundColor}"
                         CornerRadius="8"
                         Elevation="10"
-                        HasShadow="False"
-                        VerticalOptions="StartAndExpand" />
+                HasShadow="False"
+                        VerticalOptions="StartAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand">
+                        <Label Text="Please choose a function"
+                               FontSize="Large"/>
+                        <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"/>
+                         <ScrollView 
+                                    HorizontalScrollBarVisibility="Never"
+                             HeightRequest="200"
+                                    Margin="0,10">
+                            <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}"
+                                         x:Name="menuList">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                        <ui:MaterialCard Padding="10"
+                                         HasShadow="False"
+                                         BorderColor="LightGray">
+                        <Grid ColumnSpacing="10" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ui:MaterialCard HasShadow="False"
+                                                         Padding="10"
+                                                         Elevation="0"
+                                                         Grid.Column="0"
+                                                         BackgroundColor="{Binding GridColor}"
+                                                         >
+                                            <Image Source="{Binding ImageName}"
+                                                   WidthRequest="20"
+                                                   HeightRequest="20"
+                                                   Aspect="AspectFit"/>
+                                            </ui:MaterialCard>
+                                        <Label Text="{Binding Name}"
+                                               Grid.Column="1"
+                                               TextColor="Gray"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontAttributes="Bold"/>
+                            <Image Source="rightarrow.png"
+                                                   WidthRequest="30"
+                                   Grid.Column="2"
+                                   HorizontalOptions="EndAndExpand"
+                                                   HeightRequest="30"
+                                                   Aspect="AspectFit"/>
+                                        
+                                    </Grid>
+                            </ui:MaterialCard>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                             </ScrollView>
+                    </StackLayout>
+                    </ui:MaterialCard>
                 </StackLayout>
             </Grid>
-        </AbsoluteLayout>
+              </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

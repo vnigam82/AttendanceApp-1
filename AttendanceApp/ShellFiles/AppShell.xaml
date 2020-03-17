@@ -63,7 +63,7 @@
         Text="Leave Request" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
-        CommandParameter="aboutus"
+        CommandParameter="reasonrequest"
         IconImageSource="reasonmenu.png"
         Text="Reason Request" />
     <MenuItem

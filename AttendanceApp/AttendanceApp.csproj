@@ -24,6 +24,9 @@
     <Folder Include="Images\" />
     <Folder Include="Models\" />
     <Folder Include="CustomControls\ToggleButton\" />
+    <Folder Include="CustomControls\CustomDatePicker\" />
+    <Folder Include="CustomControls\CustomTimePicker\" />
+    <Folder Include="CustomControls\CustomEditor\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />
