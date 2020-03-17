@@ -1,74 +1,81 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AttendanceApp.CustomViews.HeaderView">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="AttendanceApp.CustomViews.HeaderView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentView.Content>
-        <Grid BackgroundColor="Transparent"
-              VerticalOptions="Start"
-              HeightRequest="50"
-              x:Name="menuBackground"
-              HorizontalOptions="FillAndExpand"
-              RowSpacing="0"
-              ColumnSpacing="10">
+        <Grid
+            x:Name="menuBackground"
+            BackgroundColor="Transparent"
+            ColumnSpacing="10"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="0"
+            VerticalOptions="Start">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ImageButton Grid.Column="0"
-                         Source="hamburger.png"
-                         WidthRequest="30"
-                         Command="{Binding MenuCommand}"
-                         x:Name="btnMenu"
-                         BackgroundColor="Transparent"
-                         Rotation="180"
-                         IsVisible="False"
-                         HeightRequest="25"
-                         Margin="10,0,0,0"
-                         VerticalOptions="CenterAndExpand"
-                         Aspect="AspectFit"/>
-            <ImageButton Grid.Column="0"
-                         Source="back.png"
-                         WidthRequest="30"
-                         IsVisible="False"
-                         BackgroundColor="Transparent"
-                         x:Name="btnBack"
-                         Command="{Binding BackCommand}"
-                         HeightRequest="30"
-                         Margin="10,0,0,0"
-                         VerticalOptions="CenterAndExpand"
-                         Aspect="AspectFit"/>
-            <Label Text="Dashborad"
-                   Grid.Column="1"
-                   x:Name="lblTitle"
-                   FontSize="Large"
-                   VerticalOptions="CenterAndExpand"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource backgroundColor}"
-                   VerticalTextAlignment="Center"/>
-            <ImageButton Grid.Column="2"
-                         Source="homewhite.png"
-                         WidthRequest="30"
-                         BackgroundColor="Transparent"
-                         x:Name="btnHome"
-                         Command="{Binding HomeCommand}"
-                         IsVisible="False"
-                         HeightRequest="30"
-                         Margin="0,0,10,0"
-                         VerticalOptions="CenterAndExpand"
-                         Aspect="AspectFit"/>
-            <ImageButton Grid.Column="2"
-                         Source="back.png"
-                         WidthRequest="30"
-                         Command="{Binding BackCommand}"
-                         BackgroundColor="Transparent"
-                         x:Name="btnArabicBack"
-                         IsVisible="False"
-                         HeightRequest="30"
-                         Margin="0,0,10,0"
-                         Rotation="180"
-                         VerticalOptions="CenterAndExpand"
-                         Aspect="AspectFit"/>
+            <ImageButton
+                x:Name="btnMenu"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding MenuCommand}"
+                HeightRequest="25"
+                IsVisible="False"
+                Rotation="180"
+                Source="hamburger.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+            <ImageButton
+                x:Name="btnBack"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding BackCommand}"
+                HeightRequest="30"
+                IsVisible="False"
+                Source="back.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+            <Label
+                x:Name="lblTitle"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="Dashborad"
+                TextColor="{StaticResource backgroundColor}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                x:Name="btnHome"
+                Grid.Column="2"
+                Margin="0,0,10,0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding HomeCommand}"
+                HeightRequest="30"
+                IsVisible="False"
+                Source="homewhite.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+            <ImageButton
+                x:Name="btnArabicBack"
+                Grid.Column="2"
+                Margin="0,0,10,0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding BackCommand}"
+                HeightRequest="30"
+                IsVisible="False"
+                Rotation="180"
+                Source="back.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
         </Grid>
     </ContentView.Content>
 </ContentView>

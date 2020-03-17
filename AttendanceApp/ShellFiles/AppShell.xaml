@@ -1,48 +1,94 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<Shell xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       xmlns:controls="clr-namespace:AttendanceApp.CustomControls"
-       Title="AttendanceApp"
-             x:Class="AttendanceApp.ShellFiles.AppShell"
-       FlyoutHeaderBehavior="Scroll"
-       
-       FlyoutVerticalScrollMode="Auto"
-       xmlns:pages="clr-namespace:AttendanceApp.Views"
-       >
-   
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AttendanceApp.ShellFiles.AppShell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AttendanceApp.CustomControls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:AttendanceApp.Views"
+    Title="AttendanceApp"
+    FlyoutHeaderBehavior="Scroll"
+    FlyoutVerticalScrollMode="Auto">
+
     <Shell.FlyoutHeader>
-        <controls:FlyoutHeader/>    
+        <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
-    <FlyoutItem Title="Home" Icon="home.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}"/>
+    <!-- <FlyoutItem Title="Home" Icon="home.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="About us" Icon="aboutus.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:AboutUs}"/>
+   <FlyoutItem Title="About us" Icon="aboutus.png">
+        <ShellContent ContentTemplate="{DataTemplate pages:AboutUs}" />
     </FlyoutItem>
     <FlyoutItem Title="CheckIn/CheckOut" Icon="checkinmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:CheckinCheckout}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:CheckinCheckout}" />
     </FlyoutItem>
     <FlyoutItem Title="Leave Request" Icon="leavereasonmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:LeaveRequest}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:LeaveRequest}" />
     </FlyoutItem>
     <FlyoutItem Title="Reason Request" Icon="reasonmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:ReasonRequest}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:ReasonRequest}" />
     </FlyoutItem>
     <FlyoutItem Title="Unjustified Violations" Icon="violationmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:UnjustifiedViolations}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:UnjustifiedViolations}" />
     </FlyoutItem>
     <FlyoutItem Title="My Attendance" Icon="attendancemenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:MyAttendance}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:MyAttendance}" />
     </FlyoutItem>
     <FlyoutItem Title="Approve Reasons" Icon="approvereasonmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}" />
     </FlyoutItem>
     <FlyoutItem Title="Approve Leaves" Icon="approveleavesmenu.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:ApproveReasons}" />
+    </FlyoutItem>-->
+
+
+    <FlyoutItem   Title="Home" Icon="home.png">
+        <ShellContent   ContentTemplate="{DataTemplate pages:DashboardPage}"   />
     </FlyoutItem>
-    
-    <MenuItem Text="Logout"
-              IconImageSource="logout.png" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="aboutus.png"
+        Text="About us" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="checkincheckout"
+        IconImageSource="checkinmenu.png"
+        Text="CheckIn/CheckOut" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="leavereasonmenu.png"
+        Text="Leave Request" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="reasonmenu.png"
+        Text="Reason Request" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="violationmenu.png"
+        Text="Unjustified Violations" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="attendancemenu.png"
+        Text="My Attendance" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="approvereasonmenu.png"
+        Text="Approve Reasons" />
+    <MenuItem
+        Command="{Binding RandomPageCommand}"
+        CommandParameter="aboutus"
+        IconImageSource="approveleavesmenu.png"
+        Text="Approve Leaves" />
+
+
+    <MenuItem IconImageSource="logout.png" Text="Logout" />
+
+
 </Shell>

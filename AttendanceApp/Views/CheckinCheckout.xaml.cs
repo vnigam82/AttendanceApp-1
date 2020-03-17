@@ -17,7 +17,7 @@ namespace AttendanceApp.Views
             _checkincheckoutViewmodel = ServiceContainer.Resolve<CheckinCheckoutViewModel>();
             //_checkincheckoutViewmodel.AddDashboardMenuItems();
             BindingContext = _checkincheckoutViewmodel;
-            headerView.BindingContext = _checkincheckoutViewmodel;
+            //headerView.BindingContext = _checkincheckoutViewmodel;
         }
         protected override void OnAppearing()
         {
