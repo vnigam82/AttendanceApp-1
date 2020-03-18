@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles" xmlns:customcontrol="clr-namespace:AttendanceApp.CustomControls"
+             xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
+             xmlns:customcontrol="clr-namespace:AttendanceApp.CustomControls"
              x:Class="AttendanceApp.Views.ReasonRequest">
     <ContentPage.Content>
          <AbsoluteLayout>
@@ -49,7 +50,80 @@
                         VerticalOptions="StartAndExpand">
                     <StackLayout HorizontalOptions="FillAndExpand"
                                  VerticalOptions="FillAndExpand">
-                        <customcontrol:BorderlessTimePicker Image="checkinmenu.png"/>
+                        <Label Text="Reason Request"
+                               FontSize="Large"/>
+                        <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"/>
+                         <ScrollView 
+                                    HorizontalScrollBarVisibility="Never"
+                             VerticalScrollBarVisibility="Never"
+                             HeightRequest="400"
+                                    Margin="0,10">
+                            <StackLayout x:Name="menuList">
+                                <Label Text="Reason Date"
+                                       FontSize="Medium"/>
+                                    <customcontrol:BorderlessDatePicker
+                                        Image="datepicker"
+                                        HeightRequest="40"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+
+                                <Label Text="Start Time"
+                                       Margin="0,10,0,0"
+                                       FontSize="Medium"/>
+                                    <customcontrol:BorderlessTimePicker
+                                        Image="timepicker"
+                                        HeightRequest="40"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+
+                                 <Label Text="End Time"
+                                       Margin="0,10,0,0"
+                                       FontSize="Medium"/>
+                                    <customcontrol:BorderlessTimePicker
+                                        Image="timepicker"
+                                        HeightRequest="40"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+
+                                <Label Text="Reason Type"
+                                       Margin="0,10,0,0"
+                                       FontSize="Medium"/>
+                                    <customcontrol:CustomPickerNew
+                                        Image="xf_arrow_dropdown"
+                                        HeightRequest="40"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+
+                                <Label Text="Remarks"
+                                       Margin="0,10,0,0"
+                                       FontSize="Medium"/>
+                                    <customcontrol:BorderlessEditor
+                                        HeightRequest="80"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+
+                                <ui:MaterialButton Text="Submit"
+                                                   TextColor="White"/>
+                                </StackLayout>
+                             </ScrollView>
        </StackLayout>
                     </ui:MaterialCard>
                 </StackLayout>

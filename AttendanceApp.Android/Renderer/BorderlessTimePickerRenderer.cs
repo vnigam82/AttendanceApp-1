@@ -38,15 +38,15 @@ namespace AttendanceApp.Droid.Renderer
                 layoutParams.SetMargins(0, 0, 0, 0);
                 LayoutParameters = layoutParams;
                 Control.LayoutParameters = layoutParams;
-                Control.SetPadding(0, 0, 30, 0);
-                SetPadding(0, 0, 30, 0);
+                Control.SetPadding(0, 0, 0, 0);
+                SetPadding(0, 0, 0, 0);
                 Control.Background = AddPickerStyles(element.Image);
             }
         }
         public LayerDrawable AddPickerStyles(string imagePath)
         {
             ShapeDrawable border = new ShapeDrawable();
-            border.Paint.Color = Android.Graphics.Color.Gray;
+            border.Paint.Color = Android.Graphics.Color.Transparent;
             border.SetPadding(10, 10, 10, 10);
             border.Paint.SetStyle(Paint.Style.Stroke);
 
@@ -59,6 +59,7 @@ namespace AttendanceApp.Droid.Renderer
 
         private BitmapDrawable GetDrawable(string imagePath)
         {
+
             int resID = Resources.GetIdentifier(imagePath, "drawable", this.Context.PackageName);
             var drawable = ContextCompat.GetDrawable(this.Context, resID);
             var bitmap = ((BitmapDrawable)drawable).Bitmap;

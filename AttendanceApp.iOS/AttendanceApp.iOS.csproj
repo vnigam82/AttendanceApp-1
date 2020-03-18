@@ -192,6 +192,8 @@
     <BundleResource Include="Resources\editmagenta.png" />
     <BundleResource Include="Resources\tickmagenta.png" />
     <BundleResource Include="Resources\rightarrow.png" />
+    <BundleResource Include="Resources\datepicker.png" />
+    <BundleResource Include="Resources\timepicker.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />

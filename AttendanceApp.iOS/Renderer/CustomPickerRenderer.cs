@@ -25,6 +25,7 @@ namespace AttendanceApp.iOS.Renderer
                 var downarrow = UIImage.FromBundle(element.Image);
                 Control.RightViewMode = UITextFieldViewMode.Always;
                 Control.BackgroundColor = UIColor.White;
+                Control.BorderStyle = UITextBorderStyle.None;
                 Control.RightView = new UIImageView(downarrow);
             }
         }
