@@ -71,10 +71,10 @@ namespace AttendanceApp.ViewModels
                     //{
                     //    Xamarin.Forms.Shell.Current.GoToAsync("fourWheelerParking");
                     //}
-                    //if (result.Id == 5)
-                    //{
-                    //    Xamarin.Forms.Shell.Current.GoToAsync("foodservice");
-                    //}
+                    if (result.Id == 5)
+                    {
+                        Xamarin.Forms.Shell.Current.GoToAsync("myattendance");
+                    }
                     //if (result.Id == 6)
                     //{
                     //    Xamarin.Forms.Shell.Current.GoToAsync("gym");

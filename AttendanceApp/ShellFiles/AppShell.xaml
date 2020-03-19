@@ -73,7 +73,7 @@
         Text="Unjustified Violations" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
-        CommandParameter="aboutus"
+        CommandParameter="myattendance"
         IconImageSource="attendancemenu.png"
         Text="My Attendance" />
     <MenuItem

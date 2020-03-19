@@ -71,6 +71,10 @@ namespace AttendanceApp.ShellFiles
                     case "aboutus":
                     Shell.Current.GoToAsync("aboutus");
                     break;
+
+                    case "myattendance":
+                    Shell.Current.GoToAsync("myattendance");
+                    break;
             }
 
 
