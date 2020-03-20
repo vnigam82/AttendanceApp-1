@@ -15,6 +15,7 @@
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
     <PackageReference Include="XF.Material" Version="1.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -27,6 +28,8 @@
     <Folder Include="CustomControls\CustomDatePicker\" />
     <Folder Include="CustomControls\CustomTimePicker\" />
     <Folder Include="CustomControls\CustomEditor\" />
+    <Folder Include="Dependency\" />
+    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />

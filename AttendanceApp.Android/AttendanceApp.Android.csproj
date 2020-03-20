@@ -74,6 +74,9 @@
     <PackageReference Include="XF.Material">
       <Version>1.5.2</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Renderer\BorderlessDatePickerRenderer.cs" />
     <Compile Include="Renderer\BorderlessTimePickerRenderer.cs" />
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
+    <Compile Include="Dependency\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -266,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Dependency\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AttendanceApp\AttendanceApp.csproj">

@@ -70,6 +70,7 @@
     <Compile Include="Renderer\BorderlessDatePickerRenderer.cs" />
     <Compile Include="Renderer\BorderlessTimePickerRenderer.cs" />
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
+    <Compile Include="Dependency\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -144,6 +145,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
     <PackageReference Include="XF.Material">
       <Version>1.5.2</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -261,5 +265,8 @@
   <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\loginbg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dependency\" />
   </ItemGroup>
 </Project>

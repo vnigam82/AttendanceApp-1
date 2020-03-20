@@ -47,7 +47,7 @@
                         VerticalOptions="CenterAndExpand"
                         />
             </StackLayout>
-            <Image Source="samplelogo"
+            <Image Source="{Binding LogoImage}"
                    Grid.Row="1"
                    HorizontalOptions="Center"
                    WidthRequest="120"
