@@ -24,6 +24,7 @@ namespace AttendanceApp.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
+            Rg.Plugins.Popup.Popup.Init();
             XF.Material.iOS.Material.Init();
             LoadApplication(new App());
 

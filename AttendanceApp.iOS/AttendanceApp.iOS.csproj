@@ -71,6 +71,7 @@
     <Compile Include="Renderer\BorderlessTimePickerRenderer.cs" />
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
     <Compile Include="Dependency\FileHelper.cs" />
+    <Compile Include="Dependency\LoadingIndicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -148,6 +149,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="BTProgressHUD">
+      <Version>1.3.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

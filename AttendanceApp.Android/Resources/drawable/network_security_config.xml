@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<network-security-config>
+  <base-config cleartextTrafficPermitted="true" />
+  <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">http://83.110.15.147:8090/GATAC_API/</domain>
+  </domain-config>
+</network-security-config>

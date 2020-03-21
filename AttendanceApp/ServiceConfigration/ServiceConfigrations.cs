@@ -9,7 +9,7 @@ namespace AttendanceApp.ServiceConfigration
         public static string BaseUrl => "http://83.110.15.147:8090/GATAC_API/";
         //public static string BaseUrl1 => "http://utilityapp.quarkcity.com/utility/";
         public static string GetOrganizationProfile => "Mobile/OrganizationProfile";
-        //public static string ForgetUrl => "Api/APP_USER/ForgetPassword/";
+        public static string Login => "Mobile/Login";
         //public static string CheckUsernameUrl => "Api/APP_USER/GetUserId";
         //public static string RegisterUrl => "Api/APP_USER/RegisterUser";
         //public static string GetLunchMenuUrl => "Api/APP_USER/GetLunchMenu";
