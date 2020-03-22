@@ -18,6 +18,7 @@ namespace AttendanceApp.Views
 
             _dashboardViewmodel = ServiceContainer.Resolve<DashboardViewModel>();
             _dashboardViewmodel.AddDashboardMenuItems();
+            _dashboardViewmodel.GetOrganizationProfile();
             BindingContext = _dashboardViewmodel;
         }
         protected override void OnAppearing()

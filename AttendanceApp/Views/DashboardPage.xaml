@@ -30,7 +30,7 @@
                      BackgroundColor="White"
                      VerticalOptions="End"/>
             <StackLayout Grid.Row="1">
-                <Image Source="samplelogo.png"
+                <Image Source="{Binding LogoImage}"
                        WidthRequest="120"
                        HeightRequest="100"
                        Aspect="Fill"

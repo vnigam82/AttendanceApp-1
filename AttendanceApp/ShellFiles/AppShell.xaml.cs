@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AttendanceApp.Helpers;
+using AttendanceApp.ViewModels;
 using AttendanceApp.Views;
 using Xamarin.Forms;
 
@@ -14,6 +16,7 @@ namespace AttendanceApp.ShellFiles
         Dictionary<string, Type> routes = new Dictionary<string, Type>();
         public Dictionary<string, Type> Routes { get { return routes; } }
         Random rand = new Random();
+        FlyoutHeaderViewModel _flyoutViewmodel;
         public ICommand RandomPageCommand
         {
             get
@@ -27,7 +30,10 @@ namespace AttendanceApp.ShellFiles
         {
             InitializeComponent();
             RegisterRoutes();
-            BindingContext = this;
+            _flyoutViewmodel = ServiceContainer.Resolve<FlyoutHeaderViewModel>();
+
+            _flyoutViewmodel.GetUserProfile();
+            BindingContext = _flyoutViewmodel;
         }
 
         private void RegisterRoutes()

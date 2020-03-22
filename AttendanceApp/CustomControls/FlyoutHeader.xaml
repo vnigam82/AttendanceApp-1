@@ -29,7 +29,7 @@
                 WidthRequest="100"
                          Grid.Row="0">
                 <Image Aspect="AspectFit"
-               Source="profile"
+               Source="{Binding ImageSource}"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
                        WidthRequest="80"
@@ -54,7 +54,7 @@
                          Grid.Row="0"
                          VerticalOptions="Start"
                          HorizontalOptions="EndAndExpand"/>
-        <Label Text="Vivek Kumar Nigam" 
+        <Label Text="{Binding ProfileUserName}" 
                TextColor="White"
                Grid.Column="0"
                Grid.Row="1"
@@ -63,7 +63,7 @@
                FontAttributes="Bold" 
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="Center" />
-            <Label Text="viveklpu2011@gmail.com" 
+            <Label Text="{Binding ProfileUserEmail}" 
                TextColor="White"
                Grid.Column="0"
                Grid.Row="2"

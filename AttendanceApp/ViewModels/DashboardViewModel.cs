@@ -1,7 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.RegularExpressions;
+using AttendanceApp.Dependency;
+using AttendanceApp.Helpers;
 using AttendanceApp.Models;
+using AttendanceApp.Utils;
+using Newtonsoft.Json;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.ViewModels
 {
@@ -42,7 +49,43 @@ namespace AttendanceApp.ViewModels
             DashboardMenuItems.Add(new DashboardMenuModel { Id = 6, Name = DashboardTilesText.ApproveReasons, Image = DashboardTilesImages.ApproveReasonsImage, GridColor = GridColorUtil.ApproveReasonsColor });
             DashboardMenuItems.Add(new DashboardMenuModel { Id = 7, Name = DashboardTilesText.ApproveLeaves, Image = DashboardTilesImages.ApproveLeavesImage, GridColor = GridColorUtil.ApproveLeavesColor });
         }
+        public async void GetOrganizationProfile()
+        {
+            try
+            {
+                if (!HttpRequest.CheckConnection())
+                {
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                                            msDuration: MaterialSnackbar.DurationLong);
+                    return;
+                }
+                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                var menuItem = await CommonMethods.GetOrganizationProfile();
 
+                if (menuItem != null)
+                {
+                    // DependencyService.Get<ILodingPageService>().HideLoadingPage();
+                    ImageBase64 = menuItem.logo.src;
+                    ImageType = menuItem.logo.type;
+                    LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+                }
+                else
+                {
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                                            msDuration: MaterialSnackbar.DurationLong);
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IProgressBar>().Hide();
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                            msDuration: MaterialSnackbar.DurationLong);
+            }
+            finally
+            {
+                DependencyService.Get<IProgressBar>().Hide();
+            }
+        }
         public Command ItemTappedCommand
         {
             get
@@ -89,6 +132,53 @@ namespace AttendanceApp.ViewModels
                     //}
 
                 });
+            }
+        }
+
+        private string imageBase64;
+        public string ImageBase64
+        {
+            get { return imageBase64; }
+            set
+            {
+                imageBase64 = value;
+                OnPropertyChanged("ImageBase64");
+                string result = Regex.Replace(imageBase64, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+                LogoImage = Xamarin.Forms.ImageSource.FromStream(
+                    () => new MemoryStream(Convert.FromBase64String(result)));
+            }
+        }
+
+        private Xamarin.Forms.ImageSource logoimage;
+        public Xamarin.Forms.ImageSource LogoImage
+        {
+            get { return logoimage; }
+            set
+            {
+                logoimage = value;
+                OnPropertyChanged("LogoImage");
+            }
+        }
+
+        private Language langType;
+        public Language LangType
+        {
+            get { return langType; }
+            set
+            {
+                langType = value;
+                OnPropertyChanged("LangType");
+            }
+        }
+
+        private string imageType;
+        public string ImageType
+        {
+            get { return imageType; }
+            set
+            {
+                imageType = value;
+                OnPropertyChanged("ImageType");
             }
         }
     }

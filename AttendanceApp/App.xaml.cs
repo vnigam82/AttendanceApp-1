@@ -38,6 +38,8 @@ namespace AttendanceApp
             ServiceContainer.Register(() => new CheckinCheckoutViewModel(navigation));
             ServiceContainer.Register(() => new ReasonRequestViewModel(navigation));
             ServiceContainer.Register(() => new MyAttendanceViewModel(navigation));
+            ServiceContainer.Register(() => new FlyoutHeaderViewModel(navigation));
+            
         }
 
         static AttendanceDBClass database;

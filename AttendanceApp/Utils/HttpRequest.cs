@@ -187,18 +187,6 @@ namespace AttendanceApp.Utils
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         //check internet connection
         public static bool CheckConnection()
         {

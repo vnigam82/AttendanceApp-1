@@ -17,8 +17,6 @@ namespace AttendanceApp.ViewModels
 {
     public class LoginViewModel:BaseViewModel
     {
-
-
         public Command  _loginCommand;
         public LoginViewModel()
         {

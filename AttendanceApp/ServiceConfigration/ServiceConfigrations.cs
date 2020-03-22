@@ -10,6 +10,7 @@ namespace AttendanceApp.ServiceConfigration
         public static string BaseUrl1 => "http://83.110.15.147:8098/GATAC_API/";
         public static string GetOrganizationProfile => "Mobile/OrganizationProfile";
         public static string Login => "Mobile/Login";
+        public static string GetUserProfile => "Mobile/";
         //public static string CheckUsernameUrl => "Api/APP_USER/GetUserId";
         //public static string RegisterUrl => "Api/APP_USER/RegisterUser";
         //public static string GetLunchMenuUrl => "Api/APP_USER/GetLunchMenu";
