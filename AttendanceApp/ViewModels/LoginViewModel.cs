@@ -2,10 +2,12 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
 using AttendanceApp.ServiceConfigration;
+using AttendanceApp.ShellFiles;
 using AttendanceApp.Utils;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -81,6 +83,8 @@ namespace AttendanceApp.ViewModels
                                             msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
+                UserName = "JBH\\naomif";
+                Password = "GAT123";
                 if(!Validate())
                 {
                     await MaterialDialog.Instance.SnackbarAsync(message: Error,
@@ -90,46 +94,58 @@ namespace AttendanceApp.ViewModels
 
                 DependencyService.Get<IProgressBar>().Show("Authenticating user...");
                 //var postData= new Login() { email= "vivek@nigam.com", password="Qwerty@123"};
-                var postData = new LoginRootObject()
+                //var postData = new LoginRootObject()
+                //{
+                //    Credentials =new LoginModel()
+                //    {
+                //        username=UserName,
+                //        password = Password
+                //    } 
+
+                //};
+                var postData = new LoginModel()
                 {
-                    Credentials =new LoginModel()
-                    {
-                        UserName=UserName,
-                        Password = Password
-                    } 
-                    
+                    username=UserName,
+                    password=Password
                 };
-                
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
-                var loginInfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl, ServiceConfigrations.Login, jsonString);
+                var loginInfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.Login+ "?IsDeviceValidated=false", jsonString);
                 if (loginInfo.Status)
                 {
-                    //var loginResult = JsonConvert.DeserializeObject<Login>(loginInfo.Result);
-                    //if (loginResult != null)
-                    //{
-                    //    if (loginResult.status == StatusEnum.Success)
-                    //    {
-                    //        Console.WriteLine("Token: " + loginResult.token);
-                    //        if (Rememberme)
-                    //        {
-                    //            UserSettings.IsLoggedIn = Rememberme;
-                    //            LoginDbModel logindb = new LoginDbModel();
-                    //            logindb.Email = loginResult.email;
-                    //            logindb.AccessToken = loginResult.token;
-                    //            await App.Database.InsertLoginDetails(logindb);
-                    //            Application.Current.MainPage = new NavigationPage(new DashboardPage());
-                    //        }
-                    //        else
-                    //        {
-                    //            if (App.Current.Properties.ContainsKey("AccessToken"))
-                    //                App.Current.Properties.Remove("AccessToken");
-                    //            App.Current.Properties.Add("AccessToken", loginResult.token);
-                    //            await App.Current.SavePropertiesAsync();
-                    //            Application.Current.MainPage = new NavigationPage(new DashboardPage());
-                    //        }
-                    //    }
-                    //}
+                    if (loginInfo.Result!=null)
+                    {
+                        UserSettingUtils.UserName = UserName;
+                        UserSettingUtils.Password = Password;
+                        UserSettingUtils.UserLoginGUID = loginInfo.Result.Substring(1, loginInfo.Result.Length - 2);
+
+                        if (Rememberme)
+                        {
+                            var logindbdata = new LoginDBModel();
+                            logindbdata.UserName = UserName;
+                            logindbdata.Password = Password;
+                            logindbdata.UserGUID = loginInfo.Result.Substring(1, loginInfo.Result.Length - 2);
+
+                            App.Database.SaveLoggedInUser(logindbdata);
+
+                            DependencyService.Get<IProgressBar>().Hide();
+
+                            App.Current.MainPage = new AppShell();
+                        }
+                        else
+                        {
+                            App.Current.MainPage = new AppShell();
+                        }
+                    }
+                    else
+                    {
+                        DependencyService.Get<IProgressBar>().Hide();
+                        await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
+                                            actionButtonText: "Ok",
+                                            msDuration: 3000);
+                        
+                    }
+
                 }
                 else
                 {

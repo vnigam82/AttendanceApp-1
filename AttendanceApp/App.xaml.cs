@@ -16,8 +16,18 @@ namespace AttendanceApp
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            MainPage = new Login();
+            //MainPage = new Login();
             //MainPage = new AppShell();
+
+            LoginDBModel objUser = App.Database.GetLoggedInUser();
+            if (objUser != null)
+            {
+                MainPage = new AppShell();
+            }
+            else
+            {
+                MainPage = new Login();
+            }
         }
         public static void RegisterViewModels(INavigation navigation)
         {

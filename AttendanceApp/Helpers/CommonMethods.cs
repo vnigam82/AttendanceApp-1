@@ -15,7 +15,7 @@ namespace AttendanceApp.Helpers
             OrganizationProfile obj = new OrganizationProfile();
             try
             {
-                string url = ServiceConfigrations.BaseUrl + ServiceConfigrations.GetOrganizationProfile;
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetOrganizationProfile;
 
                 var userinfo = await HttpRequest.GetRequest(url);
 
