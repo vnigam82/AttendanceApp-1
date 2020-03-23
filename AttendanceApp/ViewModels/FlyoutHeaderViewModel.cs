@@ -3,6 +3,7 @@ using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
 using AttendanceApp.Utils;
+using AttendanceApp.Views;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -30,16 +31,29 @@ namespace AttendanceApp.ViewModels
                 //DependencyService.Get<IProgressBar>().Show("Please wait...");
                 var menuItem = await CommonMethods.GetUserProfile();
 
-                if (menuItem != null)
+                if (menuItem.Status)
                 {
-                    ProfileUserName = menuItem.fullName;
-                    ProfileUserEmail = menuItem.email;
-                    ProfilePic = menuItem.picture;
+                    if (menuItem!=null)
+                    {
+                        ProfileUserName = menuItem.fullName;
+                        ProfileUserEmail = menuItem.email;
+                        ProfilePic = menuItem.picture ;
+                    }
+                    
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                    if (menuItem.StatusCode==System.Net.HttpStatusCode.NotFound)
+                    {
+                        await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
                                             msDuration: MaterialSnackbar.DurationLong);
+                        App.Current.MainPage = new Login();
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
+                                            msDuration: MaterialSnackbar.DurationLong);
+                    }
                 }
             }
             catch (Exception ex)

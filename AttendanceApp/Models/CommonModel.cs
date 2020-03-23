@@ -1,4 +1,6 @@
 ﻿using System;
+using AttendanceApp.Utils;
+
 namespace AttendanceApp.Models
 {
     public class Logo
@@ -7,7 +9,7 @@ namespace AttendanceApp.Models
         public string ImageSource { get
             {
                 string imagesource = string.Empty;
-                if(!string.IsNullOrWhiteSpace(src))
+                if(string.IsNullOrWhiteSpace(src))
                 {
                     imagesource = "profile.png";
                 }
@@ -36,10 +38,16 @@ namespace AttendanceApp.Models
     }
 
 
-    public class clsUserProfile
+    public class clsUserProfile: HttpRequestResponseStatus
     {
         public string email { get; set; }
         public string fullName { get; set; }
         public Logo picture { get; set; }
+    }
+
+    public class BaseModel
+    {
+        public int email { get; set; }
+        public string fullName { get; set; }
     }
 }

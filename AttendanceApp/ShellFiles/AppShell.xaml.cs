@@ -7,6 +7,7 @@ using AttendanceApp.Helpers;
 using AttendanceApp.ViewModels;
 using AttendanceApp.Views;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace AttendanceApp.ShellFiles
 {
@@ -29,6 +30,10 @@ namespace AttendanceApp.ShellFiles
         public AppShell()
         {
             InitializeComponent();
+            var safeInsets = On<Xamarin.Forms.PlatformConfiguration.iOS>().SafeAreaInsets();
+            safeInsets.Top = 0;
+            this.Padding = safeInsets;
+
             RegisterRoutes();
             _flyoutViewmodel = ServiceContainer.Resolve<FlyoutHeaderViewModel>();
 

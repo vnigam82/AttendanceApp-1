@@ -108,21 +108,21 @@ namespace AttendanceApp.ViewModels
                 };
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
-                var loginInfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.Login+ "?IsDeviceValidated=false", jsonString);
+                var loginInfo = await CommonMethods.LogInToUser(jsonString);
                 if (loginInfo.Status)
                 {
                     if (loginInfo.Result!=null)
                     {
                         UserSettingUtils.UserName = UserName;
                         UserSettingUtils.Password = Password;
-                        UserSettingUtils.UserLoginGUID = loginInfo.Result.Substring(1, loginInfo.Result.Length - 2);
+                        UserSettingUtils.UserLoginGUID = loginInfo.Result;
 
                         if (Rememberme)
                         {
                             var logindbdata = new LoginDBModel();
                             logindbdata.UserName = UserName;
                             logindbdata.Password = Password;
-                            logindbdata.UserGUID = loginInfo.Result.Substring(1, loginInfo.Result.Length - 2);
+                            logindbdata.UserGUID = loginInfo.Result;//.Substring(0, loginInfo.Result.Length - 1);
 
                             App.Database.SaveLoggedInUser(logindbdata);
 

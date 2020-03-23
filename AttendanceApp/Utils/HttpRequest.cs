@@ -153,7 +153,19 @@ namespace AttendanceApp.Utils
                             responseStatus = new HttpRequestResponseStatus()
                             {
                                 Status = false,
-                                Message = "There is internal error with services. Please contact administrator."
+                                Message = "There is internal error with services. Please contact administrator.",
+                                StatusCode = System.Net.HttpStatusCode.InternalServerError
+                            };
+                        }
+                        else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            //Message: There is internal error with services. Please contact administrator.
+
+                            responseStatus = new HttpRequestResponseStatus()
+                            {
+                                Status = false,
+                                Message = "Token Expire.",
+                                StatusCode= System.Net.HttpStatusCode.NotFound
                             };
                         }
                         else
@@ -200,5 +212,6 @@ namespace AttendanceApp.Utils
         public bool Status { get; set; }
         public string Message { get; set; }
         public string Result { get; set; }
+        public System.Net.HttpStatusCode StatusCode { get; set; }
     }
 }
