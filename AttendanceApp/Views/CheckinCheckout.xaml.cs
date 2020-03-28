@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
+using AttendanceApp.Utils;
 using AttendanceApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.Views
 {
@@ -28,5 +31,7 @@ namespace AttendanceApp.Views
             mainlayout.Padding = safeInsets;
 
         }
+
+         
     }
 }

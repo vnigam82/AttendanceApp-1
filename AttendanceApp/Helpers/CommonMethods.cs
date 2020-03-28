@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AttendanceApp.Database;
 using AttendanceApp.Models;
@@ -53,6 +54,56 @@ namespace AttendanceApp.Helpers
                     if (serviceResult != null)
                     {
                         obj = serviceResult;
+                        obj.Status = userinfo.Status;
+                        obj.Message = userinfo.Message;
+                        obj.Result = userinfo.Result;
+                    }
+                    else
+                    {
+                        obj.Message = userinfo.Message;
+                        obj.Status = userinfo.Status;
+                        obj.StatusCode = userinfo.StatusCode;
+                    }
+                }
+                else
+                {
+                    obj.Message = userinfo.Message;
+                    obj.StatusCode = userinfo.StatusCode;
+                }
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                return obj;
+            }
+        }
+
+        public static async Task<ClsLocationData> GetLocations()
+        {
+            ClsLocationData obj = new ClsLocationData();
+            LoginDBModel objUser = App.Database.GetLoggedInUser();
+            try
+            {
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/AssignedLocations";
+
+                var userinfo = await HttpRequest.GetRequest(url);
+                if (userinfo.Status)
+                {
+                    var serviceResult = JsonConvert.DeserializeObject<List<ClsLocationData>>(userinfo.Result);
+                    if (serviceResult.Count>0)
+                    {
+                        LocationData locationData = new LocationData();
+                        foreach (var item in serviceResult)
+                        {
+                            var serviceData = JsonConvert.DeserializeObject<LocationData>(item.mapLocation);
+                            
+                            locationData.lat = serviceData.lat;
+                            locationData.lng = serviceData.lng;
+                            locationData.radius = serviceData.radius;
+                            break;
+                        }
+
+                        obj.locationData = locationData;
                         obj.Status = userinfo.Status;
                         obj.Message = userinfo.Message;
                         obj.Result = userinfo.Result;

@@ -50,4 +50,19 @@ namespace AttendanceApp.Models
         public int email { get; set; }
         public string fullName { get; set; }
     }
+
+
+    public class LocationData
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+        public double radius { get; set; }
+    }
+    public class ClsLocationData: HttpRequestResponseStatus
+    {
+        public string name { get; set; }
+        public string description { get; set; }
+        public string mapLocation { get; set; }
+        public LocationData locationData { get; set; }
+    }
 }

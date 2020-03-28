@@ -136,6 +136,9 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.5.231</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Geolocator">
+      <Version>4.5.0.6</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.5.922</Version>
     </PackageReference>
@@ -270,7 +273,5 @@
   <ItemGroup>
     <AndroidResource Include="Resources\loginbg.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dependency\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
