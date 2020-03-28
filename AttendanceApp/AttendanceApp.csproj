@@ -32,6 +32,8 @@
     <Folder Include="Dependency\" />
     <Folder Include="Database\" />
     <Folder Include="Database\DBModel\" />
+    <Folder Include="CustomControls\AccordianControl\" />
+    <Folder Include="CustomControls\RadioButton\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using AttendanceApp.CustomControls.RadioButton;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
 using AttendanceApp.ServiceConfigration;
 using AttendanceApp.Utils;
+using Newtonsoft.Json;
 using Plugin.Geolocator;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -18,11 +20,107 @@ namespace AttendanceApp.ViewModels
         private INavigation _navigation;
         ServiceConfigrations service = new ServiceConfigrations();
         private bool _isShowBack, _isShowMenuButton;
+
+        private ObservableCollection<RadioOption> _radiooptionlist;
+        public ObservableCollection<RadioOption> RadioOptionsList
+        {
+            get { return _radiooptionlist; }
+            set
+            {
+
+                _radiooptionlist = value;
+            }
+        }
+
+        private ObservableCollection<clsReasons> _reasonlist;
+        public ObservableCollection<clsReasons> ReasonList
+        {
+            get { return _reasonlist; }
+            set
+            {
+
+                _reasonlist = value;
+            }
+        }
         #endregion
         public CheckinCheckoutViewModel(INavigation navigation)
         {
             this._navigation = navigation;
+        }
 
+        public void InitializeRadioButtonList()
+        {
+            RadioOptionsList = new ObservableCollection<RadioOption>()
+            {
+                new RadioOption(){
+                    id=1,
+                    IsSelected=false,
+                    Title="Happy",
+                    HappynessCode=1,
+                    ImageName="happyface.png"
+                },
+                 new RadioOption(){
+                    id=2,
+                    IsSelected=false,
+                    Title="Sad",
+                    HappynessCode=-1,
+                    ImageName="sadface.png"
+                },
+                 new RadioOption(){
+                    id=3,
+                    IsSelected=false,
+                    Title="Neutral",
+                    HappynessCode=0,
+                    ImageName="neutralface.png"
+                },
+            };
+        }
+
+        public async void GetReasonList()
+        {
+            try
+            {
+                if (!HttpRequest.CheckConnection())
+                {
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                                            msDuration: MaterialSnackbar.DurationLong);
+                    return;
+                }
+                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                var menuItem = await CommonMethods.GetReasons();
+
+                if (menuItem != null)
+                {
+                    if (menuItem.Count>0)
+                    {
+                        DependencyService.Get<IProgressBar>().Hide();
+                        foreach (var item in menuItem)
+                        {
+                            var data = new clsReasons();
+                            data.code = item.code;
+                            data.name = item.name;
+                            data.langData= JsonConvert.DeserializeObject<ReasonLanguage>(item.name);
+                            ReasonList.Add(data);
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                                            msDuration: MaterialSnackbar.DurationLong);
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IProgressBar>().Hide();
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                            msDuration: MaterialSnackbar.DurationLong);
+            }
+            finally
+            {
+                DependencyService.Get<IProgressBar>().Hide();
+            }
         }
 
         public bool IsShowBack
@@ -129,9 +227,6 @@ namespace AttendanceApp.ViewModels
                                 await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are out of location", "OK");
                             }
                         }
-
-
-
                     }
                     catch (Exception ex)
                     {
@@ -139,13 +234,7 @@ namespace AttendanceApp.ViewModels
                         await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                                            msDuration: MaterialSnackbar.DurationLong);
                     }
-
-
-
                     DependencyService.Get<IProgressBar>().Hide();
-
-
-
                 }
                 else
                 {

@@ -11,7 +11,7 @@ namespace AttendanceApp.ServiceConfigration
         public static string GetOrganizationProfile => "Mobile/OrganizationProfile";
         public static string Login => "Mobile/Login";
         public static string GetUserProfile => "Mobile/";
-
+        public static string GetReasons => "Mobile/Reasons";
         public static string GetAssignedLocations  => "Mobile/";
 
 

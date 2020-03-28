@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             mc:Ignorable="d"
+             x:Name="_accordion_view_123"
+             x:Class="AttendanceApp.CustomControls.Accordion">
+    <ContentView.Content>
+         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentView Grid.Row="1"
+                         Margin="5" x:Name="_accContent"
+                         Content="{Binding Source={x:Reference _accordion_view_123}, Path=AccordionContentView}"/>
+             <ui:MaterialCard Padding="10" 
+                                         HasShadow="False"
+                                         BorderColor="LightGray"
+                  BackgroundColor="{Binding Source={x:Reference _accordion_view_123}, Path=HeaderBackgroundColor}">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TitleTapped"/>
+                </Grid.GestureRecognizers>
+                <ContentView x:Name="_titleContainer"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="CenterAndExpand"
+                             Content="{Binding Source={x:Reference _accordion_view_123}, Path=TitleView}"/>
+                <Label FontSize="Large" HorizontalOptions="Start"
+                       BackgroundColor="Red"
+                       IsVisible="False"
+                       VerticalOptions="Start" Margin="5,0,0,0"
+                       Text="{Binding Source={x:Reference _accordion_view_123}, Path=Title}"/>
+                <ContentView x:Name="_indicatorContainer"
+                             Content="{Binding Source={x:Reference _accordion_view_123}, Path=IndicatorView}"
+                             HorizontalOptions="End" Grid.Column="1"
+                             VerticalOptions="Center"/>
+            </Grid>
+                 </ui:MaterialCard>
+            <!--IsVisible="{Binding Source={x:Reference _accordion_view_123}, Path=IsOpen}"-->
+        </Grid>
+    </ContentView.Content>
+</ContentView>

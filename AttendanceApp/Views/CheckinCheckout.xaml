@@ -6,7 +6,7 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
+             xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles" xmlns:accordian="clr-namespace:AttendanceApp.CustomControls"
              x:Class="AttendanceApp.Views.CheckinCheckout">
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -57,7 +57,166 @@
                                  VerticalOptions="StartAndExpand"
                                  HeightRequest="1"
                                  BackgroundColor="LightGray"/>
-                         <ScrollView 
+                        <ScrollView>
+                        <Grid RowSpacing="5"
+                              ColumnSpacing="0"
+                              Margin="0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                             <ui:MaterialCard Padding="10" 
+                                         HasShadow="False"
+                                              Grid.Row="0"
+                                         BorderColor="LightGray">
+                        <Grid ColumnSpacing="10" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                                    <ui:MaterialCard HasShadow="False"
+                                                         Padding="10"
+                                                         Elevation="0"
+                                                         Grid.Column="0"
+                                                         BackgroundColor="#8f3724"
+                                                         >
+                                            <Image Source="checkinwhite.png"
+                                                   WidthRequest="20"
+                                                   HeightRequest="20"
+                                                   Aspect="AspectFit"/>
+                                            </ui:MaterialCard>
+                                        <Label Text="Coming (Check IN)"
+                                               Grid.Column="1"
+                                               TextColor="Gray"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontAttributes="Bold"/>
+                            
+                                    </Grid>
+                                                <ui:MaterialCard.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding MenuItemsCommand}"/>
+                                                   
+                                                </ui:MaterialCard.GestureRecognizers>
+                            </ui:MaterialCard>
+                            <accordian:Accordion x:Name="ac2"
+                                                 Margin="0,8,0,0"
+                          Grid.Row="1">
+              <accordian:Accordion.TitleView>
+                <Grid ColumnSpacing="10" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                                    <ui:MaterialCard HasShadow="False"
+                                                         Padding="10"
+                                                         Elevation="0"
+                                                         Grid.Column="0"
+                                                         BackgroundColor="#ffae00"
+                                                         >
+                                            <Image Source="reasonwhite.png"
+                                                   WidthRequest="20"
+                                                   HeightRequest="20"
+                                                   Aspect="AspectFit"/>
+                                            </ui:MaterialCard>
+                                        <Label Text="Reasons"
+                                               Grid.Column="1"
+                                               TextColor="Gray"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontAttributes="Bold"/>
+                            
+                                    </Grid>
+            </accordian:Accordion.TitleView>
+            <accordian:Accordion.AccordionContentView>
+                <StackLayout HeightRequest="250">
+                    <ListView x:Name="lstFilterType"
+                               ItemTapped="Handle_ItemTapped" 
+                          ItemSelected="Handle_ItemSelected"    
+                              ItemsSource="{Binding RadioOptionsList}"
+                          SeparatorVisibility="None"
+                          HasUnevenRows="true">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" 
+                                             Spacing="0"
+                                             Margin="0,5">
+                                    <Grid HorizontalOptions="Start" Margin="10,0">
+                                        <Label Text="○" 
+                                               FontSize="25" 
+                                               TextColor="Red" 
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Text="●" 
+                                               FontSize="25" 
+                                               TextColor="Red" 
+                                               IsVisible="{Binding IsSelected}" 
+                                               VerticalTextAlignment="Center" />
+                                    </Grid>
+                                    <Label  
+                                        Text="{Binding Title}" 
+                                        FontSize="Medium"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" 
+                                        HorizontalOptions="Start"/>
+                                    <Image Margin="5,0"
+                                           Source="{Binding ImageName}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                    
+                                    <accordian:CustomPickerNew
+                                        Image="xf_arrow_dropdown"
+                                        Title="Select Reason"
+                                        HeightRequest="40"/>
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="StartAndExpand"
+                                 HeightRequest="1"
+                                 BackgroundColor="LightGray"
+                                         Margin="0,-5,0,0"/>
+                    <ui:MaterialButton Text="Submit"
+                                       HorizontalOptions="End"
+                                                   TextColor="White"
+                                       Margin="0,5"/>
+                </StackLayout>
+            </accordian:Accordion.AccordionContentView>
+
+        </accordian:Accordion>
+                            <ui:MaterialCard Padding="10" 
+                                         HasShadow="False"
+                                              Grid.Row="2"
+                                         BorderColor="LightGray">
+                        <Grid ColumnSpacing="10" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                                    <ui:MaterialCard HasShadow="False"
+                                                         Padding="10"
+                                                         Elevation="0"
+                                                         Grid.Column="0"
+                                                         BackgroundColor="#57bb8a"
+                                                         >
+                                            <Image Source="leaveswhite.png"
+                                                   WidthRequest="20"
+                                                   HeightRequest="20"
+                                                   Aspect="AspectFit"/>
+                                            </ui:MaterialCard>
+                                        <Label Text="Leaving (Check Out)"
+                                               Grid.Column="1"
+                                               TextColor="Gray"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontAttributes="Bold"/>
+                            
+                                    </Grid>
+                                                <ui:MaterialCard.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BindingContext.MenuItemsCommand}"/>
+                                                   
+                                                </ui:MaterialCard.GestureRecognizers>
+                            </ui:MaterialCard>
+                        </Grid>
+                       </ScrollView>
+                         <!--<ScrollView 
                                     HorizontalScrollBarVisibility="Never"
                              HeightRequest="200"
                                     Margin="0,10">
@@ -107,7 +266,7 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                                 </StackLayout>
-                             </ScrollView>
+                             </ScrollView>-->
                     </StackLayout>
                     </ui:MaterialCard>
                 </StackLayout>

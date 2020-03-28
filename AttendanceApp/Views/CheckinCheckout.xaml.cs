@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using AttendanceApp.CustomControls.RadioButton;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Utils;
@@ -13,12 +15,15 @@ namespace AttendanceApp.Views
     public partial class CheckinCheckout : ContentPage
     {
         CheckinCheckoutViewModel _checkincheckoutViewmodel;
+        public static RadioOption GetSelectedRadio { get; set; }
         public CheckinCheckout()
         {
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
             _checkincheckoutViewmodel = ServiceContainer.Resolve<CheckinCheckoutViewModel>();
             _checkincheckoutViewmodel.AddMenuItems();
+            _checkincheckoutViewmodel.InitializeRadioButtonList();
+            _checkincheckoutViewmodel.GetReasonList();
             BindingContext = _checkincheckoutViewmodel;
             //headerView.BindingContext = _checkincheckoutViewmodel;
         }
@@ -32,6 +37,26 @@ namespace AttendanceApp.Views
 
         }
 
-         
+        public void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var item = e.Item as RadioOption;
+
+            if (item == null)
+                return;
+
+            foreach (var s in _checkincheckoutViewmodel.RadioOptionsList.Where(x => x.IsSelected))
+            {
+                s.IsSelected = false;
+            }
+
+            item.IsSelected = true;
+            GetSelectedRadio = item;
+        }
+
+
+        public void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            lstFilterType.SelectedItem = null;
+        }
     }
 }

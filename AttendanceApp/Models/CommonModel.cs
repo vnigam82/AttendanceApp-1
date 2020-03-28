@@ -37,7 +37,13 @@ namespace AttendanceApp.Models
         public string fr { get; set; }
     }
 
-
+    public class ReasonLanguage
+    {
+        public string En { get; set; }
+        public string ar { get; set; }
+        public string de { get; set; }
+        public string fr { get; set; }
+    }
     public class clsUserProfile: HttpRequestResponseStatus
     {
         public string email { get; set; }
@@ -64,5 +70,12 @@ namespace AttendanceApp.Models
         public string description { get; set; }
         public string mapLocation { get; set; }
         public LocationData locationData { get; set; }
+    }
+
+    public class clsReasons
+    {
+        public int code { get; set; }
+        public string name { get; set; }
+        public ReasonLanguage langData { get; set; }
     }
 }

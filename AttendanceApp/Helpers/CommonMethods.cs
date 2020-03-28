@@ -163,5 +163,33 @@ namespace AttendanceApp.Helpers
             }
         }
 
+        public static async Task<List<clsReasons>> GetReasons()
+        {
+            List<clsReasons> obj = new List<clsReasons>();
+            try
+            {
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetReasons;
+
+                var userinfo = await HttpRequest.GetRequest(url);
+
+                var serviceResult = JsonConvert.DeserializeObject<List<clsReasons>>(userinfo.Result);
+                if (serviceResult != null)
+                {
+                    if (serviceResult.Count>0)
+                    {
+                        obj = serviceResult;
+                    }
+                    return obj;
+                }
+                else
+                {
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                return obj;
+            }
+        }
     }
 }

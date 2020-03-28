@@ -205,6 +205,9 @@
     <BundleResource Include="Resources\rightarrow.png" />
     <BundleResource Include="Resources\datepicker.png" />
     <BundleResource Include="Resources\timepicker.png" />
+    <BundleResource Include="Resources\neutralface.png" />
+    <BundleResource Include="Resources\sadface.png" />
+    <BundleResource Include="Resources\happyface.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xf_error%402x.png" />
