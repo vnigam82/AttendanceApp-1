@@ -44,6 +44,7 @@ namespace AttendanceApp.Views
             if (item == null)
                 return;
 
+            _checkincheckoutViewmodel.SelectedHappinessOption = item;
             foreach (var s in _checkincheckoutViewmodel.RadioOptionsList.Where(x => x.IsSelected))
             {
                 s.IsSelected = false;
@@ -58,5 +59,43 @@ namespace AttendanceApp.Views
         {
             lstFilterType.SelectedItem = null;
         }
+
+        void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
+        {
+            _checkincheckoutViewmodel.CheckLocation();
+            if (sender==materialCheckin)
+            {
+                if (_checkincheckoutViewmodel.IsUserExist)
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "In";
+                }
+            }
+            else
+            {
+                if (_checkincheckoutViewmodel.IsUserExist)
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "Out";
+                }
+            }
+            
+        }
+
+        void btnClose_Clicked(System.Object sender, System.EventArgs e)
+        {
+            ac2.IsOpen = !ac2.IsOpen;
+        }
+
+        //void btnSubmit_Clicked(System.Object sender, System.EventArgs e)
+        //{
+        //    //_checkincheckoutViewmodel.ExecuteSubmitCommand();
+            
+        //        if (_checkincheckoutViewmodel.IsUserExist)
+        //        {
+        //            ac2.IsOpen = !ac2.IsOpen;
+        //        }
+           
+        //}
     }
 }

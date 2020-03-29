@@ -105,7 +105,7 @@ namespace AttendanceApp.CustomControls
 
         private void TitleTapped(object sender, EventArgs e)
         {
-            IsOpen = !IsOpen;
+            //IsOpen = !IsOpen;
         }
     }
 }

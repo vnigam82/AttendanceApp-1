@@ -68,6 +68,9 @@
                             </Grid.RowDefinitions>
                              <ui:MaterialCard Padding="10" 
                                          HasShadow="False"
+                                              x:Name="materialCheckin"
+                                              IsClickable="True"
+                                              Clicked="materialCheckin_Clicked"
                                               Grid.Row="0"
                                          BorderColor="LightGray">
                         <Grid ColumnSpacing="10" RowSpacing="0">
@@ -93,10 +96,6 @@
                                                FontAttributes="Bold"/>
                             
                                     </Grid>
-                                                <ui:MaterialCard.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding MenuItemsCommand}"/>
-                                                   
-                                                </ui:MaterialCard.GestureRecognizers>
                             </ui:MaterialCard>
                             <accordian:Accordion x:Name="ac2"
                                                  Margin="0,8,0,0"
@@ -168,22 +167,42 @@
                                     <accordian:CustomPickerNew
                                         Image="xf_arrow_dropdown"
                                         Title="Select Reason"
+                                        ItemsSource="{Binding ReasonList}"
+                                        ItemDisplayBinding="{Binding langData.En}"
+                                        SelectedItem="{Binding SelectedReason}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
                                  HeightRequest="1"
                                  BackgroundColor="LightGray"
                                          Margin="0,-5,0,0"/>
-                    <ui:MaterialButton Text="Submit"
+                    <StackLayout HorizontalOptions="End"
+                                 Orientation="Horizontal"
+                                 Spacing="5">
+                        <ui:MaterialButton Text="Submit"
                                        HorizontalOptions="End"
+                                       x:Name="btnSubmit"
+                                           Command="{Binding SubmitCommand}"
                                                    TextColor="White"
                                        Margin="0,5"/>
+                        <ui:MaterialButton Text="Close"
+                                       HorizontalOptions="End"
+                                           BackgroundColor="Red"
+                                           x:Name="btnClose"
+                                           Clicked="btnClose_Clicked"
+                                                   TextColor="White"
+                                       Margin="0,5"/>
+                    </StackLayout>
+                    
                 </StackLayout>
             </accordian:Accordion.AccordionContentView>
 
         </accordian:Accordion>
-                            <ui:MaterialCard Padding="10" 
+                            <ui:MaterialCard Padding="10"
+                                             x:Name="materialCheckout"
                                          HasShadow="False"
+                                             IsClickable="True"
+                                              Clicked="materialCheckin_Clicked"
                                               Grid.Row="2"
                                          BorderColor="LightGray">
                         <Grid ColumnSpacing="10" RowSpacing="0">

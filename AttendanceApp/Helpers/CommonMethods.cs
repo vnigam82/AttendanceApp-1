@@ -191,5 +191,43 @@ namespace AttendanceApp.Helpers
                 return obj;
             }
         }
+
+        public static async Task<HttpRequestResponseStatus> BookingAttendance(string jsonData)
+        {
+            LoginDBModel objUser = App.Database.GetLoggedInUser();
+            HttpRequestResponseStatus obj = new HttpRequestResponseStatus();
+            try
+            {
+                //string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance";
+                var userinfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance", jsonData);
+
+
+                if (userinfo.Status)
+                {
+                    string serviceResult = JsonConvert.DeserializeObject<string>(userinfo.Result);
+                    if (serviceResult != null)
+                    {
+                        obj.Result = serviceResult;
+                        obj.Status = userinfo.Status;
+                        obj.Message = userinfo.Message;
+
+                        return obj;
+                    }
+                    else
+                    {
+                        return obj;
+                    }
+                }
+                else
+                {
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                return obj;
+            }
+        }
+
     }
 }
