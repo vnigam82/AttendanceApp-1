@@ -95,6 +95,7 @@
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
     <Compile Include="Dependency\FileHelper.cs" />
     <Compile Include="Dependency\LoadingIndicator.cs" />
+    <Compile Include="Dependency\DialogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -367,6 +368,14 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\happyface.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\LogoutPopup.axml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\button_border.xml">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

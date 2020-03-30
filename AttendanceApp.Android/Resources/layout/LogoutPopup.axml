@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:background="#ffffff">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:layout_margin="1dp"
+        android:minHeight="25px"
+        android:background="#8d1afe">
+        <TextView
+            android:id="@+id/titleLogin"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Exit"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:paddingTop="4dp"
+            android:background="#8d1afe"
+            android:typeface="sans"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:gravity="left" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/titleLogin"
+            android:id="@+id/titleBorder"
+            android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/lblMessage"
+            android:layout_below="@+id/titleBorder"
+            android:layout_height="25dp"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:text="Are you sure want to exit from Application?"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+        <LinearLayout
+            android:id="@+id/linearLayoutBtns"
+            android:layout_below="@+id/lblMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="20dp">
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:textSize="14dp"
+                android:text="Yes"
+                android:background="@drawable/button_border"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp" />
+            <Button
+                android:id="@+id/btnNo"
+                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:textSize="14dp"
+                android:text="No"
+                android:background="@drawable/button_border"
+                android:layout_marginLeft="5dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginBottom="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

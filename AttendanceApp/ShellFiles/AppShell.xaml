@@ -88,7 +88,7 @@
         Text="Approve Leaves" />
 
 
-    <MenuItem IconImageSource="logout.png" Text="Logout" />
+    <MenuItem IconImageSource="logout.png" Text="Logout" Command="{Binding LogoutCommand}"/>
 
 
 </Shell>

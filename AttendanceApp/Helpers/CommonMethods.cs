@@ -45,7 +45,7 @@ namespace AttendanceApp.Helpers
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             try
             {
-                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetUserProfile+objUser.UserGUID+"/Profile";
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetUserProfile+UserSettingUtils.UserLoginGUID+"/Profile";
 
                 var userinfo = await HttpRequest.GetRequest(url);
                 if (userinfo.Status)
@@ -84,7 +84,7 @@ namespace AttendanceApp.Helpers
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             try
             {
-                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/AssignedLocations";
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + UserSettingUtils.UserLoginGUID + "/AssignedLocations";
 
                 var userinfo = await HttpRequest.GetRequest(url);
                 if (userinfo.Status)
@@ -149,11 +149,19 @@ namespace AttendanceApp.Helpers
                     }
                     else
                     {
+                        obj.Result = serviceResult;
+                        obj.Status = userinfo.Status;
+                        obj.Message = userinfo.Message;
+
                         return obj;
                     }
                 }
                 else
                 {
+                    
+                    obj.Status = userinfo.Status;
+                    obj.Message = userinfo.Message;
+
                     return obj;
                 }
             }
@@ -199,7 +207,7 @@ namespace AttendanceApp.Helpers
             try
             {
                 //string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance";
-                var userinfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance", jsonData);
+                var userinfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.GetAssignedLocations + UserSettingUtils.UserLoginGUID + "/Attendance", jsonData);
 
 
                 if (userinfo.Status)

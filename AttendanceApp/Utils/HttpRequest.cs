@@ -73,17 +73,23 @@ namespace AttendanceApp.Utils
                         ///Status Code: 404 - Servive Not Found
                         ///Status Code: 500 - Internal Server Error
 
-
-
-                        responseStatus = new HttpRequestResponseStatus()
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                         {
-                            Status = false,
-                            Message = "There is internal error with services. Please contact administrator."
-                        };
+                            responseStatus = new HttpRequestResponseStatus()
+                            {
+                                Status = false,
+                                Message = "User name and password did not match."
+                            };
+                        }
+                        else
+                        {
+                            responseStatus = new HttpRequestResponseStatus()
+                            {
+                                Status = false,
+                                Message = "There is internal error with services. Please contact administrator."
+                            };
 
-
-
-
+                        }
                         return responseStatus;//default(HttpRequestResponseStatus<T>);
                     }
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.ViewModels;
 using AttendanceApp.Views;
@@ -17,6 +18,13 @@ namespace AttendanceApp.ShellFiles
         Dictionary<string, Type> routes = new Dictionary<string, Type>();
         public Dictionary<string, Type> Routes { get { return routes; } }
         Random rand = new Random();
+        public ICommand LogoutCommand => new Command(async () => await NavigateToRandomPageAsync());
+
+        async Task NavigateToRandomPageAsync()
+        {
+            DependencyService.Get<IDialogs>().ShowLogoutPopup();
+        }
+
         FlyoutHeaderViewModel _flyoutViewmodel;
         public ICommand RandomPageCommand
         {
@@ -86,6 +94,7 @@ namespace AttendanceApp.ShellFiles
                     case "myattendance":
                     Shell.Current.GoToAsync("myattendance");
                     break;
+
             }
 
 
