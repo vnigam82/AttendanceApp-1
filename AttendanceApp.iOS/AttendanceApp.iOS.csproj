@@ -74,6 +74,7 @@
     <Compile Include="Dependency\LoadingIndicator.cs" />
     <Compile Include="Views\CustomPopUpView.cs" />
     <Compile Include="Dependency\DialogService.cs" />
+    <Compile Include="Views\test.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

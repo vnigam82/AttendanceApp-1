@@ -34,6 +34,7 @@
                        WidthRequest="120"
                        HeightRequest="100"
                        Aspect="Fill"
+                       BackgroundColor="White"
                        HorizontalOptions="CenterAndExpand"
                        Margin="0,20"/>
                 <flv:FlowListView Margin="0,5"

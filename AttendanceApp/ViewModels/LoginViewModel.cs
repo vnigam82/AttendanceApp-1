@@ -81,8 +81,8 @@ namespace AttendanceApp.ViewModels
                                             msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
-                UserName = "JBH\\naomif";
-                Password = "GAT123";
+                //UserName = "JBH\\naomif";
+                //Password = "GAT123";
                 if(!Validate())
                 {
                     await MaterialDialog.Instance.SnackbarAsync(message: Error,
@@ -103,7 +103,7 @@ namespace AttendanceApp.ViewModels
                 //};
                 var postData = new LoginModel()
                 {
-                    username=UserName,
+                    username=UserName.Contains("\\\\")?UserName.Replace(@"\\", @"\"):UserName,
                     password=Password
                 };
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
