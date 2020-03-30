@@ -7,7 +7,7 @@ namespace AttendanceApp.Helpers
     public static class ClickHelper
     {
         static bool clicked = false;
-        public static bool IsConcurrentClick(int ms = 500)
+        public static bool IsConcurrentClick(int ms = 50)
         {
             if (clicked)
                 return true;

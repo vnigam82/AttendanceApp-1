@@ -23,12 +23,16 @@ namespace AttendanceApp.ViewModels
             GetOrganizationProfile();
         }
 
-
+        private bool iISBusy;
         public Command LoginCommand
         {
             get
             {
-                return _loginCommand ?? (_loginCommand = new Command(() => ExecuteLoginCommand()));
+                return _loginCommand ?? (_loginCommand = new Command(() =>
+                {
+                    iISBusy = true;
+                    ExecuteLoginCommand();
+                },()=>!iISBusy));
             }
         }
 
@@ -38,8 +42,9 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    //   msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
                 DependencyService.Get<IProgressBar>().Show("Please wait...");
@@ -54,15 +59,17 @@ namespace AttendanceApp.ViewModels
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                    // msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Error Loading Data.");
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await CommonMethods.ShowPopup(ex.Message);
+                // await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                //   msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
@@ -75,18 +82,21 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
+                IsButtonDisabled = false;
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    //msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Please check your network connection.");
                     return;
                 }
                 //UserName = "JBH\\naomif";
                 //Password = "GAT123";
                 if(!Validate())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                    // msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup(Error);
                     return;
                 }
 
@@ -138,29 +148,33 @@ namespace AttendanceApp.ViewModels
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
-                                            actionButtonText: "Ok",
-                                            msDuration: 3000);
-                        
+                        await CommonMethods.ShowPopup("Invalid User Details");
+                        //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
+                        // actionButtonText: "Ok",
+                        // msDuration: 3000);
+
                     }
 
                 }
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
-                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                                            actionButtonText: "Ok",
-                                            msDuration: 3000);
+                    await CommonMethods.ShowPopup(loginInfo.Message);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                    //  actionButtonText: "Ok",
+                    //  msDuration: 3000);
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await CommonMethods.ShowPopup(ex.Message);
+                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                //msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
+                IsButtonDisabled = true;
                 DependencyService.Get<IProgressBar>().Hide();
             }
         }
@@ -171,13 +185,18 @@ namespace AttendanceApp.ViewModels
             Error = string.Empty;
             if (string.IsNullOrWhiteSpace(UserName))
             {
-                Error += "Please provide User Name";
+                Error += "Please provide User Name.";
                 result = false;
             }
             
             if (string.IsNullOrWhiteSpace(Password))
             {
-                Error += "\nPlease provide Password";
+                Error += "\nPlease provide Password.";
+                result = false;
+            }
+            if (!Rememberme)
+            {
+                Error += "\nPlease check the remember me checkbox.";
                 result = false;
             }
             return result;
@@ -276,6 +295,19 @@ namespace AttendanceApp.ViewModels
             }
         }
 
+        private bool _isbuttondisabled=true;
+        public bool IsButtonDisabled
+        {
+            get { return _isbuttondisabled; }
+            set
+            {
+                if (_isbuttondisabled != value)
+                {
+                    _isbuttondisabled = value;
+                    OnPropertyChanged("IsButtonDisabled");
+                }
+            }
+        }
         private Language langType;
         public Language LangType
         {

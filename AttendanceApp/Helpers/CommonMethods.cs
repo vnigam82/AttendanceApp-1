@@ -12,7 +12,11 @@ namespace AttendanceApp.Helpers
 {
     public static class CommonMethods
     {
-        
+        public static async Task ShowPopup(string messgae)
+        {
+            await App.Current.MainPage.DisplayAlert("AttendanceApp", messgae, "OK");
+        }
+
         public static async Task<OrganizationProfile> GetOrganizationProfile()
         {
             OrganizationProfile obj = new OrganizationProfile();
@@ -84,7 +88,7 @@ namespace AttendanceApp.Helpers
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             try
             {
-                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + UserSettingUtils.UserLoginGUID + "/AssignedLocations";
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/AssignedLocations";
 
                 var userinfo = await HttpRequest.GetRequest(url);
                 if (userinfo.Status)
@@ -207,7 +211,7 @@ namespace AttendanceApp.Helpers
             try
             {
                 //string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance";
-                var userinfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.GetAssignedLocations + UserSettingUtils.UserLoginGUID + "/Attendance", jsonData);
+                var userinfo = await HttpRequest.PostRequest(ServiceConfigrations.BaseUrl1, ServiceConfigrations.GetAssignedLocations + objUser.UserGUID + "/Attendance", jsonData);
 
 
                 if (userinfo.Status)

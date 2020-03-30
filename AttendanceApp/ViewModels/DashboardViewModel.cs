@@ -55,8 +55,9 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                                           // msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
                 DependencyService.Get<IProgressBar>().Show("Please wait...");
@@ -71,15 +72,17 @@ namespace AttendanceApp.ViewModels
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                                            //msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Error Loading Data.");
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await CommonMethods.ShowPopup(ex.Message);
+                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                            //msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {

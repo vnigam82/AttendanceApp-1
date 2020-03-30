@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.Utils
 {
@@ -28,8 +29,7 @@ namespace AttendanceApp.Utils
         {
             var responseStatus = new HttpRequestResponseStatus();
 
-
-
+           
             if (CheckConnection())
             {
                 using (var client = new HttpClient())
@@ -209,6 +209,7 @@ namespace AttendanceApp.Utils
         public static bool CheckConnection()
         {
             var con = CrossConnectivity.Current.IsConnected;
+
             return con == true ? true : false;
         }
     }

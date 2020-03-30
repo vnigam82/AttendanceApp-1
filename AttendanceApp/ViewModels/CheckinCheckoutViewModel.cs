@@ -21,7 +21,7 @@ namespace AttendanceApp.ViewModels
         #region Local Variable
         private INavigation _navigation;
         ServiceConfigrations service = new ServiceConfigrations();
-        private bool _isShowBack, _isShowMenuButton,_isUserExist,_isAccordianOpen;
+        private bool _isShowBack, _isShowMenuButton,_isUserExist,_isAccordianOpen,_isenabledsubmitbutton=true;
         public Command _submitCommand;
         private string _direction = string.Empty,Error = string.Empty;
         private RadioOption _selectedHappinessOption;
@@ -120,21 +120,23 @@ namespace AttendanceApp.ViewModels
         }
         public async void ExecuteSubmitCommand()
         {
-            var data = selectedReason;
-
+            //var data = selectedReason;
+            IsEnabledSubmitButton = false;
             try
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    //                        msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
               
                 if (!Validate())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                    //                        msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup(Error);
                     return;
                 }
 
@@ -165,15 +167,17 @@ namespace AttendanceApp.ViewModels
                 if (loginInfo.Status)
                 {
                     IsUserExist = true;
-                    await App.Current.MainPage.DisplayAlert("AttendanceApp", @"You are Checked "+Direction+" successfully", "OK");
+                    await CommonMethods.ShowPopup(@"You are Checked " + Direction + " successfully");
+                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", @"You are Checked "+Direction+" successfully", "OK");
                     await _navigation.PopAsync();
                 }
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
-                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                                            actionButtonText: "Ok",
-                                            msDuration: 3000);
+                    await CommonMethods.ShowPopup(loginInfo.Message);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                    //                        actionButtonText: "Ok",
+                    //                        msDuration: 3000);
                     IsUserExist = false;
                 }
             }
@@ -181,12 +185,14 @@ namespace AttendanceApp.ViewModels
             {
                 DependencyService.Get<IProgressBar>().Hide();
                 IsUserExist = false;
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await CommonMethods.ShowPopup(ex.Message);
+                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                //                            msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
                 IsUserExist = false;
+                IsEnabledSubmitButton = true;
                 DependencyService.Get<IProgressBar>().Hide();
             }
         }
@@ -295,6 +301,21 @@ namespace AttendanceApp.ViewModels
                 }
             }
         }
+        public bool IsEnabledSubmitButton
+        {
+            get
+            {
+                return _isenabledsubmitbutton;
+            }
+            set
+            {
+                if (_isenabledsubmitbutton != value)
+                {
+                    _isenabledsubmitbutton = value;
+                    OnPropertyChanged(nameof(IsEnabledSubmitButton));
+                }
+            }
+        }
         public bool IsShowMenuButton
         {
             get
@@ -399,9 +420,11 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    //                        msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Please check your network connection.");
                     return;
+
                 }
                 DependencyService.Get<IProgressBar>().Show("Please wait...");
                 var menuItem = await CommonMethods.GetLocations();
@@ -425,21 +448,26 @@ namespace AttendanceApp.ViewModels
                             Radius = distanceMeter;
                             if (distanceMeter < menuItem.locationData.radius)
                             {
-                                IsAccordianOpen = !IsAccordianOpen;
+                                
+                                
                                 await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are in location", "OK");
+                                IsUserExist = true;
+                                IsAccordianOpen = !IsAccordianOpen;
                             }
                             else
                             {
-                                IsUserExist = false;
+                                
                                 await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are out of location", "OK");
+                                IsUserExist = false;
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         IsUserExist = false;
-                        await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                           msDuration: MaterialSnackbar.DurationLong);
+                        await CommonMethods.ShowPopup(ex.Message);
+                        //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                        //msDuration: MaterialSnackbar.DurationLong);
                     }
                     DependencyService.Get<IProgressBar>().Hide();
                 }
@@ -447,16 +475,18 @@ namespace AttendanceApp.ViewModels
                 {
                     IsUserExist = false;
                     DependencyService.Get<IProgressBar>().Hide();
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await CommonMethods.ShowPopup("Error Loading Data");
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                    //                        msDuration: MaterialSnackbar.DurationLong);
                 }
             }
             catch (Exception ex)
             {
                 IsUserExist = false;
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await CommonMethods.ShowPopup(ex.Message);
+                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                //                            msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {

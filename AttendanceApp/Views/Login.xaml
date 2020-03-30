@@ -15,8 +15,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Label
                 Grid.Row="0"
@@ -31,14 +31,14 @@
                 VerticalTextAlignment="Center" />
             <customviews:LoginRoundShapeViews
                 Grid.Row="0"
-                Margin="0,20,-50,20"
+                Margin="0,20,-50,0"
                 HorizontalOptions="EndAndExpand" />
             <customviews:LoginRoundShapeViews
                 Grid.Row="3"
                 Margin="-50,20,0,20"
                 HorizontalOptions="StartAndExpand"
                 Rotation="180"
-                VerticalOptions="End" />
+                VerticalOptions="EndAndExpand" />
             <StackLayout Orientation="Horizontal" Grid.Row="3"
                          Margin="10,0"
                                HorizontalOptions="EndAndExpand">
@@ -50,9 +50,9 @@
             <Image Source="{Binding LogoImage}"
                    Grid.Row="1"
                    HorizontalOptions="Center"
-                   WidthRequest="120"
+                   WidthRequest="90"
                    VerticalOptions="Start"
-                   HeightRequest="120"/>
+                   HeightRequest="90"/>
             <ui:MaterialCard
                 Grid.Row="2"
                         Padding="5,10"
@@ -95,6 +95,8 @@
                                     IsSelected="{Binding Rememberme}"
                                     Text="Remember me" />
                                 <ui:MaterialButton
+                                    x:Name="btnLogin"
+                                    IsEnabled="{Binding IsButtonDisabled}"
                                     BackgroundColor="{StaticResource MainThemeColor}"
                                     Command="{Binding LoginCommand}"
                                     HorizontalOptions="EndAndExpand"

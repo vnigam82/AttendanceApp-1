@@ -181,6 +181,7 @@
                                  Spacing="5">
                         <ui:MaterialButton Text="Submit"
                                        HorizontalOptions="End"
+                                           IsEnabled="{Binding IsEnabledSubmitButton}"
                                        x:Name="btnSubmit"
                                            Command="{Binding SubmitCommand}"
                                                    TextColor="White"
