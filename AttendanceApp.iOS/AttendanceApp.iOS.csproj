@@ -72,9 +72,9 @@
     <Compile Include="Renderer\BorderlessEditorRenderer.cs" />
     <Compile Include="Dependency\FileHelper.cs" />
     <Compile Include="Dependency\LoadingIndicator.cs" />
-    <Compile Include="Views\CustomPopUpView.cs" />
     <Compile Include="Dependency\DialogService.cs" />
     <Compile Include="Views\test.cs" />
+    <Compile Include="Views\CustomPopUpView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -280,7 +280,4 @@
     <AndroidResource Include="Resources\loginbg.png" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
 </Project>
