@@ -45,7 +45,7 @@ namespace AttendanceApp.Helpers
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             try
             {
-                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetUserProfile+UserSettingUtils.UserLoginGUID+"/Profile";
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetUserProfile + objUser.UserGUID + "/Profile";
 
                 var userinfo = await HttpRequest.GetRequest(url);
                 if (userinfo.Status)

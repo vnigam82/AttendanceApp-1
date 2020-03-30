@@ -46,7 +46,8 @@ namespace AttendanceApp.ShellFiles
             _flyoutViewmodel = ServiceContainer.Resolve<FlyoutHeaderViewModel>();
 
             _flyoutViewmodel.GetUserProfile();
-            BindingContext = _flyoutViewmodel;
+             BindingContext = this;
+            header.BindingContext =  _flyoutViewmodel;
         }
 
         private void RegisterRoutes()

@@ -12,7 +12,7 @@
     FlyoutVerticalScrollMode="Auto">
 
     <Shell.FlyoutHeader>
-        <controls:FlyoutHeader />
+        <controls:FlyoutHeader x:Name="header" />
     </Shell.FlyoutHeader>
     <!-- <FlyoutItem Title="Home" Icon="home.png">
         <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" />
