@@ -73,7 +73,6 @@
     <Compile Include="Dependency\FileHelper.cs" />
     <Compile Include="Dependency\LoadingIndicator.cs" />
     <Compile Include="Dependency\DialogService.cs" />
-    <Compile Include="Dependency\CustomPopUpView.cs" />
     <Compile Include="Dependency\LogoutPopup.cs" />
   </ItemGroup>
   <ItemGroup>

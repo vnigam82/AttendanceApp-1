@@ -1,7 +1,6 @@
 ﻿using System;
 using AttendanceApp.Dependency;
 using AttendanceApp.iOS.Dependency;
-using AttendanceApp.iOS.Views;
 using UIKit;
 using Xamarin.Forms;
 
@@ -14,7 +13,7 @@ namespace AttendanceApp.iOS.Dependency
         {
             int screenwidth = (int)UIScreen.MainScreen.Bounds.Width;
             int screenheight = (int)UIScreen.MainScreen.Bounds.Height;
-            CustomPopUpView cpuv = new CustomPopUpView(new CoreGraphics.CGSize((screenwidth - screenwidth / 4), 250));
+            LogoutPopup cpuv = new LogoutPopup(new CoreGraphics.CGSize((screenwidth - screenwidth / 4), 250));
             cpuv.PopUp(true, delegate {
                 Console.WriteLine("cpuv will close");
             });
