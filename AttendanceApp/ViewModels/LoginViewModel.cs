@@ -42,9 +42,12 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
+                    
+                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    //   msDuration: MaterialSnackbar.DurationLong);
                     Device.BeginInvokeOnMainThread(async () =>
                     {
-                        await App.Current.MainPage.DisplayAlert("AttendanceApp", "Please check your network connection.", "OK");
+                        await CommonMethods.ShowPopup("Please check your network connection.");
                     });
                     return;
                 }
