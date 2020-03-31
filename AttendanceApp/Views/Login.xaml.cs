@@ -13,8 +13,9 @@ namespace AttendanceApp.Views
         public Login()
         {
             InitializeComponent();
+            App.Database.ClearLoginDetails();
             _loginViewmodel = new LoginViewModel();
-           
+
             BindingContext = _loginViewmodel;
         }
         protected override void OnAppearing()
@@ -26,6 +27,6 @@ namespace AttendanceApp.Views
             //LoadAnimation();
         }
 
-        
+
     }
 }

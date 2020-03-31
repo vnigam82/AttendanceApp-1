@@ -10,5 +10,6 @@ namespace AttendanceApp.Database
         public string UserName { get; set; }
         public string Password { get; set; }
         public string UserGUID { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

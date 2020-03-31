@@ -94,7 +94,7 @@ namespace AttendanceApp.ViewModels
                     await CommonMethods.ShowPopup("Please check your network connection.");
                     return;
                 }
-                //UserName = "JBH\\naomif";
+               // UserName = "JBH\\naomif";
                 //Password = "GAT123";
                 if(!Validate())
                 {
@@ -131,23 +131,24 @@ namespace AttendanceApp.ViewModels
                         UserSettingUtils.Password = Password;
                         UserSettingUtils.UserLoginGUID = loginInfo.Result;
 
-                        if (Rememberme)
-                        {
+                        //if (Rememberme)
+                        //{
                             var logindbdata = new LoginDBModel();
                             logindbdata.UserName = UserName;
                             logindbdata.Password = Password;
-                            logindbdata.UserGUID = loginInfo.Result;//.Substring(0, loginInfo.Result.Length - 1);
+                            logindbdata.UserGUID = loginInfo.Result; 
+                            logindbdata.RememberMe = Rememberme;
 
                             App.Database.SaveLoggedInUser(logindbdata);
 
                             DependencyService.Get<IProgressBar>().Hide();
 
                             App.Current.MainPage = new AppShell();
-                        }
-                        else
-                        {
-                            App.Current.MainPage = new AppShell();
-                        }
+                        //}
+                        //else
+                        //{
+                        //    App.Current.MainPage = new AppShell();
+                        //}
                     }
                     else
                     {
@@ -198,11 +199,11 @@ namespace AttendanceApp.ViewModels
                 Error += "\nPlease provide Password.";
                 result = false;
             }
-            if (!Rememberme)
-            {
-                Error += "\nPlease check the remember me checkbox.";
-                result = false;
-            }
+            //if (!Rememberme)
+            //{
+            //    Error += "\nPlease check the remember me checkbox.";
+            //    result = false;
+            //}
             return result;
         }
         private string imageBase64;

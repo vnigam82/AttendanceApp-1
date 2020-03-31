@@ -22,7 +22,14 @@ namespace AttendanceApp
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             if (objUser != null)
             {
-                MainPage = new AppShell();
+                if (objUser.RememberMe)
+                {
+                    MainPage = new AppShell();
+                }
+                else
+                {
+                    MainPage = new Login();
+                }
             }
             else
             {
@@ -39,7 +46,7 @@ namespace AttendanceApp
             ServiceContainer.Register(() => new ReasonRequestViewModel(navigation));
             ServiceContainer.Register(() => new MyAttendanceViewModel(navigation));
             ServiceContainer.Register(() => new FlyoutHeaderViewModel(navigation));
-            
+
         }
 
         static AttendanceDBClass database;
