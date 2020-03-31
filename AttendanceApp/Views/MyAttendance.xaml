@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
-              xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
              xmlns:customcontrol="clr-namespace:AttendanceApp.CustomControls"
@@ -30,7 +29,7 @@
             <customviews:HeaderView
                     x:Name="headerView"
                     Grid.Row="0"
-                    HeaderTitle="{strings:Translate myAttendance}"
+                    HeaderTitle="My Attendance"
                     IsBackVisible="{x:Static appshell:AppShell.back}"
                     IsHomeVisible="True"
                     IsMenuVisible="{Binding IsShowMenuButton}" />
@@ -40,7 +39,7 @@
                      VerticalOptions="End"/>
             <StackLayout Spacing="0"
                          Padding="0"
-                         Margin="0,80"
+                         Margin="0,80,0,0"
                   Grid.Row="1">
                 <ui:MaterialCard
                 Margin="10,30"
@@ -48,9 +47,9 @@
                         CornerRadius="5"
                         Elevation="10"
                         HasShadow="False"
-                        VerticalOptions="StartAndExpand">
+                        VerticalOptions="FillAndExpand">
                     <StackLayout>
-                            <Label Text="{strings:Translate myAttendance}"
+                        <Label Text="My Attendance"
                                FontSize="Large"/>
                         <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -68,12 +67,12 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                                <Label Text="{strings:Translate fromDate}"
+                            <Label Text="From Date"
                                Margin="0,10,0,0"
                                    Grid.Column="0"
                                    Grid.Row="0"
                                        FontSize="Medium"/>
-                                <Label Text="{strings:Translate toDate}"
+                            <Label Text="To Date"
                                Margin="0,10,0,0"
                                    Grid.Column="1"
                                    Grid.Row="0"
@@ -81,6 +80,8 @@
                             <customcontrol:BorderlessDatePicker
                                         Image="datepicker"
                                 Grid.Column="0"
+                                Date="{Binding FromDate,Mode=TwoWay}"
+                                MaximumDate="{Binding MaxDate}"
                                 Grid.Row="1"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
@@ -96,6 +97,8 @@
                                         Image="datepicker"
                                 Grid.Column="1"
                                 Grid.Row="1"
+                                Date="{Binding ToDate,Mode=TwoWay}"
+                                MaximumDate="{Binding MaxDate}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                 
@@ -105,9 +108,11 @@
                                          VerticalOptions="EndAndExpand"
                                  BackgroundColor="LightGray"
                                          Margin="0,-5,0,0"/>
-                                <ui:MaterialButton Text="{strings:Translate search}"
+                            <ui:MaterialButton Text="Search"
                                                    TextColor="White"
                                                Grid.Row="2"
+                                              
+                                               Command="{Binding SerachCommand}"
                                                Grid.Column="0"
                                                Grid.ColumnSpan="2"
                                                Margin="0,20"/>
@@ -115,133 +120,201 @@
                                          Spacing="0"
                                          Grid.Column="0"
                                          Grid.Row="3"
-                                         Grid.ColumnSpan="2"
-                                         BackgroundColor="DarkGray">
-                                <Grid RowSpacing="1"
-                                      ColumnSpacing="1"
-                                      BackgroundColor="Transparent">
+                                         Grid.ColumnSpan="2">
+                                <Grid RowSpacing="10"
+                                      ColumnSpacing="5">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                        <Label Text="{strings:Translate date}"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
+                                    <BoxView Grid.Column="0"
+                                             Grid.Row="0"
+                                             BackgroundColor="#FF9999"
+                                             WidthRequest="15"
+                                             HeightRequest="15"/>
+                                    <Label Text="Absent"
+                                           Grid.Column="1"
                                            Grid.Row="0"
-                                           TextColor="White"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource MainThemeColor}"
-                                           Grid.Column="0"/>
-                                        <Label Text="{strings:Translate timeIn}"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           TextColor="White"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource MainThemeColor}"
-                                           Grid.Row="0"
-                                           Grid.Column="1"/>
-                                        <Label Text="{strings:Translate timeOut}"
-                                           HeightRequest="30"
-                                           TextColor="White"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource MainThemeColor}"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           Grid.Row="0"
-                                           Grid.Column="2"/>
+                                           FontAttributes="Bold"
+                                           FontSize="Small"
+                                           HorizontalOptions="FillAndExpand"/>
 
-                                    <Label Text="09/10/2016"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           Grid.Row="1"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           Grid.Column="0"/>
-                                    <Label Text="07:00"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           Grid.Row="1"
-                                           Grid.Column="1"/>
-                                    <Label Text="14:00"
-                                           HeightRequest="30"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Start"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           Grid.Row="1"
-                                           Grid.Column="2"/>
-                                    <ImageButton Grid.Row="1"
-                                                 Grid.Column="2"
-                                                 Source="rightarrow"
-                                                 HorizontalOptions="EndAndExpand"
-                                                 WidthRequest="25"
-                                                 HeightRequest="20"
-                                                 Rotation="90"
-                                                 Aspect="Fill"
-                                                 BackgroundColor="Gray"
-                                                 Padding="0"/>
+                                    <BoxView Grid.Column="2"
+                                             Grid.Row="0"
+                                             BackgroundColor="#b3ff99"
+                                             WidthRequest="15"
+                                             HeightRequest="15"/>
+                                    <Label Text="Leave"
+                                           Grid.Column="3"
+                                           Grid.Row="0"
+                                           FontAttributes="Bold"
+                                           FontSize="Small"
+                                           HorizontalOptions="FillAndExpand"/>
 
-                                    <Label Text="09/10/2016"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           Grid.Row="2"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           Grid.Column="0"/>
-                                    <Label Text="07:00"
-                                           HeightRequest="30"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           Grid.Row="2"
-                                           Grid.Column="1"/>
-                                    <Label Text="14:00"
-                                           HeightRequest="30"
-                                           TextColor="Gray"
-                                           HorizontalOptions="FillAndExpand"
-                                           HorizontalTextAlignment="Start"
-                                           BackgroundColor="{StaticResource backgroundColor}"
-                                           VerticalOptions="CenterAndExpand"
-                                           VerticalTextAlignment="Center"
-                                           Grid.Row="2"
-                                           Grid.Column="2"/>
-                                    <ImageButton Grid.Row="2"
-                                                 Grid.Column="2"
-                                                 Source="rightarrow"
-                                                 HorizontalOptions="EndAndExpand"
-                                                 WidthRequest="25"
-                                                 HeightRequest="20"
-                                                 Rotation="90"
-                                                 Aspect="Fill"
-                                                 BackgroundColor="Gray"
-                                                 Padding="0"/>
+                                     <BoxView Grid.Column="0"
+                                             Grid.Row="1"
+                                             BackgroundColor="#ffdf80"
+                                             WidthRequest="15"
+                                             HeightRequest="15"/>
+                                    <Label Text="Weekend"
+                                           Grid.Column="1"
+                                           Grid.Row="1"
+                                           FontAttributes="Bold"
+                                           FontSize="Small"
+                                           HorizontalOptions="FillAndExpand"/>
+
+                                    <BoxView Grid.Column="2"
+                                             Grid.Row="1"
+                                             BackgroundColor="#99bbff"
+                                             WidthRequest="15"
+                                             HeightRequest="15"/>
+                                    <Label Text="Holiday"
+                                           Grid.Column="3"
+                                           Grid.Row="1"
+                                           FontAttributes="Bold"
+                                           FontSize="Small"
+                                           HorizontalOptions="FillAndExpand"/>
+
+                                    <ListView Margin="0,5,0,0"
+                                              Grid.Row="2"
+                                              Grid.Column="0"
+                                              Grid.ColumnSpan="4"
+                                              RowHeight="70"
+                                              HasUnevenRows="False"
+                                              CachingStrategy="RecycleElement"
+                                              SeparatorVisibility="None" 
+                                              ItemsSource="{Binding AttendanceList}"
+                                              VerticalOptions="Fill">
+                                <ListView.Header>
+                                   <Grid RowSpacing="0"
+                                         ColumnSpacing="0"
+                                         HeightRequest="30">
+                                       <Grid.ColumnDefinitions>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                       </Grid.ColumnDefinitions>
+                                       <Label Text="Date"
+                                              FontAttributes="Bold"
+                                              FontSize="Medium"
+                                              Grid.Column="0"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="Time In"
+                                              FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              FontSize="Medium"
+                                              Grid.Column="1"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="Time Out"
+                                               HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              FontAttributes="Bold"
+                                              FontSize="Medium"
+                                              Grid.Column="2"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="Total Hours"
+                                              FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              FontSize="Medium"
+                                              Grid.Column="3"
+                                              Margin="0,0,0,5"/>
+                                       <BoxView HeightRequest="2"
+                                                BackgroundColor="Gray"
+                                                HorizontalOptions="FillAndExpand"
+                                                VerticalOptions="EndAndExpand"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="4"/>
+                                   </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                           <Grid RowSpacing="0"
+                                                 BackgroundColor="{Binding GridColor}"
+                                         ColumnSpacing="0"
+                                         HeightRequest="30">
+                                       <Grid.ColumnDefinitions>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                           <ColumnDefinition Width="*"/>
+                                       </Grid.ColumnDefinitions>
+                                       <Grid.RowDefinitions>
+                                         <RowDefinition Height="Auto"/>
+                                         <RowDefinition Height="Auto"/>
+                                       </Grid.RowDefinitions>
+                                       <Label Text="{Binding date}"
+                                              FontSize="Medium"
+                                              Grid.Column="0"
+                                              Grid.Row="0"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="{Binding FinalTimeIn}"
+                                              FontSize="Medium"
+                                              Grid.Column="1"
+                                               HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              Grid.Row="0"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="{Binding FinalTimeOut}"
+                                              FontSize="Medium"
+                                               HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              Grid.Row="0"
+                                              Grid.Column="2"
+                                              Margin="0,0,0,5"/>
+                                       <Label Text="{Binding FinalTotalHours}"
+                                              FontSize="Medium"
+                                              Grid.Row="0"
+                                              HorizontalTextAlignment="Center"
+                                              HorizontalOptions="FillAndExpand"
+                                              Grid.Column="3"
+                                              Margin="0,0,0,5"/>
+                                       <BoxView HeightRequest="1"
+                                                Grid.Row="0"
+                                                IsVisible="False"
+                                                BackgroundColor="LightGray"
+                                                HorizontalOptions="FillAndExpand"
+                                                
+                                                VerticalOptions="EndAndExpand"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="4"/>
+                                            <Label 
+                                              
+                                              Grid.Column="0"
+                                                Margin="0,10,0,10"
+                                                Grid.ColumnSpan="4"
+                                                HorizontalOptions="FillAndExpand"
+                                              Grid.Row="1">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Status : " FontSize="Medium" FontAttributes="Bold"/>
+                                                        <Span FontSize="Medium" Text="{Binding FinalRemarks}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>   
+                                              <BoxView HeightRequest="1"
+                                                Grid.Row="1"
+                                                BackgroundColor="Gray"
+                                                HorizontalOptions="FillAndExpand"
+                                                VerticalOptions="EndAndExpand"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="4"/>
+
+                                   </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                                 </Grid>
                             </StackLayout>
                         </Grid>

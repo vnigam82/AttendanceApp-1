@@ -5,7 +5,9 @@
                  xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material" xmlns:b="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:b="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
              BackgroundColor="{StaticResource backgroundColor}"
     mc:Ignorable="d">
     <ContentPage.Content>

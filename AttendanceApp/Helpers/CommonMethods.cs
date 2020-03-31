@@ -240,6 +240,35 @@ namespace AttendanceApp.Helpers
                 return obj;
             }
         }
+        public static async Task<List<MyAttendanceModel>> GetAttendanceList(string data)
+        {
+            List<MyAttendanceModel> obj = new List<MyAttendanceModel>();
+            LoginDBModel objUser = App.Database.GetLoggedInUser();
+            try
+            {
+                string url = ServiceConfigrations.BaseUrl1 + ServiceConfigrations.GetUserProfile + objUser.UserGUID + "/Attendance?" + data;
+
+                var userinfo = await HttpRequest.GetRequest(url);
+                var serviceResult = JsonConvert.DeserializeObject<List<MyAttendanceModel>>(userinfo.Result);
+                if (serviceResult != null)
+                {
+                    if (serviceResult.Count > 0)
+                    {
+                        obj = serviceResult;
+                    }
+                    return obj;
+                }
+                else
+                {
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                return obj;
+            }
+        }
+
 
     }
 }

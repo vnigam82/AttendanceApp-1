@@ -15,13 +15,14 @@ namespace AttendanceApp.Views
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
             _myattendanceViewmodel = ServiceContainer.Resolve<MyAttendanceViewModel>();
-            //_reasonRequestViewmodel.AddMenuItems();
+           
             BindingContext = _myattendanceViewmodel;
             //headerView.BindingContext = _checkincheckoutViewmodel;
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            _myattendanceViewmodel.IsEnableSearchButton = true;
             var safeInsets = On<Xamarin.Forms.PlatformConfiguration.iOS>().SafeAreaInsets();
             safeInsets.Bottom = 0;
             safeInsets.Top = Device.RuntimePlatform == Device.Android ? 0 : 40;

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />
     <Compile Remove="Views\ApproveReasons.cs" />
+    <Compile Remove="Helpers\MyAttendanceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\loginbg.png" />
