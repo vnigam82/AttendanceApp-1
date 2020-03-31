@@ -435,32 +435,41 @@ namespace AttendanceApp.ViewModels
                     try
                     {
                         var locator = CrossGeolocator.Current;
-                        var sourceLocation = await locator.GetPositionAsync();
-
-                        if (sourceLocation != null)
+                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                         {
+                            var sourceLocation = await locator.GetPositionAsync();
 
-                            Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
-                            LatLongLocation = sourceCoordinates;
-                            Location destinationCoordinates = new Location(menuItem.locationData.lat, menuItem.locationData.lng);
-                            double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
-                            double distanceMeter = distance * 1000;
-                            Radius = distanceMeter;
-                            if (distanceMeter < menuItem.locationData.radius)
+                            if (sourceLocation != null)
                             {
-                                
-                                
-                                await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are in location", "OK");
-                                IsUserExist = true;
-                                IsAccordianOpen = !IsAccordianOpen;
-                            }
-                            else
-                            {
-                                
-                                await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are out of location", "OK");
-                                IsUserExist = false;
+
+                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                                LatLongLocation = sourceCoordinates;
+                                Location destinationCoordinates = new Location(menuItem.locationData.lat, menuItem.locationData.lng);
+                                double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
+                                double distanceMeter = distance * 1000;
+                                Radius = distanceMeter;
+                                if (distanceMeter < menuItem.locationData.radius)
+                                {
+
+
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are in location", "OK");
+                                    IsUserExist = true;
+                                    IsAccordianOpen = !IsAccordianOpen;
+                                }
+                                else
+                                {
+
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are out of location", "OK");
+                                    IsUserExist = false;
+                                }
                             }
                         }
+                        else
+                        {
+                            await CommonMethods.ShowPopup("Please enable your location service.");
+                            return;
+                        }
+                       
                     }
                     catch (Exception ex)
                     {
