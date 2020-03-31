@@ -43,11 +43,12 @@ namespace AttendanceApp.ViewModels
                 if (!HttpRequest.CheckConnection())
                 {
                     
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //   msDuration: MaterialSnackbar.DurationLong);
+                    
                     Device.BeginInvokeOnMainThread(async () =>
                     {
-                        await CommonMethods.ShowPopup("Please check your network connection.");
+                        //await CommonMethods.ShowPopup("Please check your network connection.");
+                        await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                           msDuration: MaterialSnackbar.DurationLong);
                     });
                     return;
                 }
@@ -63,17 +64,17 @@ namespace AttendanceApp.ViewModels
                 }
                 else
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                    // msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Error Loading Data.");
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                    msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup("Error Loading Data.");
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                // await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //   msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                   msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
@@ -89,18 +90,18 @@ namespace AttendanceApp.ViewModels
                 IsButtonDisabled = false;
                 if (!HttpRequest.CheckConnection())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup("Please check your network connection.");
                     return;
                 }
                // UserName = "JBH\\naomif";
                 //Password = "GAT123";
                 if(!Validate())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                    // msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Error);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                     msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup(Error);
                     return;
                 }
 
@@ -153,10 +154,10 @@ namespace AttendanceApp.ViewModels
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        await CommonMethods.ShowPopup("Invalid User Details");
-                        //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
-                        // actionButtonText: "Ok",
-                        // msDuration: 3000);
+                        //await CommonMethods.ShowPopup("Invalid User Details");
+                        await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
+                         actionButtonText: "Ok",
+                         msDuration: 3000);
 
                     }
 
@@ -164,18 +165,18 @@ namespace AttendanceApp.ViewModels
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup(loginInfo.Message);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                    //  actionButtonText: "Ok",
-                    //  msDuration: 3000);
+                    //await CommonMethods.ShowPopup(loginInfo.Message);
+                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                    actionButtonText: "Ok",
+                    msDuration: 3000);
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {

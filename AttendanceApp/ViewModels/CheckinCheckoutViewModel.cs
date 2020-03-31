@@ -420,9 +420,9 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //                        msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                                            msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup("Please check your network connection.");
                     return;
 
                 }
@@ -437,7 +437,7 @@ namespace AttendanceApp.ViewModels
                         var locator = CrossGeolocator.Current;
                         if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                         {
-                            var sourceLocation = await locator.GetPositionAsync();
+                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
 
                             if (sourceLocation != null)
                             {
@@ -466,7 +466,9 @@ namespace AttendanceApp.ViewModels
                         }
                         else
                         {
-                            await CommonMethods.ShowPopup("Please enable your location service.");
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Please enable your location service.",
+                            msDuration: MaterialSnackbar.DurationLong);
+                            //await CommonMethods.ShowPopup("Please enable your location service.");
                             return;
                         }
                        
@@ -474,9 +476,10 @@ namespace AttendanceApp.ViewModels
                     catch (Exception ex)
                     {
                         IsUserExist = false;
-                        await CommonMethods.ShowPopup(ex.Message);
-                        //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                        //msDuration: MaterialSnackbar.DurationLong);
+                        //await CommonMethods.ShowPopup(ex.Message);
+
+                        await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                        msDuration: MaterialSnackbar.DurationLong);
                     }
                     DependencyService.Get<IProgressBar>().Hide();
                 }
@@ -484,18 +487,18 @@ namespace AttendanceApp.ViewModels
                 {
                     IsUserExist = false;
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup("Error Loading Data");
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                    //                        msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup("Error Loading Data");
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                                            msDuration: MaterialSnackbar.DurationLong);
                 }
             }
             catch (Exception ex)
             {
                 IsUserExist = false;
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //                            msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                           msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
