@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+              xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:appshell="clr-namespace:AttendanceApp.ShellFiles"
              xmlns:customcontrol="clr-namespace:AttendanceApp.CustomControls"
@@ -29,7 +30,7 @@
             <customviews:HeaderView
                     x:Name="headerView"
                     Grid.Row="0"
-                    HeaderTitle="My Attendance"
+                    HeaderTitle="{strings:Translate myAttendance}"
                     IsBackVisible="{x:Static appshell:AppShell.back}"
                     IsHomeVisible="True"
                     IsMenuVisible="{Binding IsShowMenuButton}" />
@@ -49,7 +50,7 @@
                         HasShadow="False"
                         VerticalOptions="StartAndExpand">
                     <StackLayout>
-                        <Label Text="My Attendance"
+                            <Label Text="{strings:Translate myAttendance}"
                                FontSize="Large"/>
                         <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -67,12 +68,12 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Text="From Date"
+                                <Label Text="{strings:Translate fromDate}"
                                Margin="0,10,0,0"
                                    Grid.Column="0"
                                    Grid.Row="0"
                                        FontSize="Medium"/>
-                            <Label Text="To Date"
+                                <Label Text="{strings:Translate toDate}"
                                Margin="0,10,0,0"
                                    Grid.Column="1"
                                    Grid.Row="0"
@@ -104,7 +105,7 @@
                                          VerticalOptions="EndAndExpand"
                                  BackgroundColor="LightGray"
                                          Margin="0,-5,0,0"/>
-                            <ui:MaterialButton Text="Search"
+                                <ui:MaterialButton Text="{strings:Translate search}"
                                                    TextColor="White"
                                                Grid.Row="2"
                                                Grid.Column="0"
@@ -129,7 +130,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="Date"
+                                        <Label Text="{strings:Translate date}"
                                            HeightRequest="30"
                                            VerticalOptions="CenterAndExpand"
                                            VerticalTextAlignment="Center"
@@ -139,7 +140,7 @@
                                            HorizontalTextAlignment="Center"
                                            BackgroundColor="{StaticResource MainThemeColor}"
                                            Grid.Column="0"/>
-                                    <Label Text="Time In"
+                                        <Label Text="{strings:Translate timeIn}"
                                            HeightRequest="30"
                                            VerticalOptions="CenterAndExpand"
                                            VerticalTextAlignment="Center"
@@ -149,7 +150,7 @@
                                            BackgroundColor="{StaticResource MainThemeColor}"
                                            Grid.Row="0"
                                            Grid.Column="1"/>
-                                    <Label Text="Time Out"
+                                        <Label Text="{strings:Translate timeOut}"
                                            HeightRequest="30"
                                            TextColor="White"
                                            HorizontalOptions="FillAndExpand"

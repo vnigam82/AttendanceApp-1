@@ -55,12 +55,12 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                                            // msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
-                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetOrganizationProfile();
 
                 if (menuItem != null)
@@ -74,7 +74,7 @@ namespace AttendanceApp.ViewModels
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
                                             //msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Error Loading Data.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
                 }
             }
             catch (Exception ex)

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+              xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
@@ -30,7 +31,7 @@
             <customviews:HeaderView
                     x:Name="headerView"
                     Grid.Row="0"
-                    HeaderTitle="Check In/Check Out"
+                    HeaderTitle="{strings:Translate checkInCheckOut}"
                     IsBackVisible="{x:Static appshell:AppShell.back}"
                     IsHomeVisible="True"
                     IsMenuVisible="{Binding IsShowMenuButton}" />
@@ -51,7 +52,7 @@
                         VerticalOptions="StartAndExpand">
                     <StackLayout HorizontalOptions="FillAndExpand"
                                  VerticalOptions="FillAndExpand">
-                        <Label Text="Please choose a function"
+                            <Label Text="{strings:Translate pleaseChooseFunction}"
                                FontSize="Large"/>
                         <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -89,7 +90,7 @@
                                                    HeightRequest="20"
                                                    Aspect="AspectFit"/>
                                             </ui:MaterialCard>
-                                        <Label Text="Coming (Check IN)"
+                                            <Label Text="{strings:Translate comingCheckIn}"
                                                Grid.Column="1"
                                                TextColor="Gray"
                                                VerticalOptions="CenterAndExpand"
@@ -117,7 +118,7 @@
                                                    HeightRequest="20"
                                                    Aspect="AspectFit"/>
                                             </ui:MaterialCard>
-                                        <Label Text="Reasons"
+                                                <Label Text="{strings:Translate reasons}"
                                                Grid.Column="1"
                                                TextColor="Gray"
                                                VerticalOptions="CenterAndExpand"
@@ -179,14 +180,14 @@
                     <StackLayout HorizontalOptions="End"
                                  Orientation="Horizontal"
                                  Spacing="5">
-                        <ui:MaterialButton Text="Submit"
+                                                    <ui:MaterialButton Text="{strings:Translate submit}"
                                        HorizontalOptions="End"
                                            IsEnabled="{Binding IsEnabledSubmitButton}"
                                        x:Name="btnSubmit"
                                            Command="{Binding SubmitCommand}"
                                                    TextColor="White"
                                        Margin="0,5"/>
-                        <ui:MaterialButton Text="Close"
+                                                    <ui:MaterialButton Text="{strings:Translate close}"
                                        HorizontalOptions="End"
                                            BackgroundColor="Red"
                                            x:Name="btnClose"
@@ -222,7 +223,7 @@
                                                    HeightRequest="20"
                                                    Aspect="AspectFit"/>
                                             </ui:MaterialCard>
-                                        <Label Text="Leaving (Check Out)"
+                                            <Label Text="{strings:Translate leavingCheckOut}"
                                                Grid.Column="1"
                                                TextColor="Gray"
                                                VerticalOptions="CenterAndExpand"

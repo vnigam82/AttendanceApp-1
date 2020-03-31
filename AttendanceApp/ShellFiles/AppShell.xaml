@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AttendanceApp.CustomControls"
+      xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:AttendanceApp.Views"
@@ -50,45 +51,45 @@
         Command="{Binding RandomPageCommand}"
         CommandParameter="aboutus"
         IconImageSource="aboutus.png"
-        Text="About us" />
+        Text="{strings:Translate aboutus}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="checkincheckout"
         IconImageSource="checkinmenu.png"
-        Text="CheckIn/CheckOut" />
+        Text="{strings:Translate checkInCheckOut}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="aboutus"
         IconImageSource="leavereasonmenu.png"
-        Text="Leave Request" />
+        Text="{strings:Translate leaveRequest}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="reasonrequest"
         IconImageSource="reasonmenu.png"
-        Text="Reason Request" />
+        Text="{strings:Translate reasonRequest}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="aboutus"
         IconImageSource="violationmenu.png"
-        Text="Unjustified Violations" />
+        Text="{strings:Translate unjustifiedViolations}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="myattendance"
         IconImageSource="attendancemenu.png"
-        Text="My Attendance" />
+        Text="{strings:Translate myAttendance}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="aboutus"
         IconImageSource="approvereasonmenu.png"
-        Text="Approve Reasons" />
+        Text="{strings:Translate approveReasons}" />
     <MenuItem
         Command="{Binding RandomPageCommand}"
         CommandParameter="aboutus"
         IconImageSource="approveleavesmenu.png"
-        Text="Approve Leaves" />
+        Text="{strings:Translate approveLeaves}" />
 
 
-    <MenuItem IconImageSource="logout.png" Text="Logout" Command="{Binding LogoutCommand}"/>
+    <MenuItem IconImageSource="logout.png" Text="{strings:Translate logout}" Command="{Binding LogoutCommand}"/>
 
 
 </Shell>

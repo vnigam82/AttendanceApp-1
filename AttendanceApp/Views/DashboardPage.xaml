@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
+              xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions" xmlns:flv="clr-namespace:AttendanceApp" xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Class="AttendanceApp.Views.DashboardPage"
@@ -22,7 +23,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <customviews:HeaderView IsBackVisible="False"
-                                    HeaderTitle="Ganter TA System"
+                                    HeaderTitle="{strings:Translate ganterTASystem}"
                                     IsMenuVisible="True"
                                     Grid.Row="0"/>
             <BoxView Grid.Row="0"

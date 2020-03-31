@@ -19,7 +19,7 @@ namespace AttendanceApp.CustomViews
                     txtUrl.IsEnabled = true;
                     txtUrl.Text = txtUrl.Placeholder;
                     txtUrl.FloatingPlaceholderEnabled = true;
-                    txtUrl.Placeholder = "Enter Url";
+                    txtUrl.Placeholder = Resx.AppResources.enterUrl;
                 }
                 else
                 {

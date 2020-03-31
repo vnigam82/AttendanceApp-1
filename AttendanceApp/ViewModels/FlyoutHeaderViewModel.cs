@@ -24,7 +24,7 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
                                             msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }

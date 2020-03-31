@@ -101,19 +101,19 @@ namespace AttendanceApp.ViewModels
             Error = string.Empty;
             if (string.IsNullOrWhiteSpace(Direction))
             {
-                Error += "Please choose direction";
+                Error += Resx.AppResources.pleaseChooseDirection;
                 result = false;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedHappinessOption?.Title))
             {
-                Error += "\nPlease select happiness option";
+                Error += "\n"+ Resx.AppResources.pleaseSelectHappinessOption;
                 result = false;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedReason?.name))
             {
-                Error += "\nPlease select reason";
+                Error += "\n" + Resx.AppResources.pleaseSelectReason;
                 result = false;
             }
             return result;
@@ -126,7 +126,7 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //                        msDuration: MaterialSnackbar.DurationLong);
                     return;
@@ -140,7 +140,7 @@ namespace AttendanceApp.ViewModels
                     return;
                 }
 
-                DependencyService.Get<IProgressBar>().Show("Authenticating user...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
                
                 var locationData = new LocationData()
                 {
@@ -167,7 +167,7 @@ namespace AttendanceApp.ViewModels
                 if (loginInfo.Status)
                 {
                     IsUserExist = true;
-                    await CommonMethods.ShowPopup(@"You are Checked " + Direction + " successfully");
+                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " "+ Resx.AppResources.successfully);
                     //await App.Current.MainPage.DisplayAlert("AttendanceApp", @"You are Checked "+Direction+" successfully", "OK");
                     await _navigation.PopAsync();
                 }
@@ -204,21 +204,21 @@ namespace AttendanceApp.ViewModels
                 new RadioOption(){
                     id=1,
                     IsSelected=false,
-                    Title="Happy",
+                    Title=Resx.AppResources.happy,
                     HappynessCode=1,
                     ImageName="happyface.png"
                 },
                  new RadioOption(){
                     id=2,
                     IsSelected=false,
-                    Title="Sad",
+                    Title=Resx.AppResources.sad,
                     HappynessCode=-1,
                     ImageName="sadface.png"
                 },
                  new RadioOption(){
                     id=3,
                     IsSelected=false,
-                    Title="Neutral",
+                    Title=Resx.AppResources.neutral,
                     HappynessCode=0,
                     ImageName="neutralface.png"
                 },
@@ -231,11 +231,11 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
                                             msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
-                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetReasons();
                 ReasonList = new ObservableCollection<clsReasons>();
                 if (menuItem != null)
@@ -257,7 +257,7 @@ namespace AttendanceApp.ViewModels
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
                                             msDuration: MaterialSnackbar.DurationLong);
                 }
             }
@@ -398,9 +398,9 @@ namespace AttendanceApp.ViewModels
         public void AddMenuItems()
         {
 
-            MenuItems.Add(new MenuModel { Id = 1, Name = "Coming (Check IN)", ImageName = "checkinwhite.png", GridColor = GridColorUtil.StoreColor });
-            MenuItems.Add(new MenuModel { Id = 2, Name = "Reasons", ImageName = "reasonwhite.png", GridColor = GridColorUtil.ManualsColor });
-            MenuItems.Add(new MenuModel { Id = 3, Name = "Leaving (Check Out)", ImageName = "leaveswhite.png", GridColor = GridColorUtil.AnnouncementsColor });
+            MenuItems.Add(new MenuModel { Id = 1, Name = Resx.AppResources.comingCheckIn, ImageName = "checkinwhite.png", GridColor = GridColorUtil.StoreColor });
+            MenuItems.Add(new MenuModel { Id = 2, Name = Resx.AppResources.reasons, ImageName = "reasonwhite.png", GridColor = GridColorUtil.ManualsColor });
+            MenuItems.Add(new MenuModel { Id = 3, Name = Resx.AppResources.leavingCheckOut, ImageName = "leaveswhite.png", GridColor = GridColorUtil.AnnouncementsColor });
         }
         public Command MenuItemsCommand
         {
@@ -422,11 +422,11 @@ namespace AttendanceApp.ViewModels
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //                        msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     return;
 
                 }
-                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetLocations();
 
                 if (menuItem.locationData != null)
@@ -452,21 +452,21 @@ namespace AttendanceApp.ViewModels
                                 {
 
 
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are in location", "OK");
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
                                     IsUserExist = true;
                                     IsAccordianOpen = !IsAccordianOpen;
                                 }
                                 else
                                 {
 
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", "You are out of location", "OK");
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
                                     IsUserExist = false;
                                 }
                             }
                         }
                         else
                         {
-                            await CommonMethods.ShowPopup("Please enable your location service.");
+                            await CommonMethods.ShowPopup(Resx.AppResources.pleaseEnableYourLocationService);
                             return;
                         }
                        
@@ -484,7 +484,7 @@ namespace AttendanceApp.ViewModels
                 {
                     IsUserExist = false;
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup("Error Loading Data");
+                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
                     //                        msDuration: MaterialSnackbar.DurationLong);
                 }

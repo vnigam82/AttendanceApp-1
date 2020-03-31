@@ -1,28 +1,81 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AttendanceApp.Database;
+using AttendanceApp.Database.DBModel;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
+using AttendanceApp.Resx;
 using AttendanceApp.ServiceConfigration;
 using AttendanceApp.ShellFiles;
 using AttendanceApp.Utils;
+using AttendanceApp.Views;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.ViewModels
 {
-    public class LoginViewModel:BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
-        public Command  _loginCommand;
+        public Command _loginCommand;
         public LoginViewModel()
         {
             GetOrganizationProfile();
+            var sqlLiteResult = App.Database.GetLanguage();
+            if (sqlLiteResult != null)
+            {
+                if (sqlLiteResult.LangKey == "ar-AE")
+                {
+                    LngToggled = true;
+                }
+                else
+                {
+                    LngToggled = false;
+                }
+            }
+            else
+            {
+                LngToggled = false;
+            }
         }
+        public Command ToggledCommand
+        {
+            get
+            {
+                return new Command((data) =>
+                {
+                    if (LngToggled == false)
+                    {
+                        string lang = "en-US";
+                        AppLanguage objUser = new AppLanguage();
+                        objUser.LangKey = lang;
+                        App.lang = lang;
+                        App.Database.SaveLanguage(objUser);
+                        L10n.SetLocale();
+                        var netLanguage = DependencyService.Get<ILocale>().GetCurrent();
+                        AppResources.Culture = new CultureInfo(lang);
+                        App.Current.MainPage = new Login();
+                    }
+                    else
+                    {
+                        string lang = "ar-AE";
+                        AppLanguage objUser = new AppLanguage();
+                        objUser.LangKey = lang;
+                        App.lang = lang;
+                        App.Database.SaveLanguage(objUser);
+                        L10n.SetLocale();
+                        var netLanguage = DependencyService.Get<ILocale>().GetCurrent();
+                        AppResources.Culture = new CultureInfo(lang);
+                        App.Current.MainPage = new Login();
+                    }
+                });
 
+            }
+        }
         private bool iISBusy;
         public Command LoginCommand
         {
@@ -32,7 +85,7 @@ namespace AttendanceApp.ViewModels
                 {
                     iISBusy = true;
                     ExecuteLoginCommand();
-                },()=>!iISBusy));
+                }, () => !iISBusy));
             }
         }
 
@@ -42,18 +95,18 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    
+
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //   msDuration: MaterialSnackbar.DurationLong);
                     Device.BeginInvokeOnMainThread(async () =>
                     {
-                        await CommonMethods.ShowPopup("Please check your network connection.");
+                        await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     });
                     return;
                 }
-                DependencyService.Get<IProgressBar>().Show("Please wait...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetOrganizationProfile();
-                
+
                 if (menuItem != null)
                 {
                     // DependencyService.Get<ILodingPageService>().HideLoadingPage();
@@ -65,7 +118,7 @@ namespace AttendanceApp.ViewModels
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
                     // msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Error Loading Data.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
                 }
             }
             catch (Exception ex)
@@ -91,12 +144,12 @@ namespace AttendanceApp.ViewModels
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup("Please check your network connection.");
+                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     return;
                 }
-               // UserName = "JBH\\naomif";
-                //Password = "GAT123";
-                if(!Validate())
+                 UserName = "JBH\\naomif";
+                Password = "GAT123";
+                if (!Validate())
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: Error,
                     // msDuration: MaterialSnackbar.DurationLong);
@@ -104,7 +157,7 @@ namespace AttendanceApp.ViewModels
                     return;
                 }
 
-                DependencyService.Get<IProgressBar>().Show("Authenticating user...");
+                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
                 //var postData= new Login() { email= "vivek@nigam.com", password="Qwerty@123"};
                 //var postData = new LoginRootObject()
                 //{
@@ -117,15 +170,15 @@ namespace AttendanceApp.ViewModels
                 //};
                 var postData = new LoginModel()
                 {
-                    username=UserName.Contains("\\\\")?UserName.Replace(@"\\", @"\"):UserName,
-                    password=Password
+                    username = UserName.Contains("\\\\") ? UserName.Replace(@"\\", @"\") : UserName,
+                    password = Password
                 };
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
                 var loginInfo = await CommonMethods.LogInToUser(jsonString);
                 if (loginInfo.Status)
                 {
-                    if (loginInfo.Result!=null)
+                    if (loginInfo.Result != null)
                     {
                         UserSettingUtils.UserName = UserName;
                         UserSettingUtils.Password = Password;
@@ -133,17 +186,17 @@ namespace AttendanceApp.ViewModels
 
                         //if (Rememberme)
                         //{
-                            var logindbdata = new LoginDBModel();
-                            logindbdata.UserName = UserName;
-                            logindbdata.Password = Password;
-                            logindbdata.UserGUID = loginInfo.Result; 
-                            logindbdata.RememberMe = Rememberme;
+                        var logindbdata = new LoginDBModel();
+                        logindbdata.UserName = UserName;
+                        logindbdata.Password = Password;
+                        logindbdata.UserGUID = loginInfo.Result;
+                        logindbdata.RememberMe = Rememberme;
 
-                            App.Database.SaveLoggedInUser(logindbdata);
+                        App.Database.SaveLoggedInUser(logindbdata);
 
-                            DependencyService.Get<IProgressBar>().Hide();
+                        DependencyService.Get<IProgressBar>().Hide();
 
-                            App.Current.MainPage = new AppShell();
+                        App.Current.MainPage = new AppShell();
                         //}
                         //else
                         //{
@@ -153,7 +206,7 @@ namespace AttendanceApp.ViewModels
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        await CommonMethods.ShowPopup("Invalid User Details");
+                        await CommonMethods.ShowPopup(Resx.AppResources.invalidUserDetails);
                         //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
                         // actionButtonText: "Ok",
                         // msDuration: 3000);
@@ -190,13 +243,13 @@ namespace AttendanceApp.ViewModels
             Error = string.Empty;
             if (string.IsNullOrWhiteSpace(UserName))
             {
-                Error += "Please provide User Name.";
+                Error += Resx.AppResources.pleaseProvideUserName;
                 result = false;
             }
-            
+
             if (string.IsNullOrWhiteSpace(Password))
             {
-                Error += "\nPlease provide Password.";
+                Error += "\n"+ Resx.AppResources.pleaseProvidePassword;
                 result = false;
             }
             //if (!Rememberme)
@@ -253,6 +306,19 @@ namespace AttendanceApp.ViewModels
             }
         }
 
+        private bool lngToggled;
+        public bool LngToggled
+        {
+            get { return lngToggled; }
+            set
+            {
+                lngToggled = value;
+                OnPropertyChanged("LngToggled");
+            }
+        }
+
+
+
         private string _username;
         public string UserName
         {
@@ -300,7 +366,7 @@ namespace AttendanceApp.ViewModels
             }
         }
 
-        private bool _isbuttondisabled=true;
+        private bool _isbuttondisabled = true;
         public bool IsButtonDisabled
         {
             get { return _isbuttondisabled; }

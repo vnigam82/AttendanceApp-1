@@ -27,6 +27,6 @@ namespace AttendanceApp.Views
             //LoadAnimation();
         }
 
-
+       
     }
 }

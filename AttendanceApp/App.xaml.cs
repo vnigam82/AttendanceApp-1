@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
+using AttendanceApp.Resx;
 using AttendanceApp.ShellFiles;
 using AttendanceApp.ViewModels;
 using AttendanceApp.Views;
@@ -12,13 +14,19 @@ namespace AttendanceApp
 {
     public partial class App : Application
     {
+        public static string lang = "";
         public App()
         {
             InitializeComponent();
-            XF.Material.Forms.Material.Init(this);
-            //MainPage = new Login();
-            //MainPage = new AppShell();
 
+            L10n.SetLocale();
+            var netLanguage = DependencyService.Get<ILocale>().GetCurrent();
+            AppResources.Culture = new CultureInfo(netLanguage);
+
+            lang = netLanguage;
+
+
+            XF.Material.Forms.Material.Init(this);
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             if (objUser != null)
             {

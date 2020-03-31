@@ -2,6 +2,7 @@
 <ContentView
     x:Class="AttendanceApp.CustomViews.HeaderView"
     xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentView.Content>
         <Grid
@@ -47,7 +48,7 @@
                 Grid.Column="1"
                 FontAttributes="Bold"
                 FontSize="Large"
-                Text="Dashborad"
+                Text="{strings:Translate dashborad}"
                 TextColor="{StaticResource backgroundColor}"
                 VerticalOptions="CenterAndExpand"
                 VerticalTextAlignment="Center" />

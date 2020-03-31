@@ -10,13 +10,13 @@ namespace AttendanceApp.Models
     }
     public static class DashboardTilesText
     {
-        public static string CheckInChckout { get { return "Check IN/Check OUT"; } }
-        public static string LeaveRequest { get { return "Leave Request"; } }
-        public static string ReasonRequest { get { return "Reason Request"; } }
-        public static string UnjustifiedViolations { get { return "Unjustified Violations"; } }
-        public static string MyAttendance { get { return "My Attendance"; } }
-        public static string ApproveReasons { get { return "Approve Reasons"; } }
-        public static string ApproveLeaves { get { return "Approve Leaves"; } }
+        public static string CheckInChckout { get { return Resx.AppResources.checkInCheckOut; } }
+        public static string LeaveRequest { get { return Resx.AppResources.leaveRequest; } }
+        public static string ReasonRequest { get { return Resx.AppResources.reasonRequest; } }
+        public static string UnjustifiedViolations { get { return Resx.AppResources.unjustifiedViolations; } }
+        public static string MyAttendance { get { return Resx.AppResources.myAttendance; } }
+        public static string ApproveReasons { get { return Resx.AppResources.approveReasons; } }
+        public static string ApproveLeaves { get { return Resx.AppResources.approveLeaves; } }
     }
     public static class DashboardTilesImages
     {

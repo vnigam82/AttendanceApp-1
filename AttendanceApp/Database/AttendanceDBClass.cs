@@ -1,4 +1,5 @@
 ﻿using System;
+using AttendanceApp.Database.DBModel;
 using SQLite;
 
 namespace AttendanceApp.Database
@@ -13,6 +14,7 @@ namespace AttendanceApp.Database
             {
                 database = new SQLiteConnection(dbPath);
                 database.CreateTable<LoginDBModel>();
+                database.CreateTable<AppLanguage>();
 
             }
             catch (Exception ex)
@@ -20,7 +22,30 @@ namespace AttendanceApp.Database
 
             }
         }
+        public AppLanguage GetLanguage()
+        {
+            return database.Table<AppLanguage>().FirstOrDefault();
+        }
 
+        public int SaveLanguage(AppLanguage item)
+        {
+            try
+            {
+                var data = database.Table<AppLanguage>().ToList();
+                foreach (var cn in data)
+                {
+                     database.Delete(cn);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return database.Insert(item);
+             
+        }
+     
+        
+        
         public LoginDBModel GetLoggedInUser()
         {
             return database.Table<LoginDBModel>().FirstOrDefault();

@@ -15,6 +15,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.5.922" />
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
+    <PackageReference Include="Xamarin.Forms.BehaviorsPack" Version="2.1.1" />
     <PackageReference Include="XF.Material" Version="1.5.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
@@ -29,9 +30,6 @@
     <Folder Include="CustomControls\CustomDatePicker\" />
     <Folder Include="CustomControls\CustomTimePicker\" />
     <Folder Include="CustomControls\CustomEditor\" />
-    <Folder Include="Dependency\" />
-    <Folder Include="Database\" />
-    <Folder Include="Database\DBModel\" />
     <Folder Include="CustomControls\AccordianControl\" />
     <Folder Include="CustomControls\RadioButton\" />
   </ItemGroup>
@@ -46,5 +44,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\loginbg.png" />
     <EmbeddedResource Include="Images\bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resx\AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resx\AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

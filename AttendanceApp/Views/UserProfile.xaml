@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:local="clr-namespace:AttendanceApp.MarkupExtensions"
+              xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
@@ -28,7 +29,7 @@
             </Grid.RowDefinitions>
             <customviews:HeaderView IsBackVisible="True"
                                     IsMenuVisible="False"
-                                    HeaderTitle="Profile"
+                                    HeaderTitle="{strings:Translate profile}"
                                     IsHomeVisible="True"
                                     Grid.Row="0"/>
             <BoxView Grid.Row="0"
@@ -52,18 +53,18 @@
                         VerticalOptions="StartAndExpand">
                     <StackLayout HorizontalOptions="CenterAndExpand"
                                  Margin="0,50,0,0">
-                        <Label Text="Test"
+                                <Label Text="{strings:Translate test}"
                                FontSize="Large"
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"
                                FontAttributes="Bold"/>
-                        <Label Text="Test"
+                                <Label Text="{strings:Translate test}"
                                FontSize="Small"
                                TextColor="{StaticResource MainThemeColor}"
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"
                                FontAttributes="Bold"/>
-                        <Label Text="Position"
+                                <Label Text="{strings:Translate position}"
                                FontSize="Large"
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"
@@ -82,18 +83,18 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"
                                    Grid.Row="0"
-                                   Text="Direct Manager"
+                                   Text="{strings:Translate directManager}"
                                    FontSize="Small"/>
                             <Label Grid.Column="1"
                                    Grid.Row="0"
                                    HorizontalOptions="EndAndExpand"
                                    HorizontalTextAlignment="End"
-                                   Text="Vacation Balance"
+                                   Text="{strings:Translate vacationBalance}"
                                    FontSize="Small"/>
                             <Label Grid.Column="0"
                                    Grid.Row="1"
                                    TextColor="{StaticResource MainThemeColor}"
-                                   Text="Visual Studio"
+                                   Text="{strings:Translate visualStudio}"
                                    FontSize="Small"/>
                             <Label Grid.Column="1"
                                    Grid.Row="1"
@@ -119,7 +120,7 @@
                     
 		</ffimageloading:CachedImage>
             </Grid>
-                <Label Text="More Settings"
+                    <Label Text="{strings:Translate moreSettings}"
                        FontSize="Small"
                        TextColor="Gray"
                        Margin="{OnPlatform iOS='30,0,0,10',Android='30,0,0,10'}"/>
@@ -155,7 +156,7 @@
                                     WidthRequest="20"
                                     Grid.Column="0"
                                     HeightRequest="20"/>
-                             <Label Text="Configuration Settings"
+                                    <Label Text="{strings:Translate configurationSettings}"
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalOptions="Center"
@@ -200,7 +201,7 @@
                                     WidthRequest="20"
                                     Grid.Column="0"
                                     HeightRequest="20"/>
-                             <Label Text="Change Password"
+                                    <Label Text="{strings:Translate changePassword}"
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalOptions="Center"
