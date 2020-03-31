@@ -147,8 +147,8 @@ namespace AttendanceApp.ViewModels
                     await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     return;
                 }
-                 UserName = "JBH\\naomif";
-                Password = "GAT123";
+                // UserName = "JBH\\naomif";
+                //Password = "GAT123";
                 if (!Validate())
                 {
                     //await MaterialDialog.Instance.SnackbarAsync(message: Error,
