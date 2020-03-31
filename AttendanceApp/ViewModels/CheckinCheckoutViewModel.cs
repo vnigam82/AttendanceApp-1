@@ -437,7 +437,7 @@ namespace AttendanceApp.ViewModels
                         var locator = CrossGeolocator.Current;
                         if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                         {
-                            var sourceLocation = await locator.GetPositionAsync();
+                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
 
                             if (sourceLocation != null)
                             {
@@ -474,9 +474,10 @@ namespace AttendanceApp.ViewModels
                     catch (Exception ex)
                     {
                         IsUserExist = false;
-                        await CommonMethods.ShowPopup(ex.Message);
-                        //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                        //msDuration: MaterialSnackbar.DurationLong);
+                        //await CommonMethods.ShowPopup(ex.Message);
+
+                        await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                        msDuration: MaterialSnackbar.DurationLong);
                     }
                     DependencyService.Get<IProgressBar>().Hide();
                 }
@@ -493,9 +494,9 @@ namespace AttendanceApp.ViewModels
             {
                 IsUserExist = false;
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //                            msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                           msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {

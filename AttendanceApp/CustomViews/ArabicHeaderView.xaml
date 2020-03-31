@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AttendanceApp.CustomViews.ArabicHeaderView">
+    <ContentView.Content>
+         <Grid
+            x:Name="menuBackground"
+            BackgroundColor="Transparent"
+            ColumnSpacing="10"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="0"
+            VerticalOptions="Start">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ImageButton
+                x:Name="btnHome"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                IsVisible="False"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding HomeCommand}"
+                HeightRequest="30"
+                Source="homewhite.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+           
+            <Label
+                x:Name="lblTitle"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="Dashborad"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                TextColor="{StaticResource backgroundColor}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                x:Name="btnMenu"
+                Grid.Column="2"
+                Margin="0,0,10,0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding MenuCommand}"
+                HeightRequest="30"
+                Rotation="180"
+                IsVisible="False"
+                RotationY="180"
+                Source="hamburger.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+            <ImageButton
+                x:Name="btnArabicBack"
+                Grid.Column="2"
+                Margin="0,0,10,0"
+                IsVisible="False"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Command="{Binding BackCommand}"
+                HeightRequest="30"
+                Rotation="180"
+                Source="back.png"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="30" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

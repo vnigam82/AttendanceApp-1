@@ -95,7 +95,7 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-
+                    
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //   msDuration: MaterialSnackbar.DurationLong);
                     Device.BeginInvokeOnMainThread(async () =>
@@ -124,9 +124,9 @@ namespace AttendanceApp.ViewModels
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                // await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //   msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                   msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
@@ -151,9 +151,9 @@ namespace AttendanceApp.ViewModels
                 //Password = "GAT123";
                 if (!Validate())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                    // msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Error);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                     msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup(Error);
                     return;
                 }
 
@@ -217,18 +217,18 @@ namespace AttendanceApp.ViewModels
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup(loginInfo.Message);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                    //  actionButtonText: "Ok",
-                    //  msDuration: 3000);
+                    //await CommonMethods.ShowPopup(loginInfo.Message);
+                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                    actionButtonText: "Ok",
+                    msDuration: 3000);
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
