@@ -34,9 +34,9 @@ namespace AttendanceApp.ViewModels
             {
                 return _searchcommand ?? (_searchcommand = new Command(() =>
                 {
-                    iISBusy = true;
+                    //iISBusy = true;
                     GetAttendanceList();
-                }, () => !iISBusy));
+                }));
             }
         }
 
@@ -99,7 +99,7 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
-                IsEnableSearchButton = false;
+               // IsEnableSearchButton = false;
                 if (!HttpRequest.CheckConnection())
                 {
                     await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
@@ -153,7 +153,7 @@ namespace AttendanceApp.ViewModels
             }
             finally
             {
-                IsEnableSearchButton = true;
+               // IsEnableSearchButton = true;
                 DependencyService.Get<IProgressBar>().Hide();
             }
         }

@@ -22,7 +22,7 @@ namespace AttendanceApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _myattendanceViewmodel.IsEnableSearchButton = true;
+           // _myattendanceViewmodel.IsEnableSearchButton = true;
             var safeInsets = On<Xamarin.Forms.PlatformConfiguration.iOS>().SafeAreaInsets();
             safeInsets.Bottom = 0;
             safeInsets.Top = Device.RuntimePlatform == Device.Android ? 0 : 40;

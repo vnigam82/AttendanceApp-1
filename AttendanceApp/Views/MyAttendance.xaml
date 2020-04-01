@@ -186,9 +186,8 @@
                                               Grid.Row="2"
                                               Grid.Column="0"
                                               Grid.ColumnSpan="4"
-                                              RowHeight="70"
-                                              HasUnevenRows="False"
-                                              CachingStrategy="RecycleElement"
+                                              HasUnevenRows="True"
+                                              CachingStrategy="RetainElement"
                                               SeparatorVisibility="None" 
                                               ItemsSource="{Binding AttendanceList}"
                                               VerticalOptions="Fill">
@@ -239,10 +238,10 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
+                                            
                                            <Grid RowSpacing="0"
                                                  BackgroundColor="{Binding GridColor}"
-                                         ColumnSpacing="0"
-                                         HeightRequest="30">
+                                         ColumnSpacing="0">
                                        <Grid.ColumnDefinitions>
                                            <ColumnDefinition Width="*"/>
                                            <ColumnDefinition Width="*"/>
@@ -311,6 +310,7 @@
                                                 Grid.ColumnSpan="4"/>
 
                                    </Grid>
+                                              
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AttendanceApp.Views.Login"
-                 xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
+             xmlns:strings="clr-namespace:AttendanceApp;assembly=AttendanceApp"
              xmlns:customviews="clr-namespace:AttendanceApp.CustomViews"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:b="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
              BackgroundColor="{StaticResource backgroundColor}"
@@ -36,15 +36,17 @@
                 Grid.Row="0"
                 Margin="0,20,-50,0"
                 HorizontalOptions="EndAndExpand" />
-            <customviews:LoginRoundShapeViews
+            
+            <StackLayout Orientation="Horizontal" Grid.Row="3"
+                         Margin="10,20"
+                         VerticalOptions="EndAndExpand"
+                               HorizontalOptions="FillAndExpand">
+                <customviews:LoginRoundShapeViews
                 Grid.Row="3"
-                Margin="-50,20,0,20"
+                Margin="-50,20,0,0"
                 HorizontalOptions="StartAndExpand"
                 Rotation="180"
                 VerticalOptions="EndAndExpand" />
-            <StackLayout Orientation="Horizontal" Grid.Row="3"
-                         Margin="10,0"
-                               HorizontalOptions="EndAndExpand">
                 <Label Text="{strings:Translate arabicLbl}" VerticalOptions="CenterAndExpand"/>
                 <Switch   IsToggled="{Binding LngToggled}" ThumbColor="{StaticResource MainThemeColor}"
                         VerticalOptions="CenterAndExpand">
