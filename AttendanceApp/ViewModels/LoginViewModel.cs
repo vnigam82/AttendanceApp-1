@@ -31,15 +31,23 @@ namespace AttendanceApp.ViewModels
                 if (sqlLiteResult.LangKey == "ar-AE")
                 {
                     LngToggled = true;
+                    LanText = "Arabic";
                 }
                 else
                 {
                     LngToggled = false;
+                    LanText = "English";
                 }
             }
             else
             {
                 LngToggled = false;
+                LanText = "English";
+                string lang = "en-US";
+                AppLanguage objUser = new AppLanguage();
+                objUser.LangKey = lang;
+                App.lang = lang;
+                App.Database.SaveLanguage(objUser);
             }
         }
         public Command ToggledCommand
@@ -305,6 +313,18 @@ namespace AttendanceApp.ViewModels
                 OnPropertyChanged("LanguageType");
             }
         }
+
+        private string lanText;
+        public string LanText
+        {
+            get { return lanText; }
+            set
+            {
+                lanText = value;
+                OnPropertyChanged("LanText");
+            }
+        }
+
 
         private bool lngToggled;
         public bool LngToggled
