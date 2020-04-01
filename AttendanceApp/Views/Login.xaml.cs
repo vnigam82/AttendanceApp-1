@@ -17,6 +17,7 @@ namespace AttendanceApp.Views
             _loginViewmodel = new LoginViewModel();
 
             BindingContext = _loginViewmodel;
+
         }
         protected override void OnAppearing()
         {

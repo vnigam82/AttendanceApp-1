@@ -38,7 +38,7 @@
                 HorizontalOptions="EndAndExpand" />
             
             <StackLayout Orientation="Horizontal" Grid.Row="3"
-                         Margin="10,20"
+                         Margin="10,20" 
                          VerticalOptions="EndAndExpand"
                                HorizontalOptions="FillAndExpand">
                 <customviews:LoginRoundShapeViews

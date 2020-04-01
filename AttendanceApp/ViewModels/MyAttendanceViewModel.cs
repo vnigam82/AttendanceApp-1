@@ -125,7 +125,6 @@ namespace AttendanceApp.ViewModels
                             data.isLeave = item.isLeave;
                             data.isWeekend = item.isWeekend;
                             data.timeIn = item.timeIn;
-                           
                             data.timeOut = item.timeOut;
                             data.totalHours = item.totalHours;
                             data.remarks = item.remarks;

@@ -15,8 +15,9 @@ namespace AttendanceApp.Views
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
             _myattendanceViewmodel = ServiceContainer.Resolve<MyAttendanceViewModel>();
-           
+             
             BindingContext = _myattendanceViewmodel;
+
             //headerView.BindingContext = _checkincheckoutViewmodel;
         }
         protected override void OnAppearing()
