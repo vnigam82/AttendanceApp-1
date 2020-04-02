@@ -1,4 +1,5 @@
 ﻿using System;
+using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
@@ -18,14 +19,27 @@ namespace AttendanceApp.ViewModels
             this._navigation = navigation;
         }
 
+
+      
+
+
+
         internal async void GetUserProfile()
         {
             try
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    try
+                    {
+                        clsDBUserProfile objUser = App.Database.GetUserProfileDetails();
+                        ProfileUserName = objUser.fullName;
+                        ProfileUserEmail = objUser.email;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                     
                     return;
                 }
                 //DependencyService.Get<IProgressBar>().Show("Please wait...");
@@ -38,6 +52,15 @@ namespace AttendanceApp.ViewModels
                         ProfileUserName = menuItem.fullName;
                         ProfileUserEmail = menuItem.email;
                         ProfilePic = menuItem.picture ;
+
+
+
+                        clsDBUserProfile orgData = new clsDBUserProfile();
+                        orgData.fullName = menuItem.fullName;
+                        orgData.email = menuItem.email;
+                        orgData.src = menuItem.picture.ImageSource;
+                        var status = App.Database.SaveUserProfileDetails(orgData);
+
                     }
                     
                 }

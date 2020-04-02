@@ -87,15 +87,13 @@ namespace AttendanceApp.Database
         }
         public int SaveUserProfileDetails(clsDBUserProfile item)
         {
-            if (item.ID != 0)
+            var data = database.Table<clsDBUserProfile>().ToList();
+            foreach (var cn in data)
             {
-                return database.Update(item);
+                database.Delete(cn);
             }
-            else
-            {
-                //database.Delete(item);
-                return database.Insert(item);
-            }
+            return database.Insert(item);
+             
         }
 
         public int ClearLoginDetails()
