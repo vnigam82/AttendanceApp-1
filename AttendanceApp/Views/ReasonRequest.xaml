@@ -40,7 +40,7 @@
                      VerticalOptions="End"/>
             <StackLayout Spacing="0"
                          Padding="0"
-                         Margin="0,80"
+                         Margin="0,20,0,0"
                   Grid.Row="1">
                 <ui:MaterialCard
                 Margin="30"
@@ -52,7 +52,7 @@
                     <StackLayout HorizontalOptions="FillAndExpand"
                                  VerticalOptions="FillAndExpand">
                             <Label Text="{strings:Translate reasonRequest}"
-                               FontSize="Large"/>
+                               FontSize="{Binding LabelFontSize}"/>
                         <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
                                  HeightRequest="1"
@@ -64,9 +64,10 @@
                                     Margin="0,10">
                             <StackLayout x:Name="menuList">
                                     <Label Text="{strings:Translate reasonDate}"
-                                       FontSize="Medium"/>
+                                       FontSize="{Binding LabelFontSize}"/>
                                     <customcontrol:BorderlessDatePicker
                                         Image="datepicker"
+                                        FontSize="{Binding LabelFontSize}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -76,9 +77,10 @@
 
                                     <Label Text="{strings:Translate startTime}"
                                        Margin="0,10,0,0"
-                                       FontSize="Medium"/>
+                                       FontSize="{Binding LabelFontSize}"/>
                                     <customcontrol:BorderlessTimePicker
                                         Image="timepicker"
+                                        FontSize="{Binding LabelFontSize}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -88,9 +90,10 @@
 
                                     <Label Text="{strings:Translate endTime}"
                                        Margin="0,10,0,0"
-                                       FontSize="Medium"/>
+                                       FontSize="{Binding LabelFontSize}"/>
                                     <customcontrol:BorderlessTimePicker
                                         Image="timepicker"
+                                        FontSize="{Binding LabelFontSize}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -100,9 +103,10 @@
 
                                     <Label Text="{strings:Translate reasonType}"
                                        Margin="0,10,0,0"
-                                       FontSize="Medium"/>
+                                       FontSize="{Binding LabelFontSize}"/>
                                     <customcontrol:CustomPickerNew
                                         Image="xf_arrow_dropdown"
+                                        FontSize="{Binding LabelFontSize}"
                                         HeightRequest="40"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
@@ -112,9 +116,10 @@
 
                                     <Label Text="{strings:Translate remarks}"
                                        Margin="0,10,0,0"
-                                       FontSize="Medium"/>
+                                       FontSize="{Binding LabelFontSize}"/>
                                     <customcontrol:BorderlessEditor
-                                        HeightRequest="80"/>
+                                        FontSize="{Binding LabelFontSize}"
+                                        HeightRequest="60"/>
                                 <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
                                  HeightRequest="1"

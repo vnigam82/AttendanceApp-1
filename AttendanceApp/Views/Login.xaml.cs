@@ -13,7 +13,7 @@ namespace AttendanceApp.Views
         public Login()
         {
             InitializeComponent();
-            App.Database.ClearLoginDetails();
+           // App.Database.ClearLoginDetails();
             _loginViewmodel = new LoginViewModel();
 
             BindingContext = _loginViewmodel;

@@ -62,11 +62,11 @@
                                         Source="{Binding Image}"
                                         WidthRequest="50" />
                                     <Label
-                                        HorizontalOptions="Fill"
+                                        HorizontalOptions="FillAndExpand"
                                         HorizontalTextAlignment="Center"
                                         Text="{Binding Name}"
                                         TextColor="White"
-                                        FontSize="Small"
+                                        FontSize="{Binding LblFontSize}"
                                         VerticalOptions="EndAndExpand"
                                         VerticalTextAlignment="Start" />
                                 </StackLayout>

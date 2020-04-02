@@ -1,4 +1,6 @@
 ﻿using System;
+using AttendanceApp.Helpers;
+
 namespace AttendanceApp.Models
 {
     public class DashboardMenuModel
@@ -7,6 +9,11 @@ namespace AttendanceApp.Models
         public string Name { get; set; }
         public string Image { get; set; }
         public string GridColor { get; set; }
+        public double LblFontSize {
+            get
+            {
+                return CommonMethods.GetFontSizeBasedOnScreenHeight();
+            } }
     }
     public static class DashboardTilesText
     {

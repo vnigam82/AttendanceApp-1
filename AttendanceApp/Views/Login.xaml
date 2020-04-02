@@ -34,11 +34,11 @@
                 VerticalTextAlignment="Center" />
             <customviews:LoginRoundShapeViews
                 Grid.Row="0"
-                Margin="0,20,-50,0"
+                Margin="0,10,-50,0"
                 HorizontalOptions="EndAndExpand" />
             
             <StackLayout Orientation="Horizontal" Grid.Row="3"
-                         Margin="10,20" 
+                         Margin="0,0,10,10" 
                          VerticalOptions="EndAndExpand"
                                HorizontalOptions="FillAndExpand">
                 <customviews:LoginRoundShapeViews
@@ -75,6 +75,7 @@
                                 AlwaysShowUnderline="True"
                                 BackgroundColor="White"
                                 LeadingIcon="email"
+                                Margin="0,-5,0,0"
                                 LeadingIconTintColor="{StaticResource MainThemeColor}"
                                 Placeholder="{strings:Translate userName}"
                                 PlaceholderColor="DarkGray"
@@ -82,10 +83,10 @@
                                 TintColor="{StaticResource MainThemeColor}"
                                 UnderlineColor="LightGray" />
                             <ui:MaterialTextField
-                                Margin="0"
                                 AlwaysShowUnderline="True"
                                 BackgroundColor="White"
                                 InputType="Password"
+                                Margin="0,-15,0,0"
                                 LeadingIcon="password"
                                 LeadingIconTintColor="{StaticResource MainThemeColor}"
                                 Placeholder="{strings:Translate password}"
@@ -101,7 +102,8 @@
                                     HorizontalOptions="Start"
                                     HorizontalSpacing="10"
                                     IsSelected="{Binding Rememberme}"
-                                    Text="{strings:Translate rememberMe}" />
+                                    Text="{strings:Translate rememberMe}"
+                                    />
                                 <ui:MaterialButton
                                     x:Name="btnLogin"
                                     IsEnabled="{Binding IsButtonDisabled}"

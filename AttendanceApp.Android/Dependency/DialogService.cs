@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using AttendanceApp.Dependency;
 using AttendanceApp.Droid.Dependency;
+using AttendanceApp.Utils;
 using AttendanceApp.Views;
 using Xamarin.Forms;
 
@@ -43,7 +44,10 @@ namespace AttendanceApp.Droid.Dependency
                     btnYesClick.Click += delegate
                     {
                         myCustomDialog.Hide();
-                        App.Database.ClearLoginDetails();
+                        if (HttpRequest.CheckConnection())
+                        {
+                            App.Database.ClearLoginDetails();
+                        }
                         App.Current.MainPage = new Login();
                     };
                 }

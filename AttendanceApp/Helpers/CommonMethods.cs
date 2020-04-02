@@ -6,6 +6,8 @@ using AttendanceApp.Models;
 using AttendanceApp.ServiceConfigration;
 using AttendanceApp.Utils;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.Helpers
@@ -269,6 +271,83 @@ namespace AttendanceApp.Helpers
             }
         }
 
+        public static double GetFontSizeBasedOnScreenHeight()
+        {
+            double fontSize = 0;
+            double resolution = 160;
+            int[] ptSizes = { 4, 6, 8, 10, 12 };
 
+            // Get Metrics
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+
+            // Orientation (Landscape, Portrait, Square, Unknown)
+            var orientation = mainDisplayInfo.Orientation;
+
+            // Rotation (0, 90, 180, 270)
+            var rotation = mainDisplayInfo.Rotation;
+
+            // Width (in pixels)
+            var width = mainDisplayInfo.Width;
+
+            // Width (in xamarin.forms units)
+            var xamarinWidth = width / mainDisplayInfo.Density;
+
+            // Height (in pixels)
+            var height = mainDisplayInfo.Height;
+
+            // Screen density
+            var density = mainDisplayInfo.Density;
+
+            NamedSize[] namedSizes =
+            {
+                NamedSize.Default, NamedSize.Micro, NamedSize.Small,
+                NamedSize.Medium, NamedSize.Large
+            };
+
+            foreach (double ptSize in ptSizes)
+            {
+                fontSize = xamarinWidth * density / 72;
+            }
+            return fontSize;
+        }
+        public static double GetFontSizeBasedOnScreenHeightForGridRow()
+        {
+            double fontSize = 0;
+            double resolution = 160;
+            int[] ptSizes = { 4, 6, 8, 10, 12 };
+
+            // Get Metrics
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+
+            // Orientation (Landscape, Portrait, Square, Unknown)
+            var orientation = mainDisplayInfo.Orientation;
+
+            // Rotation (0, 90, 180, 270)
+            var rotation = mainDisplayInfo.Rotation;
+
+            // Width (in pixels)
+            var width = mainDisplayInfo.Width;
+
+            // Width (in xamarin.forms units)
+            var xamarinWidth = width / mainDisplayInfo.Density;
+
+            // Height (in pixels)
+            var height = mainDisplayInfo.Height;
+
+            // Screen density
+            var density = mainDisplayInfo.Density;
+
+            NamedSize[] namedSizes =
+            {
+                NamedSize.Default, NamedSize.Micro, NamedSize.Small,
+                NamedSize.Medium, NamedSize.Large
+            };
+
+            foreach (double ptSize in ptSizes)
+            {
+                fontSize = xamarinWidth * density / 90;
+            }
+            return fontSize;
+        }
     }
 }

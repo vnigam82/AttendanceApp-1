@@ -20,13 +20,34 @@ namespace AttendanceApp.ViewModels
         private ObservableCollection<MyAttendanceModel> _attendancelist;
         private Command _searchcommand;
         private bool _isenablesearchbutton = true;
+        private double _lablefontsize = 0, _gridheaderrowfontsize = 0;
         #endregion
         public MyAttendanceViewModel(INavigation navigation)
         {
             this._navigation = navigation;
-
+            LabelFontSize = CommonMethods.GetFontSizeBasedOnScreenHeight();
+            GridHeaderRowFontSize = CommonMethods.GetFontSizeBasedOnScreenHeightForGridRow();
         }
+        public double LabelFontSize
+        {
+            get { return _lablefontsize; }
+            set
+            {
 
+                _lablefontsize = value;
+                OnPropertyChanged(nameof(LabelFontSize));
+            }
+        }
+        public double GridHeaderRowFontSize
+        {
+            get { return _gridheaderrowfontsize; }
+            set
+            {
+
+                _gridheaderrowfontsize = value;
+                OnPropertyChanged(nameof(GridHeaderRowFontSize));
+            }
+        }
         private bool iISBusy;
         public Command SerachCommand
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AttendanceApp.Utils;
 using AttendanceApp.Views;
 using CoreGraphics;
 using UIKit;
@@ -82,14 +83,10 @@ namespace AttendanceApp.iOS.Dependency
             btnYes.Frame = new CGRect(11, logoutmessagetextFrame.Y + logoutmessagetextFrame.Height + 48, ((belowHeaderView.Frame.Width + 15) - (belowHeaderView.Frame.Width / 2)), btnHeight);
             btnYes.TouchUpInside += delegate {
                 Close();
-                Task.Run(() => App.Database.ClearLoginDetails());
-                if (App.Current.Properties.ContainsKey("UserId"))
-                    App.Current.Properties.Remove("UserId");
-
-                if (App.Current.Properties.ContainsKey("IsLoggedIn"))
-                    App.Current.Properties.Remove("IsLoggedIn");
-
-                Task.Run(async () => await App.Current.SavePropertiesAsync());
+                if (HttpRequest.CheckConnection())
+                {
+                    App.Database.ClearLoginDetails();
+                }
                 App.Current.MainPage = new Login();
             };
 

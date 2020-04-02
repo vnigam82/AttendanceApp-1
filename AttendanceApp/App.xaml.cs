@@ -30,14 +30,14 @@ namespace AttendanceApp
             LoginDBModel objUser = App.Database.GetLoggedInUser();
             if (objUser != null)
             {
-                if (objUser.RememberMe)
-                {
+                //if (objUser.RememberMe)
+                //{
                     MainPage = new AppShell();
-                }
-                else
-                {
-                    MainPage = new Login();
-                }
+                //}
+                //else
+                //{
+                //    MainPage = new Login();
+                //}
             }
             else
             {

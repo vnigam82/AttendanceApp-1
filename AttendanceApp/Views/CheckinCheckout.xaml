@@ -41,19 +41,19 @@
                      VerticalOptions="End"/>
             <StackLayout Spacing="0"
                          Padding="0"
-                         Margin="0,80"
+                         Margin="0,20"
                   Grid.Row="1">
                 <ui:MaterialCard
                 Margin="30"
                         BackgroundColor="{StaticResource backgroundColor}"
                         CornerRadius="8"
+                    VerticalOptions="StartAndExpand"
                         Elevation="10"
-                HasShadow="False"
-                        VerticalOptions="StartAndExpand">
+                HasShadow="False">
                     <StackLayout HorizontalOptions="FillAndExpand"
                                  VerticalOptions="FillAndExpand">
                             <Label Text="{strings:Translate pleaseChooseFunction}"
-                               FontSize="Large"/>
+                               FontSize="{Binding LabelFontSize}"/>
                         <BoxView HorizontalOptions="FillAndExpand"
                                  VerticalOptions="StartAndExpand"
                                  HeightRequest="1"
@@ -61,6 +61,7 @@
                         <ScrollView>
                         <Grid RowSpacing="5"
                               ColumnSpacing="0"
+                              VerticalOptions="FillAndExpand"
                               Margin="0,10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -235,59 +236,10 @@
                                                    
                                                 </ui:MaterialCard.GestureRecognizers>
                             </ui:MaterialCard>
+                           
                         </Grid>
                        </ScrollView>
-                         <!--<ScrollView 
-                                    HorizontalScrollBarVisibility="Never"
-                             HeightRequest="200"
-                                    Margin="0,10">
-                            <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}" 
-                                         x:Name="menuList">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                            <ui:MaterialCard Padding="10" IsClickable="True"  
-                                         HasShadow="False"
-                                         BorderColor="LightGray">
-                        <Grid ColumnSpacing="10" RowSpacing="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                                    <ui:MaterialCard HasShadow="False"
-                                                         Padding="10"
-                                                         Elevation="0"
-                                                         Grid.Column="0"
-                                                         BackgroundColor="{Binding GridColor}"
-                                                         >
-                                            <Image Source="{Binding ImageName}"
-                                                   WidthRequest="20"
-                                                   HeightRequest="20"
-                                                   Aspect="AspectFit"/>
-                                            </ui:MaterialCard>
-                                        <Label Text="{Binding Name}"
-                                               Grid.Column="1"
-                                               TextColor="Gray"
-                                               VerticalOptions="CenterAndExpand"
-                                               FontAttributes="Bold"/>
-                            <Image Source="rightarrow.png"
-                                                   WidthRequest="30"
-                                   Grid.Column="2"
-                                   HorizontalOptions="EndAndExpand"
-                                                   HeightRequest="30"
-                                                   Aspect="AspectFit"/>
-                                        
-                                    </Grid>
-                                                <ui:MaterialCard.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BindingContext.MenuItemsCommand, Source={x:Reference menuList}}"
-                                                                              CommandParameter="{Binding .}"/>
-                                                   
-                                                </ui:MaterialCard.GestureRecognizers>
-                            </ui:MaterialCard>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                                </StackLayout>
-                             </ScrollView>-->
+                       
                     </StackLayout>
                     </ui:MaterialCard>
                 </StackLayout>

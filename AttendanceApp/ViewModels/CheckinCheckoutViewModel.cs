@@ -26,7 +26,7 @@ namespace AttendanceApp.ViewModels
         private string _direction = string.Empty,Error = string.Empty;
         private RadioOption _selectedHappinessOption;
         private Location _latlonglocation;
-        private double _radius = 0;
+        private double _radius = 0,_lablefontsize=0,_gridheaderrowfontsize=0;
         private ObservableCollection<RadioOption> _radiooptionlist;
         public ObservableCollection<RadioOption> RadioOptionsList
         {
@@ -60,6 +60,18 @@ namespace AttendanceApp.ViewModels
                 OnPropertyChanged(nameof(SelectedHappinessOption));
             }
         }
+
+        public double LabelFontSize
+        {
+            get { return _lablefontsize; }
+            set
+            {
+
+                _lablefontsize = value;
+                OnPropertyChanged(nameof(LabelFontSize));
+            }
+        }
+        
         public Location LatLongLocation
         {
             get { return _latlonglocation; }
@@ -85,6 +97,8 @@ namespace AttendanceApp.ViewModels
         public CheckinCheckoutViewModel(INavigation navigation)
         {
             this._navigation = navigation;
+            LabelFontSize = CommonMethods.GetFontSizeBasedOnScreenHeight();
+            
         }
 
         public Command SubmitCommand

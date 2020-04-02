@@ -22,9 +22,19 @@ namespace AttendanceApp.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         public Command _loginCommand;
+        LoginDBModel objUser = new LoginDBModel();
+        OrgProfileDBModel orgDetails = new OrgProfileDBModel();
+
         public LoginViewModel()
         {
             GetOrganizationProfile();
+            objUser = App.Database.GetLoggedInUser();
+            orgDetails = App.Database.GetOrganizationDetails();
+            if (objUser!=null)
+            {
+                UserName = objUser.UserName;
+                Password = objUser.Password; 
+            }
             var sqlLiteResult = App.Database.GetLanguage();
             if (sqlLiteResult != null)
             {
@@ -103,30 +113,68 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //   msDuration: MaterialSnackbar.DurationLong);
-                    Device.BeginInvokeOnMainThread(async () =>
+                   
+                    if (orgDetails != null)
                     {
-                        await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
-                    });
-                    return;
-                }
-                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
-                var menuItem = await CommonMethods.GetOrganizationProfile();
+                        if (!string.IsNullOrEmpty(orgDetails.src))
+                         {
+                            ImageBase64 = orgDetails.src;
+                            ImageType = orgDetails.type;
+                            LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
+                        }
+                        else
+                        {
+                            Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
+                                   msDuration: MaterialSnackbar.DurationLong);
+                            });
+                            return;
+                        }
 
-                if (menuItem != null)
-                {
-                    // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-                    ImageBase64 = menuItem.logo.src;
-                    ImageType = menuItem.logo.type;
-                    LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+                    }
+                    else
+                    {
+                        //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
+                        msDuration: MaterialSnackbar.DurationLong);
+                        });
+                        return;
+                    }
+                    
                 }
                 else
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                    // msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    var menuItem = await CommonMethods.GetOrganizationProfile();
+
+                    if (menuItem != null)
+                    {
+                        // DependencyService.Get<ILodingPageService>().HideLoadingPage();
+                        ImageBase64 = menuItem.logo.src;
+                        ImageType = menuItem.logo.type;
+                        LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+
+
+                        var orgData = new OrgProfileDBModel();
+                        orgData.src = "src";
+                        orgData.type = "type";
+                        orgData.name = "name";
+
+                        //orgData.src = menuItem.logo.src;
+                        //orgData.type = menuItem.logo.type;
+                        //orgData.name = menuItem.name;
+
+                        var status= App.Database.SaveOrganizationUser(orgData);
+                    }
+                    else
+                    {
+                        //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
+                        // msDuration: MaterialSnackbar.DurationLong);
+                        await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    }
                 }
             }
             catch (Exception ex)
@@ -147,89 +195,114 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
+               
                 IsButtonDisabled = false;
+
+                // UserName = "JBH\\naomif";
+                //Password = "GAT123"; 
                 if (!HttpRequest.CheckConnection())
                 {
+                    if (!Validate())
+                    {
+                        await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                         msDuration: MaterialSnackbar.DurationLong);
+                        //await CommonMethods.ShowPopup(Error);
+                        return;
+                    }
+                    else
+                    {
+                        if (objUser!=null)
+                        {
+                            if (objUser.UserName == UserName && objUser.Password == Password)
+                            {
+                                App.Current.MainPage = new AppShell();
+                            }
+                            else
+                            {
+                                await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
+                            msDuration: MaterialSnackbar.DurationLong);
+                            return;
+                        }
+                    }
+
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
-                    return;
+                    
                 }
-                // UserName = "JBH\\naomif";
-                //Password = "GAT123";
-                if (!Validate())
+                else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                     msDuration: MaterialSnackbar.DurationLong);
-                    //await CommonMethods.ShowPopup(Error);
-                    return;
-                }
-
-                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
-                //var postData= new Login() { email= "vivek@nigam.com", password="Qwerty@123"};
-                //var postData = new LoginRootObject()
-                //{
-                //    Credentials =new LoginModel()
-                //    {
-                //        username=UserName,
-                //        password = Password
-                //    } 
-
-                //};
-                var postData = new LoginModel()
-                {
-                    username = UserName.Contains("\\\\") ? UserName.Replace(@"\\", @"\") : UserName,
-                    password = Password
-                };
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
-
-                var loginInfo = await CommonMethods.LogInToUser(jsonString);
-                if (loginInfo.Status)
-                {
-                    if (loginInfo.Result != null)
+                    if (!Validate())
                     {
-                        UserSettingUtils.UserName = UserName;
-                        UserSettingUtils.Password = Password;
-                        UserSettingUtils.UserLoginGUID = loginInfo.Result;
+                        await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                         msDuration: MaterialSnackbar.DurationLong);
+                        //await CommonMethods.ShowPopup(Error);
+                        return;
+                    }
 
-                        //if (Rememberme)
-                        //{
-                        var logindbdata = new LoginDBModel();
-                        logindbdata.UserName = UserName;
-                        logindbdata.Password = Password;
-                        logindbdata.UserGUID = loginInfo.Result;
-                        logindbdata.RememberMe = Rememberme;
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
+                    var postData = new LoginModel()
+                    {
+                        username = UserName.Contains("\\\\") ? UserName.Replace(@"\\", @"\") : UserName,
+                        password = Password
+                    };
+                    var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
-                        App.Database.SaveLoggedInUser(logindbdata);
+                    var loginInfo = await CommonMethods.LogInToUser(jsonString);
+                    if (loginInfo.Status)
+                    {
+                        if (loginInfo.Result != null)
+                        {
+                            UserSettingUtils.UserName = UserName;
+                            UserSettingUtils.Password = Password;
+                            UserSettingUtils.UserLoginGUID = loginInfo.Result;
 
-                        DependencyService.Get<IProgressBar>().Hide();
+                            //if (Rememberme)
+                            //{
+                            var logindbdata = new LoginDBModel();
+                            logindbdata.UserName = UserName;
+                            logindbdata.Password = Password;
+                            logindbdata.UserGUID = loginInfo.Result;
+                            logindbdata.RememberMe = Rememberme;
 
-                        App.Current.MainPage = new AppShell();
-                        //}
-                        //else
-                        //{
-                        //    App.Current.MainPage = new AppShell();
-                        //}
+                            App.Database.SaveLoggedInUser(logindbdata);
+
+                            DependencyService.Get<IProgressBar>().Hide();
+
+                            App.Current.MainPage = new AppShell();
+                            //}
+                            //else
+                            //{
+                            //    App.Current.MainPage = new AppShell();
+                            //}
+                        }
+                        else
+                        {
+                            DependencyService.Get<IProgressBar>().Hide();
+                            await CommonMethods.ShowPopup(Resx.AppResources.invalidUserDetails);
+                            //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
+                            // actionButtonText: "Ok",
+                            // msDuration: 3000);
+
+                        }
+
                     }
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        await CommonMethods.ShowPopup(Resx.AppResources.invalidUserDetails);
-                        //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
-                        // actionButtonText: "Ok",
-                        // msDuration: 3000);
-
+                        //await CommonMethods.ShowPopup(loginInfo.Message);
+                        await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                        actionButtonText: "Ok",
+                        msDuration: 3000);
                     }
-
                 }
-                else
-                {
-                    DependencyService.Get<IProgressBar>().Hide();
-                    //await CommonMethods.ShowPopup(loginInfo.Message);
-                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                    actionButtonText: "Ok",
-                    msDuration: 3000);
-                }
+                
             }
             catch (Exception ex)
             {
