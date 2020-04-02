@@ -13,7 +13,7 @@ namespace AttendanceApp.ViewModels
     public class FlyoutHeaderViewModel:BaseViewModel
     {
         private INavigation _navigation;
-
+        private string _imageSource = string.Empty;
         public FlyoutHeaderViewModel(INavigation navigation)
         {
             this._navigation = navigation;
@@ -35,59 +35,65 @@ namespace AttendanceApp.ViewModels
                         clsDBUserProfile objUser = App.Database.GetUserProfileDetails();
                         ProfileUserName = objUser.fullName;
                         ProfileUserEmail = objUser.email;
+                        ImageSource = objUser.ImageSource;
+
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                     }
                      
                     return;
                 }
-                //DependencyService.Get<IProgressBar>().Show("Please wait...");
-                var menuItem = await CommonMethods.GetUserProfile();
-
-                if (menuItem.Status)
-                {
-                    if (menuItem!=null)
-                    {
-                        ProfileUserName = menuItem.fullName;
-                        ProfileUserEmail = menuItem.email;
-                        ProfilePic = menuItem.picture ;
-
-
-
-                        clsDBUserProfile orgData = new clsDBUserProfile();
-                        orgData.fullName = menuItem.fullName;
-                        orgData.email = menuItem.email;
-                        orgData.src = menuItem.picture.ImageSource;
-                        var status = App.Database.SaveUserProfileDetails(orgData);
-
-                    }
-                    
-                }
                 else
                 {
-                    if (menuItem.StatusCode==System.Net.HttpStatusCode.NotFound)
+                    var menuItem = await CommonMethods.GetUserProfile();
+
+                    if (menuItem.Status)
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
-                        App.Current.MainPage = new Login();
+                        if (menuItem != null)
+                        {
+                            ProfileUserName = menuItem.fullName;
+                            ProfileUserEmail = menuItem.email;
+                            ProfilePic = menuItem.picture;
+                            ImageSource= menuItem.picture.ImageSource;
+
+
+                            clsDBUserProfile orgData = new clsDBUserProfile();
+                            orgData.fullName = menuItem.fullName;
+                            orgData.email = menuItem.email;
+                            orgData.src = menuItem.picture.ImageSource;
+                            orgData.ImageSource= menuItem.picture.ImageSource;
+                            var status = App.Database.SaveUserProfileDetails(orgData);
+
+                        }
+
                     }
                     else
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                        if (menuItem.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
+                                                msDuration: MaterialSnackbar.DurationLong);
+                            App.Current.MainPage = new Login();
+                        }
+                        else
+                        {
+                            await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
+                                                msDuration: MaterialSnackbar.DurationLong);
+                        }
                     }
                 }
+               
+                
             }
             catch (Exception ex)
             {
-                //DependencyService.Get<IProgressBar>().Hide();
                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                                             msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
-                //DependencyService.Get<IProgressBar>().Hide();
+                
             }
         }
 
@@ -121,6 +127,17 @@ namespace AttendanceApp.ViewModels
             {
                 _profilePic = value;
                 OnPropertyChanged("ProfilePic");
+            }
+        }
+
+       
+        public string ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged("ImageSource");
             }
         }
     }

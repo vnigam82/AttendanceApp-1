@@ -35,7 +35,23 @@ namespace AttendanceApp.Database
         public string email { get; set; }
         public string fullName { get; set; }
         public string src { get; set; }
-       
+        public string ImageSource
+        {
+            get
+            {
+                string imagesource = string.Empty;
+                if (string.IsNullOrWhiteSpace(src))
+                {
+                    imagesource = "profile.png";
+                }
+                else
+                {
+                    imagesource = src;
+                }
+                return imagesource;
+            }
+            set { }
+        }
         public string type { get; set; }
     }
 }

@@ -119,25 +119,25 @@ namespace AttendanceApp.ViewModels
 
                         ImageBase64 = objUser.src;
                         ImageType = orgDetails.type;
-                      //  LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
+                      ////  LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
                         
-                            Device.BeginInvokeOnMainThread(async () =>
-                            {
-                                await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                                   msDuration: MaterialSnackbar.DurationLong);
-                            });
+                      //      Device.BeginInvokeOnMainThread(async () =>
+                      //      {
+                      //          await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
+                      //             msDuration: MaterialSnackbar.DurationLong);
+                      //      });
                         
                       
 
 
-                        return;
+                      //  return;
 
                     }
                     else
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity to get logo.",
                         msDuration: MaterialSnackbar.DurationLong);
                         });
                         return;
@@ -159,7 +159,7 @@ namespace AttendanceApp.ViewModels
                         OrgProfileDBModel orgData = new OrgProfileDBModel();
                         orgData.src = menuItem.logo.src;
                         orgData.type = menuItem.logo.type;
-                        orgData.name = "name";
+                        orgData.name = menuItem.name;
 
 
                         var status = App.Database.SaveOrganizationUser(orgData);

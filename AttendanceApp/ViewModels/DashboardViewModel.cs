@@ -59,39 +59,43 @@ namespace AttendanceApp.ViewModels
                     OrgProfileDBModel objUser = App.Database.GetOrganizationDetails();
                     ImageBase64 = objUser.src;
 
-                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                    //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                  
-                    return;
-                }
-                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
-                var menuItem = await CommonMethods.GetOrganizationProfile();
-
-                if (menuItem != null)
-                {
-                    // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-                    ImageBase64 = menuItem.logo.src;
-                    ImageType = menuItem.logo.type;
-                    LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
-
-                    OrgProfileDBModel orgData = new OrgProfileDBModel();
-                    orgData.src = menuItem.logo.src;
-                    orgData.type = menuItem.logo.type;
-                    orgData.name = "name";
-                    var status = App.Database.SaveOrganizationUser(orgData);
+                    //return;
                 }
                 else
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                                            //msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    var menuItem = await CommonMethods.GetOrganizationProfile();
+
+                    if (menuItem != null)
+                    {
+                        // DependencyService.Get<ILodingPageService>().HideLoadingPage();
+                        ImageBase64 = menuItem.logo.src;
+                        ImageType = menuItem.logo.type;
+                        LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+
+                        OrgProfileDBModel orgData = new OrgProfileDBModel();
+                        orgData.src = menuItem.logo.src;
+                        orgData.type = menuItem.logo.type;
+                        orgData.name = menuItem.name;
+                        var status = App.Database.SaveOrganizationUser(orgData);
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
+                                                msDuration: MaterialSnackbar.DurationLong);
+                        //await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    }
                 }
+                
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            //msDuration: MaterialSnackbar.DurationLong);
+                //await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                                            msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
