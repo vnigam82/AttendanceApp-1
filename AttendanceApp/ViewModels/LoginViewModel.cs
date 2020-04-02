@@ -119,13 +119,17 @@ namespace AttendanceApp.ViewModels
 
                         ImageBase64 = objUser.src;
                         ImageType = orgDetails.type;
-                        LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
+                      //  LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
+                        
+                            Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
+                                   msDuration: MaterialSnackbar.DurationLong);
+                            });
+                        
+                      
 
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                               msDuration: MaterialSnackbar.DurationLong);
-                        });
+
                         return;
 
                     }
