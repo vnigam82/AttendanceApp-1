@@ -67,21 +67,23 @@ namespace AttendanceApp.Database
             }
             else
             {
-                database.Delete(item);
+                var data = database.Table<LoginDBModel>().ToList();
+                foreach (var cn in data)
+                {
+                    database.Delete(cn);
+                }
                 return database.Insert(item);
             }
         }
         public int SaveOrganizationUser(OrgProfileDBModel item)
         {
-            if (item.ID != 0)
+            var data = database.Table<OrgProfileDBModel>().ToList();
+            foreach (var cn in data)
             {
-                return database.Update(item);
+                 database.Delete(cn);
             }
-            else
-            {
-                //database.Delete(item);
-                return database.Insert(item);
-            }
+            return database.Insert(item);
+            
         }
         public int SaveUserProfileDetails(clsDBUserProfile item)
         {

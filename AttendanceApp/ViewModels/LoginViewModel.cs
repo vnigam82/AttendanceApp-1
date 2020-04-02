@@ -30,10 +30,10 @@ namespace AttendanceApp.ViewModels
             GetOrganizationProfile();
             objUser = App.Database.GetLoggedInUser();
             orgDetails = App.Database.GetOrganizationDetails();
-            if (objUser!=null)
+            if (objUser != null)
             {
                 UserName = objUser.UserName;
-                Password = objUser.Password; 
+                Password = objUser.Password;
             }
             var sqlLiteResult = App.Database.GetLanguage();
             if (sqlLiteResult != null)
@@ -113,29 +113,24 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                   
-                    if (orgDetails != null)
+                    OrgProfileDBModel objUser = App.Database.GetOrganizationDetails();
+                    if (objUser != null)
                     {
-                        if (!string.IsNullOrEmpty(orgDetails.src))
-                         {
-                            ImageBase64 = orgDetails.src;
-                            ImageType = orgDetails.type;
-                            LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
-                        }
-                        else
+
+                        ImageBase64 = objUser.src;
+                        ImageType = orgDetails.type;
+                        LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
+
+                        Device.BeginInvokeOnMainThread(async () =>
                         {
-                            Device.BeginInvokeOnMainThread(async () =>
-                            {
-                                await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                                   msDuration: MaterialSnackbar.DurationLong);
-                            });
-                            return;
-                        }
+                            await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
+                               msDuration: MaterialSnackbar.DurationLong);
+                        });
+                        return;
 
                     }
                     else
                     {
-                        //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
@@ -143,7 +138,7 @@ namespace AttendanceApp.ViewModels
                         });
                         return;
                     }
-                    
+
                 }
                 else
                 {
@@ -152,27 +147,21 @@ namespace AttendanceApp.ViewModels
 
                     if (menuItem != null)
                     {
-                        // DependencyService.Get<ILodingPageService>().HideLoadingPage();
                         ImageBase64 = menuItem.logo.src;
                         ImageType = menuItem.logo.type;
                         LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
 
 
-                        var orgData = new OrgProfileDBModel();
-                        orgData.src = "src";
-                        orgData.type = "type";
+                        OrgProfileDBModel orgData = new OrgProfileDBModel();
+                        orgData.src = menuItem.logo.src;
+                        orgData.type = menuItem.logo.type;
                         orgData.name = "name";
 
-                        //orgData.src = menuItem.logo.src;
-                        //orgData.type = menuItem.logo.type;
-                        //orgData.name = menuItem.name;
 
-                        var status= App.Database.SaveOrganizationUser(orgData);
+                        var status = App.Database.SaveOrganizationUser(orgData);
                     }
                     else
                     {
-                        //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                        // msDuration: MaterialSnackbar.DurationLong);
                         await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
                     }
                 }
@@ -180,9 +169,8 @@ namespace AttendanceApp.ViewModels
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                //await CommonMethods.ShowPopup(ex.Message);
-                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                   msDuration: MaterialSnackbar.DurationLong);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                  msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
@@ -195,11 +183,11 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
-               
+
                 IsButtonDisabled = false;
 
-                // UserName = "JBH\\naomif";
-                //Password = "GAT123"; 
+                //UserName = "JBH\\naomif";
+               // Password = "GAT123";
                 if (!HttpRequest.CheckConnection())
                 {
                     if (!Validate())
@@ -211,7 +199,7 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        if (objUser!=null)
+                        if (objUser != null)
                         {
                             if (objUser.UserName == UserName && objUser.Password == Password)
                             {
@@ -234,7 +222,7 @@ namespace AttendanceApp.ViewModels
 
                     //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
                     //msDuration: MaterialSnackbar.DurationLong);
-                    
+
                 }
                 else
                 {
@@ -302,7 +290,7 @@ namespace AttendanceApp.ViewModels
                         msDuration: 3000);
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -330,7 +318,7 @@ namespace AttendanceApp.ViewModels
 
             if (string.IsNullOrWhiteSpace(Password))
             {
-                Error += "\n"+ Resx.AppResources.pleaseProvidePassword;
+                Error += "\n" + Resx.AppResources.pleaseProvidePassword;
                 result = false;
             }
             //if (!Rememberme)

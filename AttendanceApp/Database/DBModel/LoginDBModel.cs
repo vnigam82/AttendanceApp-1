@@ -18,26 +18,27 @@ namespace AttendanceApp.Database
 
     public class OrgProfileDBModel 
     {
-        public string name { get; set; }
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public string name { get; set; }
         public string src { get; set; }
-        public string ImageSource
-        {
-            get
-            {
-                string imagesource = string.Empty;
-                if (string.IsNullOrWhiteSpace(src))
-                {
-                    imagesource = "profile.png";
-                }
-                else
-                {
-                    imagesource = src;
-                }
-                return imagesource;
-            }
-        }
+        //public string ImageSource
+        //{
+        //    get
+        //    {
+        //        string imagesource = string.Empty;
+        //        if (string.IsNullOrWhiteSpace(src))
+        //        {
+        //            imagesource = "profile.png";
+        //        }
+        //        else
+        //        {
+        //            imagesource = src;
+        //        }
+        //        return imagesource;
+        //    }
+        //}
+
         public string type { get; set; }
     }
 

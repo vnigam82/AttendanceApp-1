@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
+using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
@@ -55,9 +56,11 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
+                    OrgProfileDBModel objUser = App.Database.GetOrganizationDetails();
+                    ImageBase64 = objUser.src;
+
                     await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                           // msDuration: MaterialSnackbar.DurationLong);
+                 
                     return;
                 }
                 DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
@@ -69,6 +72,12 @@ namespace AttendanceApp.ViewModels
                     ImageBase64 = menuItem.logo.src;
                     ImageType = menuItem.logo.type;
                     LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+
+                    OrgProfileDBModel orgData = new OrgProfileDBModel();
+                    orgData.src = menuItem.logo.src;
+                    orgData.type = menuItem.logo.type;
+                    orgData.name = "name";
+                    var status = App.Database.SaveOrganizationUser(orgData);
                 }
                 else
                 {
@@ -89,6 +98,58 @@ namespace AttendanceApp.ViewModels
                 DependencyService.Get<IProgressBar>().Hide();
             }
         }
+
+
+        public async void GetOrganizationProfile1()
+        {
+            try
+            {
+                if (!HttpRequest.CheckConnection())
+                {
+                    OrgProfileDBModel objUser = App.Database.GetOrganizationDetails();
+                     
+
+                        ImageBase64 = objUser.src;
+                        await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                        return;
+
+                     
+
+                }
+                else
+                {
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    var menuItem = await CommonMethods.GetOrganizationProfile();
+
+                    if (menuItem != null)
+                    {
+                        ImageBase64 = menuItem.logo.src;
+                        ImageType = menuItem.logo.type;
+                        LangType = JsonConvert.DeserializeObject<Language>(menuItem.name);
+
+
+                        OrgProfileDBModel orgData = new OrgProfileDBModel();
+                        orgData.src = menuItem.logo.src;
+                        orgData.type = menuItem.logo.type;
+                        orgData.name = "name";
+                        var status = App.Database.SaveOrganizationUser(orgData);
+                    }
+                    else
+                    {
+                        await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IProgressBar>().Hide();
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                  msDuration: MaterialSnackbar.DurationLong);
+            }
+             
+        }
+
+
         public Command ItemTappedCommand
         {
             get
