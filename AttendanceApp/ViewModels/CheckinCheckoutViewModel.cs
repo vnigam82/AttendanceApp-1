@@ -140,7 +140,9 @@ namespace AttendanceApp.ViewModels
                 if (!Validate())
                 {
 
-                    await CommonMethods.ShowPopup(Error);
+                    //await CommonMethods.ShowPopup(Error);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
+                         msDuration: MaterialSnackbar.DurationLong);
                     return;
                 }
                 if (!HttpRequest.CheckConnection())
@@ -156,16 +158,16 @@ namespace AttendanceApp.ViewModels
                     var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
 
                     var postDataOfflone = new List<BookingModel>()
-                {
-                    new BookingModel()
                     {
-                        DateTime=DateTime.Now,
-                        Direction=Direction,
-                        Location=locjsonStringOfflone,
-                        HappinessOption=SelectedHappinessOption?.HappynessCode,
-                        ReasonCode=SelectedReason?.code
-                    }
-                };
+                        new BookingModel()
+                        {
+                            DateTime=DateTime.Now,
+                            Direction=Direction,
+                            Location=locjsonStringOfflone,
+                            HappinessOption=SelectedHappinessOption?.HappynessCode,
+                            ReasonCode=SelectedReason?.code
+                        }
+                    };
                     foreach (var item in postDataOfflone)
                     {
                         DBBookingModel dbdata = new DBBookingModel();
@@ -180,7 +182,9 @@ namespace AttendanceApp.ViewModels
 
                     IsUserExist = true;
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully,
+                         msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
                     await _navigation.PopAsync();
 
 
@@ -216,13 +220,17 @@ namespace AttendanceApp.ViewModels
                 if (loginInfo.Status)
                 {
                     IsUserExist = true;
-                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                    //await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully,
+                         msDuration: MaterialSnackbar.DurationLong);
                     await _navigation.PopAsync();
                 }
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup(loginInfo.Message);
+                    //await CommonMethods.ShowPopup(loginInfo.Message);
+                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
+                         msDuration: MaterialSnackbar.DurationLong);
                     IsUserExist = false;
                 }
             }
@@ -230,7 +238,9 @@ namespace AttendanceApp.ViewModels
             {
                 DependencyService.Get<IProgressBar>().Hide();
                 IsUserExist = false;
-                await CommonMethods.ShowPopup(ex.Message);
+                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
+                         msDuration: MaterialSnackbar.DurationLong);
+                
             }
             finally
             {
@@ -510,20 +520,22 @@ namespace AttendanceApp.ViewModels
                                 if (distanceMeter < objUser.radius)
                                 {
 
-
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
+                                    DependencyService.Get<IProgressBar>().Hide();
+                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
                                     IsUserExist = true;
                                     IsAccordianOpen = !IsAccordianOpen;
                                 }
                                 else
                                 {
-
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
+                                    DependencyService.Get<IProgressBar>().Hide();
+                                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreOutOfLocation,
+                                        msDuration: MaterialSnackbar.DurationLong);
+                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
                                     IsUserExist = false;
                                 }
                             }
                         }
-                        DependencyService.Get<IProgressBar>().Hide();
+                        
                     }
                     else
                     {
@@ -564,45 +576,46 @@ namespace AttendanceApp.ViewModels
                                 Radius = distanceMeter;
                                 if (distanceMeter < menuItem.locationData.radius)
                                 {
+                                    DependencyService.Get<IProgressBar>().Hide();
 
-
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
+                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
                                     IsUserExist = true;
                                     IsAccordianOpen = !IsAccordianOpen;
                                 }
                                 else
                                 {
-
-                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
+                                    DependencyService.Get<IProgressBar>().Hide();
+                                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreOutOfLocation,
+                                        msDuration: MaterialSnackbar.DurationLong);
                                     IsUserExist = false;
                                 }
                             }
                         }
                         else
                         {
-                            await CommonMethods.ShowPopup(Resx.AppResources.pleaseEnableYourLocationService);
+                            //await CommonMethods.ShowPopup(Resx.AppResources.pleaseEnableYourLocationService);
+                            DependencyService.Get<IProgressBar>().Hide();
+                            await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseEnableYourLocationService,
+                                        msDuration: MaterialSnackbar.DurationLong);
                             return;
                         }
 
                     }
                     catch (Exception ex)
                     {
+                        DependencyService.Get<IProgressBar>().Hide();
                         IsUserExist = false;
                         await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                         msDuration: MaterialSnackbar.DurationLong);
                     }
-
-
-
-
-
-                    DependencyService.Get<IProgressBar>().Hide();
                 }
                 else
                 {
                     IsUserExist = false;
                     DependencyService.Get<IProgressBar>().Hide();
-                    await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
+                                        msDuration: MaterialSnackbar.DurationLong);
+                    //await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
                 }
             }
             catch (Exception ex)

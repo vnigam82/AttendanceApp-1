@@ -56,6 +56,29 @@ namespace AttendanceApp.Database
             }
             return status;
         }
+
+        public int ClearBookingBasedOnId(DBBookingModel obj)
+        {
+            var status = 0;
+            try
+            {
+                var data = database.Table<DBBookingModel>().ToList();
+                foreach (var item in data)
+                {
+                    if (item.ID==obj.ID)
+                    {
+                        status = database.Delete(obj);
+                    }
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return status;
+        }
         public int SaveBooking(DBBookingModel item)
         {
             return database.Insert(item);

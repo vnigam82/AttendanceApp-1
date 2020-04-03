@@ -229,16 +229,25 @@ namespace AttendanceApp.Helpers
                     }
                     else
                     {
+                        obj.Result = serviceResult;
+                        obj.Status = userinfo.Status;
+                        obj.Message = userinfo.Message;
                         return obj;
                     }
                 }
                 else
                 {
+                    
+                    obj.Status = userinfo.Status;
+                    obj.Message = userinfo.Message;
+
                     return obj;
                 }
             }
             catch (Exception ex)
             {
+                obj.Status = false;
+                obj.Message = ex.Message;
                 return obj;
             }
         }

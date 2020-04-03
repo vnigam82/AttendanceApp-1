@@ -81,4 +81,10 @@ namespace AttendanceApp.Models
         public string name { get; set; }
         public ReasonLanguage langData { get; set; }
     }
+
+    public class clsMessages
+    {
+        public bool Status { get; set; }
+        public string Message { get; set; }
+    }
 }
