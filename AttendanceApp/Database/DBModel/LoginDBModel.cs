@@ -73,4 +73,14 @@ namespace AttendanceApp.Database
         public string name { get; set; }
          
     }
+    public class DBBookingModel
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Direction { get; set; }
+        public string Location { get; set; }
+        public int? ReasonCode { get; set; }
+        public Int64? HappinessOption { get; set; }
+    }
 }

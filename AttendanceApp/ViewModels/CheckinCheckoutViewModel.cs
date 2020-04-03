@@ -22,12 +22,12 @@ namespace AttendanceApp.ViewModels
         #region Local Variable
         private INavigation _navigation;
         ServiceConfigrations service = new ServiceConfigrations();
-        private bool _isShowBack, _isShowMenuButton,_isUserExist,_isAccordianOpen,_isenabledsubmitbutton=true;
+        private bool _isShowBack, _isShowMenuButton, _isUserExist, _isAccordianOpen, _isenabledsubmitbutton = true;
         public Command _submitCommand;
-        private string _direction = string.Empty,Error = string.Empty;
+        private string _direction = string.Empty, Error = string.Empty;
         private RadioOption _selectedHappinessOption;
         private Location _latlonglocation;
-        private double _radius = 0,_lablefontsize=0,_gridheaderrowfontsize=0;
+        private double _radius = 0, _lablefontsize = 0, _gridheaderrowfontsize = 0;
         private ObservableCollection<RadioOption> _radiooptionlist;
         public ObservableCollection<RadioOption> RadioOptionsList
         {
@@ -72,7 +72,7 @@ namespace AttendanceApp.ViewModels
                 OnPropertyChanged(nameof(LabelFontSize));
             }
         }
-        
+
         public Location LatLongLocation
         {
             get { return _latlonglocation; }
@@ -99,7 +99,6 @@ namespace AttendanceApp.ViewModels
         {
             this._navigation = navigation;
             LabelFontSize = CommonMethods.GetFontSizeBasedOnScreenHeight();
-            
         }
 
         public Command SubmitCommand
@@ -122,7 +121,7 @@ namespace AttendanceApp.ViewModels
 
             if (string.IsNullOrWhiteSpace(SelectedHappinessOption?.Title))
             {
-                Error += "\n"+ Resx.AppResources.pleaseSelectHappinessOption;
+                Error += "\n" + Resx.AppResources.pleaseSelectHappinessOption;
                 result = false;
             }
 
@@ -139,24 +138,60 @@ namespace AttendanceApp.ViewModels
             IsEnabledSubmitButton = false;
             try
             {
-                if (!HttpRequest.CheckConnection())
-                {
-                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //                        msDuration: MaterialSnackbar.DurationLong);
-                    return;
-                }
-              
                 if (!Validate())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                    //                        msDuration: MaterialSnackbar.DurationLong);
+
                     await CommonMethods.ShowPopup(Error);
                     return;
                 }
+                if (!HttpRequest.CheckConnection())
+                {
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
+
+                    var locationDataOfflone = new LocationData()
+                    {
+                        lat = LatLongLocation.Latitude,
+                        lng = LatLongLocation.Longitude,
+                        radius = Radius
+                    };
+                    var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
+
+                    var postDataOfflone = new List<BookingModel>()
+                {
+                    new BookingModel()
+                    {
+                        DateTime=DateTime.Now,
+                        Direction=Direction,
+                        Location=locjsonStringOfflone,
+                        HappinessOption=SelectedHappinessOption?.HappynessCode,
+                        ReasonCode=SelectedReason?.code
+                    }
+                };
+                    foreach (var item in postDataOfflone)
+                    {
+                        DBBookingModel dbdata = new DBBookingModel();
+                        dbdata.DateTime = item.DateTime;
+                        dbdata.Direction = item.Direction;
+                        dbdata.HappinessOption = item.HappinessOption;
+                        dbdata.Location = item.Location;
+                        dbdata.ReasonCode = item.ReasonCode;
+                        App.Database.SaveBooking(dbdata);
+                    }
+
+
+                    IsUserExist = true;
+                    DependencyService.Get<IProgressBar>().Hide();
+                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                    await _navigation.PopAsync();
+
+
+                    return;
+                }
+
+
 
                 DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
-               
+
                 var locationData = new LocationData()
                 {
                     lat = LatLongLocation.Latitude,
@@ -182,17 +217,13 @@ namespace AttendanceApp.ViewModels
                 if (loginInfo.Status)
                 {
                     IsUserExist = true;
-                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " "+ Resx.AppResources.successfully);
-                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", @"You are Checked "+Direction+" successfully", "OK");
+                    await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
                     await _navigation.PopAsync();
                 }
                 else
                 {
                     DependencyService.Get<IProgressBar>().Hide();
                     await CommonMethods.ShowPopup(loginInfo.Message);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                    //                        actionButtonText: "Ok",
-                    //                        msDuration: 3000);
                     IsUserExist = false;
                 }
             }
@@ -269,22 +300,22 @@ namespace AttendanceApp.ViewModels
                 }
                 DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetReasons();
-                
+
                 if (menuItem != null)
                 {
-                    if (menuItem.Count>0)
+                    if (menuItem.Count > 0)
                     {
                         App.Database.ClearReason();
 
                         DependencyService.Get<IProgressBar>().Hide();
-                        
+
                         foreach (var item in menuItem)
                         {
                             var data = new clsReasons();
                             data.code = item.code;
                             data.name = item.name;
                             var name = "{" + item.name + "}";
-                            data.langData= JsonConvert.DeserializeObject<ReasonLanguage>(name);
+                            data.langData = JsonConvert.DeserializeObject<ReasonLanguage>(name);
                             ReasonList.Add(data);
 
                             DBReasonLanguage dbdata = new DBReasonLanguage();
@@ -294,7 +325,7 @@ namespace AttendanceApp.ViewModels
 
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -503,7 +534,7 @@ namespace AttendanceApp.ViewModels
                         await MaterialDialog.Instance.SnackbarAsync(message: "Please checkIn/checkOut atleast first in net connectivity.",
                           msDuration: MaterialSnackbar.DurationLong);
                     }
-                   
+
                     return;
 
                 }
@@ -555,7 +586,7 @@ namespace AttendanceApp.ViewModels
                             await CommonMethods.ShowPopup(Resx.AppResources.pleaseEnableYourLocationService);
                             return;
                         }
-                       
+
                     }
                     catch (Exception ex)
                     {
@@ -567,7 +598,7 @@ namespace AttendanceApp.ViewModels
                     }
 
 
-                   
+
 
 
                     DependencyService.Get<IProgressBar>().Hide();

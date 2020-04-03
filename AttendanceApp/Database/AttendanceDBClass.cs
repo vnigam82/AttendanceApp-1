@@ -20,6 +20,7 @@ namespace AttendanceApp.Database
                 database.CreateTable<AppLanguage>();
                 database.CreateTable<DBLocationData>();
                 database.CreateTable<DBReasonLanguage>();
+                database.CreateTable<DBBookingModel>();
             }
             catch (Exception ex)
             {
@@ -31,6 +32,38 @@ namespace AttendanceApp.Database
         {
             return database.Table<AppLanguage>().FirstOrDefault();
         }
+
+
+        public List<DBBookingModel> GetBooking()
+        {
+            return database.Table<DBBookingModel>().ToList();
+        }
+        public int ClearBooking()
+        {
+            var status = 0;
+            try
+            {
+                var data = database.Table<DBBookingModel>().ToList();
+                foreach (var item in data)
+                {
+                    status = database.Delete(item);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return status;
+        }
+        public int SaveBooking(DBBookingModel item)
+        {
+            return database.Insert(item);
+
+        }
+
+
+
 
         public List<DBReasonLanguage> GetReason()
         {

@@ -190,7 +190,7 @@ namespace AttendanceApp.ViewModels
 
                 IsButtonDisabled = false;
 
-               // UserName = "JBH\\naomif";
+              // UserName = "JBH\\naomif";
               // Password = "GAT123";
                 if (!HttpRequest.CheckConnection())
                 {
