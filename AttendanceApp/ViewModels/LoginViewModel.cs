@@ -130,7 +130,7 @@ namespace AttendanceApp.ViewModels
                       
 
 
-                      //  return;
+                        return;
 
                     }
                     else
@@ -198,7 +198,6 @@ namespace AttendanceApp.ViewModels
                     {
                         await MaterialDialog.Instance.SnackbarAsync(message: Error,
                          msDuration: MaterialSnackbar.DurationLong);
-                        //await CommonMethods.ShowPopup(Error);
                         return;
                     }
                     else
@@ -217,15 +216,12 @@ namespace AttendanceApp.ViewModels
                         }
                         else
                         {
-                            //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                             await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
                             msDuration: MaterialSnackbar.DurationLong);
                             return;
                         }
                     }
 
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //msDuration: MaterialSnackbar.DurationLong);
 
                 }
                 else
@@ -234,7 +230,6 @@ namespace AttendanceApp.ViewModels
                     {
                         await MaterialDialog.Instance.SnackbarAsync(message: Error,
                          msDuration: MaterialSnackbar.DurationLong);
-                        //await CommonMethods.ShowPopup(Error);
                         return;
                     }
 
@@ -255,8 +250,7 @@ namespace AttendanceApp.ViewModels
                             UserSettingUtils.Password = Password;
                             UserSettingUtils.UserLoginGUID = loginInfo.Result;
 
-                            //if (Rememberme)
-                            //{
+                             
                             var logindbdata = new LoginDBModel();
                             logindbdata.UserName = UserName;
                             logindbdata.Password = Password;
@@ -268,19 +262,13 @@ namespace AttendanceApp.ViewModels
                             DependencyService.Get<IProgressBar>().Hide();
 
                             App.Current.MainPage = new AppShell();
-                            //}
-                            //else
-                            //{
-                            //    App.Current.MainPage = new AppShell();
-                            //}
+                            
                         }
                         else
                         {
                             DependencyService.Get<IProgressBar>().Hide();
                             await CommonMethods.ShowPopup(Resx.AppResources.invalidUserDetails);
-                            //await MaterialDialog.Instance.SnackbarAsync(message: "Invalid User Details",
-                            // actionButtonText: "Ok",
-                            // msDuration: 3000);
+                            
 
                         }
 
@@ -288,7 +276,6 @@ namespace AttendanceApp.ViewModels
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        //await CommonMethods.ShowPopup(loginInfo.Message);
                         await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
                         actionButtonText: "Ok",
                         msDuration: 3000);
@@ -299,7 +286,6 @@ namespace AttendanceApp.ViewModels
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                //await CommonMethods.ShowPopup(ex.Message);
                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                 msDuration: MaterialSnackbar.DurationLong);
             }
@@ -325,11 +311,7 @@ namespace AttendanceApp.ViewModels
                 Error += "\n" + Resx.AppResources.pleaseProvidePassword;
                 result = false;
             }
-            //if (!Rememberme)
-            //{
-            //    Error += "\nPlease check the remember me checkbox.";
-            //    result = false;
-            //}
+            
             return result;
         }
         private string imageBase64;

@@ -134,7 +134,6 @@ namespace AttendanceApp.ViewModels
         }
         public async void ExecuteSubmitCommand()
         {
-            //var data = selectedReason;
             IsEnabledSubmitButton = false;
             try
             {
@@ -232,8 +231,6 @@ namespace AttendanceApp.ViewModels
                 DependencyService.Get<IProgressBar>().Hide();
                 IsUserExist = false;
                 await CommonMethods.ShowPopup(ex.Message);
-                //await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                //                            msDuration: MaterialSnackbar.DurationLong);
             }
             finally
             {
@@ -591,8 +588,6 @@ namespace AttendanceApp.ViewModels
                     catch (Exception ex)
                     {
                         IsUserExist = false;
-                        //await CommonMethods.ShowPopup(ex.Message);
-
                         await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                         msDuration: MaterialSnackbar.DurationLong);
                     }
@@ -608,15 +603,12 @@ namespace AttendanceApp.ViewModels
                     IsUserExist = false;
                     DependencyService.Get<IProgressBar>().Hide();
                     await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                    //                        msDuration: MaterialSnackbar.DurationLong);
                 }
             }
             catch (Exception ex)
             {
                 IsUserExist = false;
                 DependencyService.Get<IProgressBar>().Hide();
-                //await CommonMethods.ShowPopup(ex.Message);
                 await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                                            msDuration: MaterialSnackbar.DurationLong);
             }
