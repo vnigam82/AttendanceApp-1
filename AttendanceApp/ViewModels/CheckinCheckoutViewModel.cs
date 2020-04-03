@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AttendanceApp.CustomControls.RadioButton;
+using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
@@ -243,20 +244,40 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
+                ReasonList = new ObservableCollection<clsReasons>();
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    var objReason = App.Database.GetReason();
+                    if (objReason.Count > 0)
+                    {
+                        foreach (var item in objReason)
+                        {
+                            var data = new clsReasons();
+                            data.code = item.code;
+                            data.name = item.name;
+                            var name = "{" + item.name + "}";
+                            data.langData = JsonConvert.DeserializeObject<ReasonLanguage>(name);
+                            ReasonList.Add(data);
+                        }
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.SnackbarAsync(message: "Please get Reason atleast first in net connectivity.",
+                          msDuration: MaterialSnackbar.DurationLong);
+                    }
                     return;
                 }
                 DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                 var menuItem = await CommonMethods.GetReasons();
-                ReasonList = new ObservableCollection<clsReasons>();
+                
                 if (menuItem != null)
                 {
                     if (menuItem.Count>0)
                     {
+                        App.Database.ClearReason();
+
                         DependencyService.Get<IProgressBar>().Hide();
+                        
                         foreach (var item in menuItem)
                         {
                             var data = new clsReasons();
@@ -265,6 +286,12 @@ namespace AttendanceApp.ViewModels
                             var name = "{" + item.name + "}";
                             data.langData= JsonConvert.DeserializeObject<ReasonLanguage>(name);
                             ReasonList.Add(data);
+
+                            DBReasonLanguage dbdata = new DBReasonLanguage();
+                            dbdata.code = data.code;
+                            dbdata.name = data.name;
+                            App.Database.SaveReason(dbdata);
+
                         }
                     }
                     
@@ -434,9 +461,49 @@ namespace AttendanceApp.ViewModels
             {
                 if (!HttpRequest.CheckConnection())
                 {
-                    //await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                    //                        msDuration: MaterialSnackbar.DurationLong);
-                    await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                    var objUser = App.Database.GetCheckinCheckoutLocation();
+                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    if (objUser != null)
+                    {
+                        var locator = CrossGeolocator.Current;
+                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
+                        {
+                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+                            if (sourceLocation != null)
+                            {
+
+                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                                LatLongLocation = sourceCoordinates;
+                                Location destinationCoordinates = new Location(objUser.lat, objUser.lng);
+                                double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
+                                double distanceMeter = distance * 1000;
+                                Radius = distanceMeter;
+                                if (distanceMeter < objUser.radius)
+                                {
+
+
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
+                                    IsUserExist = true;
+                                    IsAccordianOpen = !IsAccordianOpen;
+                                }
+                                else
+                                {
+
+                                    await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
+                                    IsUserExist = false;
+                                }
+                            }
+                        }
+                        DependencyService.Get<IProgressBar>().Hide();
+                    }
+                    else
+                    {
+                        DependencyService.Get<IProgressBar>().Hide();
+                        await MaterialDialog.Instance.SnackbarAsync(message: "Please checkIn/checkOut atleast first in net connectivity.",
+                          msDuration: MaterialSnackbar.DurationLong);
+                    }
+                   
                     return;
 
                 }
@@ -445,6 +512,11 @@ namespace AttendanceApp.ViewModels
 
                 if (menuItem.locationData != null)
                 {
+                    DBLocationData dbdata = new DBLocationData();
+                    dbdata.lat = menuItem.locationData.lat;
+                    dbdata.lng = menuItem.locationData.lng;
+                    dbdata.radius = menuItem.locationData.radius;
+                    App.Database.SaveCheckinCheckoutLocation(dbdata);
 
                     try
                     {
@@ -493,6 +565,11 @@ namespace AttendanceApp.ViewModels
                         await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
                         msDuration: MaterialSnackbar.DurationLong);
                     }
+
+
+                   
+
+
                     DependencyService.Get<IProgressBar>().Hide();
                 }
                 else

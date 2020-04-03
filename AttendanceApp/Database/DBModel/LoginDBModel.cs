@@ -55,4 +55,22 @@ namespace AttendanceApp.Database
         }
         public string type { get; set; }
     }
+
+    public class DBLocationData
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
+        public double radius { get; set; }
+    }
+
+    public class DBReasonLanguage
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+        public int code { get; set; }
+        public string name { get; set; }
+         
+    }
 }

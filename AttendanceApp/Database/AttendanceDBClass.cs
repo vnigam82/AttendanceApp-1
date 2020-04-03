@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AttendanceApp.Database.DBModel;
 using SQLite;
 
@@ -17,7 +18,8 @@ namespace AttendanceApp.Database
                 database.CreateTable<OrgProfileDBModel>();
                 database.CreateTable<clsDBUserProfile>();
                 database.CreateTable<AppLanguage>();
-
+                database.CreateTable<DBLocationData>();
+                database.CreateTable<DBReasonLanguage>();
             }
             catch (Exception ex)
             {
@@ -29,6 +31,57 @@ namespace AttendanceApp.Database
         {
             return database.Table<AppLanguage>().FirstOrDefault();
         }
+
+        public List<DBReasonLanguage> GetReason()
+        {
+            return database.Table<DBReasonLanguage>().ToList();
+        }
+        public int ClearReason()
+        {
+            var status = 0;
+            try
+            {
+                var data = database.Table<DBReasonLanguage>().ToList();
+                foreach (var item in data)
+                {
+                    status = database.Delete(item);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return status;
+        }
+        public int SaveReason(DBReasonLanguage item)
+        {
+            return database.Insert(item);
+
+        }
+
+
+        public DBLocationData GetCheckinCheckoutLocation()
+        {
+            return database.Table<DBLocationData>().FirstOrDefault();
+        }
+        public int SaveCheckinCheckoutLocation(DBLocationData item)
+        {
+            try
+            {
+                var data = database.Table<DBLocationData>().ToList();
+                foreach (var cn in data)
+                {
+                    database.Delete(cn);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return database.Insert(item);
+
+        }
+
         public int SaveLanguage(AppLanguage item)
         {
             try
