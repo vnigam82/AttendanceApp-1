@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using XF.Material.Forms.UI.Dialogs;
 
+
 namespace AttendanceApp.Views
 {
     public partial class CheckinCheckout : ContentPage

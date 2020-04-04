@@ -32,7 +32,6 @@
     <Folder Include="CustomControls\CustomEditor\" />
     <Folder Include="CustomControls\AccordianControl\" />
     <Folder Include="CustomControls\RadioButton\" />
-    <Folder Include="CustomControls\Snackbar\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\ReasonRequest.cs" />
