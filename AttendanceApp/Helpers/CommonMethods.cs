@@ -95,6 +95,7 @@ namespace AttendanceApp.Helpers
                 var userinfo = await HttpRequest.GetRequest(url);
                 if (userinfo.Status)
                 {
+                    List<LocationData> lstlocationData = new List<LocationData>();
                     var serviceResult = JsonConvert.DeserializeObject<List<ClsLocationData>>(userinfo.Result);
                     if (serviceResult.Count>0)
                     {
@@ -106,10 +107,11 @@ namespace AttendanceApp.Helpers
                             locationData.lat = serviceData.lat;
                             locationData.lng = serviceData.lng;
                             locationData.radius = serviceData.radius;
-                            break;
+                            //break;
+                            lstlocationData.Add(locationData);
                         }
 
-                        obj.locationData = locationData;
+                        obj.locationData = lstlocationData;
                         obj.Status = userinfo.Status;
                         obj.Message = userinfo.Message;
                         obj.Result = userinfo.Result;

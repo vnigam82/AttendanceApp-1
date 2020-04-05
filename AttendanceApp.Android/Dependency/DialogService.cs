@@ -44,10 +44,10 @@ namespace AttendanceApp.Droid.Dependency
                     btnYesClick.Click += delegate
                     {
                         myCustomDialog.Hide();
-                        if (HttpRequest.CheckConnection())
-                        {
-                            App.Database.ClearLoginDetails();
-                        }
+                        //if (HttpRequest.CheckConnection())
+                        //{
+                        //    App.Database.ClearLoginDetails();
+                        //}
                         App.Current.MainPage = new Login();
                     };
                 }

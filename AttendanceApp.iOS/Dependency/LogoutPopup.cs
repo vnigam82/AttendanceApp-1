@@ -83,10 +83,10 @@ namespace AttendanceApp.iOS.Dependency
             btnYes.Frame = new CGRect(11, logoutmessagetextFrame.Y + logoutmessagetextFrame.Height + 48, ((belowHeaderView.Frame.Width + 15) - (belowHeaderView.Frame.Width / 2)), btnHeight);
             btnYes.TouchUpInside += delegate {
                 Close();
-                if (HttpRequest.CheckConnection())
-                {
-                    App.Database.ClearLoginDetails();
-                }
+                //if (HttpRequest.CheckConnection())
+                //{
+                //    App.Database.ClearLoginDetails();
+                //}
                 App.Current.MainPage = new Login();
             };
 

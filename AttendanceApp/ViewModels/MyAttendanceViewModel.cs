@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using AttendanceApp.CustomControls;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Models;
@@ -123,8 +124,7 @@ namespace AttendanceApp.ViewModels
                // IsEnableSearchButton = false;
                 if (!HttpRequest.CheckConnection())
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Please check your network connection.",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseCheckYourNetworkConnection);
                     return;
                 }
                 DependencyService.Get<IProgressBar>().Show("Please wait...");
@@ -154,22 +154,19 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: "No records",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync("No records");
                     }
 
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Error Loading Data",
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await DependencyService.Get<IXSnack>().ShowMessageAsync("Error Loading Data");
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using AttendanceApp.CustomControls;
 using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
@@ -33,13 +34,16 @@ namespace AttendanceApp.ViewModels
                     try
                     {
                         clsDBUserProfile objUser = App.Database.GetUserProfileDetails();
-                        ProfileUserName = objUser.fullName;
-                        ProfileUserEmail = objUser.email;
-                        ImageSource = objUser.ImageSource;
-
+                        if (objUser!=null)
+                        {
+                            ProfileUserName = objUser?.fullName;
+                            ProfileUserEmail = objUser?.email;
+                            ImageSource = objUser?.ImageSource;
+                        }
                     }
                     catch (Exception ex)
                     {
+
                     }
                      
                     return;
@@ -72,14 +76,12 @@ namespace AttendanceApp.ViewModels
                     {
                         if (menuItem.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
-                                                msDuration: MaterialSnackbar.DurationLong);
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
                             App.Current.MainPage = new Login();
                         }
                         else
                         {
-                            await MaterialDialog.Instance.SnackbarAsync(message: menuItem.Message,
-                                                msDuration: MaterialSnackbar.DurationLong);
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
                         }
                     }
                 }
@@ -88,8 +90,7 @@ namespace AttendanceApp.ViewModels
             }
             catch (Exception ex)
             {
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {

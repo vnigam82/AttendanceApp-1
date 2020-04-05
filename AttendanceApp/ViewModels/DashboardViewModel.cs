@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
+using AttendanceApp.CustomControls;
 using AttendanceApp.Database;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
@@ -83,9 +84,7 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
-                                                msDuration: MaterialSnackbar.DurationLong);
-                        //await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.ErrorLoadingData);
                     }
                 }
                 
@@ -93,9 +92,7 @@ namespace AttendanceApp.ViewModels
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                //await CommonMethods.ShowPopup(ex.Message);
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
@@ -114,11 +111,8 @@ namespace AttendanceApp.ViewModels
                      
 
                         ImageBase64 = objUser.src;
-                        await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                        //await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
                         return;
-
-                     
-
                 }
                 else
                 {
@@ -140,15 +134,14 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.ErrorLoadingData);
                     }
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                  msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
              
         }

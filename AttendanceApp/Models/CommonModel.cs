@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AttendanceApp.Utils;
 using Newtonsoft.Json;
 
@@ -72,7 +73,7 @@ namespace AttendanceApp.Models
         public string name { get; set; }
         public string description { get; set; }
         public string mapLocation { get; set; }
-        public LocationData locationData { get; set; }
+        public List<LocationData> locationData { get; set; }
     }
 
     public class clsReasons

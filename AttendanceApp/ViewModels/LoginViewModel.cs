@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AttendanceApp.CustomControls;
 using AttendanceApp.Database;
 using AttendanceApp.Database.DBModel;
 using AttendanceApp.Dependency;
@@ -119,16 +120,6 @@ namespace AttendanceApp.ViewModels
 
                         ImageBase64 = objUser.src;
                         ImageType = orgDetails.type;
-                      ////  LangType = JsonConvert.DeserializeObject<Language>(orgDetails.name);
-                        
-                      //      Device.BeginInvokeOnMainThread(async () =>
-                      //      {
-                      //          await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseCheckYourNetworkConnection,
-                      //             msDuration: MaterialSnackbar.DurationLong);
-                      //      });
-                        
-                      
-
 
                         return;
 
@@ -137,8 +128,8 @@ namespace AttendanceApp.ViewModels
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity to get logo.",
-                        msDuration: MaterialSnackbar.DurationLong);
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync("Please login atleast first in net connectivity to get logo.");
+                            
                         });
                         return;
                     }
@@ -166,15 +157,15 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
+                        
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.ErrorLoadingData);
                     }
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                  msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
@@ -210,14 +201,14 @@ namespace AttendanceApp.ViewModels
                             }
                             else
                             {
-                                await CommonMethods.ShowPopup(Resx.AppResources.pleaseCheckYourNetworkConnection);
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.invalidUserDetails);
                                 return;
                             }
                         }
                         else
                         {
-                            await MaterialDialog.Instance.SnackbarAsync(message: "Please login atleast first in net connectivity.",
-                            msDuration: MaterialSnackbar.DurationLong);
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync("Please login atleast first in net connectivity.");
+                            
                             return;
                         }
                     }
@@ -228,8 +219,7 @@ namespace AttendanceApp.ViewModels
                 {
                     if (!Validate())
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                         msDuration: MaterialSnackbar.DurationLong);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Error);
                         return;
                     }
 
@@ -267,18 +257,14 @@ namespace AttendanceApp.ViewModels
                         else
                         {
                             DependencyService.Get<IProgressBar>().Hide();
-                            await CommonMethods.ShowPopup(Resx.AppResources.invalidUserDetails);
-                            
-
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.invalidUserDetails);
                         }
 
                     }
                     else
                     {
                         DependencyService.Get<IProgressBar>().Hide();
-                        await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                        actionButtonText: "Ok",
-                        msDuration: 3000);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(loginInfo.Message);
                     }
                 }
 
@@ -286,8 +272,7 @@ namespace AttendanceApp.ViewModels
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AttendanceApp.CustomControls.RadioButton;
 using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
@@ -13,7 +14,7 @@ using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.Views
 {
-    public partial class CheckinCheckout : ContentPage
+    public partial class CheckinCheckout : ContentPage,IDisposable
     {
         CheckinCheckoutViewModel _checkincheckoutViewmodel;
         public static RadioOption GetSelectedRadio { get; set; }
@@ -21,11 +22,7 @@ namespace AttendanceApp.Views
         {
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
-            _checkincheckoutViewmodel = ServiceContainer.Resolve<CheckinCheckoutViewModel>();
-            _checkincheckoutViewmodel.AddMenuItems();
-            _checkincheckoutViewmodel.InitializeRadioButtonList();
-            _checkincheckoutViewmodel.GetReasonList();
-            BindingContext = _checkincheckoutViewmodel;
+         
             //headerView.BindingContext = _checkincheckoutViewmodel;
         }
         protected override void OnAppearing()
@@ -35,6 +32,12 @@ namespace AttendanceApp.Views
             safeInsets.Bottom = 0;
             safeInsets.Top = Device.RuntimePlatform == Device.Android ? 0 : 40;
             mainlayout.Padding = safeInsets;
+
+            _checkincheckoutViewmodel = ServiceContainer.Resolve<CheckinCheckoutViewModel>();
+            _checkincheckoutViewmodel.AddMenuItems();
+            _checkincheckoutViewmodel.InitializeRadioButtonList();
+            _checkincheckoutViewmodel.GetReasonList();
+            BindingContext = _checkincheckoutViewmodel;
 
         }
 
@@ -63,24 +66,29 @@ namespace AttendanceApp.Views
 
         void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
         {
+           
             _checkincheckoutViewmodel.CheckLocation();
-            if (sender==materialCheckin)
-            {
-                if (_checkincheckoutViewmodel.IsUserExist)
-                {
-                    ac2.IsOpen = !ac2.IsOpen;
-                    _checkincheckoutViewmodel.Direction = "In";
-                }
-            }
-            else
-            {
-                if (_checkincheckoutViewmodel.IsUserExist)
-                {
-                    ac2.IsOpen = !ac2.IsOpen;
-                    _checkincheckoutViewmodel.Direction = "Out";
-                }
-            }
             
+            if (sender == materialCheckin)
+             {
+                if (_checkincheckoutViewmodel.IsUserExist)
+                        {
+                             
+                             ac2.IsOpen = !ac2.IsOpen;
+                            _checkincheckoutViewmodel.Direction = "In";
+                        }
+                    }
+                    else
+                    {
+                if (_checkincheckoutViewmodel.IsUserExist)
+                        {
+                           
+                             ac2.IsOpen = !ac2.IsOpen;
+                            _checkincheckoutViewmodel.Direction = "Out";
+                        }
+                    }
+
+
         }
 
         void btnClose_Clicked(System.Object sender, System.EventArgs e)
@@ -88,15 +96,27 @@ namespace AttendanceApp.Views
             ac2.IsOpen = !ac2.IsOpen;
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            BindingContext = null;
+            GC.Collect();
+        }
+
+        public void Dispose()
+        {
+            BindingContext = null;
+            GC.Collect();
+        }
         //void btnSubmit_Clicked(System.Object sender, System.EventArgs e)
         //{
         //    //_checkincheckoutViewmodel.ExecuteSubmitCommand();
-            
+
         //        if (_checkincheckoutViewmodel.IsUserExist)
         //        {
         //            ac2.IsOpen = !ac2.IsOpen;
         //        }
-           
+
         //}
     }
 }

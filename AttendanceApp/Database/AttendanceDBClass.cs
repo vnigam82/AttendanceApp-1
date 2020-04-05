@@ -117,24 +117,21 @@ namespace AttendanceApp.Database
         }
 
 
-        public DBLocationData GetCheckinCheckoutLocation()
+        public List<DBLocationData> GetCheckinCheckoutLocation()
         {
-            return database.Table<DBLocationData>().FirstOrDefault();
+            return database.Table<DBLocationData>().ToList();
         }
         public int SaveCheckinCheckoutLocation(DBLocationData item)
         {
-            try
+            if (item.ID != 0)
             {
-                var data = database.Table<DBLocationData>().ToList();
-                foreach (var cn in data)
-                {
-                    database.Delete(cn);
-                }
+                return database.Update(item);
             }
-            catch (Exception ex)
+            else
             {
+                
+                return database.Insert(item);
             }
-            return database.Insert(item);
 
         }
 
@@ -247,6 +244,24 @@ namespace AttendanceApp.Database
             try
             {
                 var data = database.Table<clsDBUserProfile>().ToList();
+                foreach (var item in data)
+                {
+                    status = database.Delete(item);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return status;
+        }
+        public int ClearCheckinCheckoutDetails()
+        {
+            var status = 0;
+            try
+            {
+                var data = database.Table<DBLocationData>().ToList();
                 foreach (var item in data)
                 {
                     status = database.Delete(item);

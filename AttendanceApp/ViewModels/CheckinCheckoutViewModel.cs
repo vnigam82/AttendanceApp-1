@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using AttendanceApp.CustomControls;
 using AttendanceApp.CustomControls.RadioButton;
 using AttendanceApp.Database;
 using AttendanceApp.Dependency;
@@ -29,6 +32,7 @@ namespace AttendanceApp.ViewModels
         private Location _latlonglocation;
         private double _radius = 0, _lablefontsize = 0, _gridheaderrowfontsize = 0;
         private ObservableCollection<RadioOption> _radiooptionlist;
+        List<clsMessages> lstmessage = new List<clsMessages>();
         public ObservableCollection<RadioOption> RadioOptionsList
         {
             get { return _radiooptionlist; }
@@ -98,6 +102,7 @@ namespace AttendanceApp.ViewModels
         public CheckinCheckoutViewModel(INavigation navigation)
         {
             this._navigation = navigation;
+            lstmessage = new List<clsMessages>();
             LabelFontSize = CommonMethods.GetFontSizeBasedOnScreenHeight();
         }
 
@@ -139,25 +144,23 @@ namespace AttendanceApp.ViewModels
             {
                 if (!Validate())
                 {
-
-                    //await CommonMethods.ShowPopup(Error);
-                    await MaterialDialog.Instance.SnackbarAsync(message: Error,
-                         msDuration: MaterialSnackbar.DurationLong);
+                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Error);
                     return;
                 }
                 if (!HttpRequest.CheckConnection())
                 {
-                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
-
-                    var locationDataOfflone = new LocationData()
+                    //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                     {
-                        lat = LatLongLocation.Latitude,
-                        lng = LatLongLocation.Longitude,
-                        radius = Radius
-                    };
-                    var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
+                        var locationDataOfflone = new LocationData()
+                        {
+                            lat = LatLongLocation.Latitude,
+                            lng = LatLongLocation.Longitude,
+                            radius = Radius
+                        };
+                        var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
 
-                    var postDataOfflone = new List<BookingModel>()
+                        var postDataOfflone = new List<BookingModel>()
                     {
                         new BookingModel()
                         {
@@ -168,42 +171,41 @@ namespace AttendanceApp.ViewModels
                             ReasonCode=SelectedReason?.code
                         }
                     };
-                    foreach (var item in postDataOfflone)
-                    {
-                        DBBookingModel dbdata = new DBBookingModel();
-                        dbdata.DateTime = item.DateTime;
-                        dbdata.Direction = item.Direction;
-                        dbdata.HappinessOption = item.HappinessOption;
-                        dbdata.Location = item.Location;
-                        dbdata.ReasonCode = item.ReasonCode;
-                        App.Database.SaveBooking(dbdata);
+                        foreach (var item in postDataOfflone)
+                        {
+                            DBBookingModel dbdata = new DBBookingModel();
+                            dbdata.DateTime = item.DateTime;
+                            dbdata.Direction = item.Direction;
+                            dbdata.HappinessOption = item.HappinessOption;
+                            dbdata.Location = item.Location;
+                            dbdata.ReasonCode = item.ReasonCode;
+                            App.Database.SaveBooking(dbdata);
+                        }
+
+
+                        IsUserExist = true;
+                        //DependencyService.Get<IProgressBar>().Hide();
+
+                       
                     }
-
-
-                    IsUserExist = true;
-                    DependencyService.Get<IProgressBar>().Hide();
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully,
-                         msDuration: MaterialSnackbar.DurationLong);
-                    //await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
                     await _navigation.PopAsync();
-
+                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
 
                     return;
                 }
 
 
-
-                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.authenticatingUser);
-
-                var locationData = new LocationData()
+                using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                 {
-                    lat = LatLongLocation.Latitude,
-                    lng = LatLongLocation.Longitude,
-                    radius = Radius
-                };
-                var locjsonString = Newtonsoft.Json.JsonConvert.SerializeObject(locationData);
+                    var locationData = new LocationData()
+                    {
+                        lat = LatLongLocation.Latitude,
+                        lng = LatLongLocation.Longitude,
+                        radius = Radius
+                    };
+                    var locjsonString = Newtonsoft.Json.JsonConvert.SerializeObject(locationData);
 
-                var postData = new List<BookingModel>()
+                    var postData = new List<BookingModel>()
                 {
                     new BookingModel()
                     {
@@ -214,39 +216,37 @@ namespace AttendanceApp.ViewModels
                         ReasonCode=SelectedReason?.code
                     }
                 };
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
+                    var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
-                var loginInfo = await CommonMethods.BookingAttendance(jsonString);
-                if (loginInfo.Status)
-                {
-                    IsUserExist = true;
-                    //await CommonMethods.ShowPopup(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully,
-                         msDuration: MaterialSnackbar.DurationLong);
-                    await _navigation.PopAsync();
+                    var loginInfo = await CommonMethods.BookingAttendance(jsonString);
+                    if (loginInfo.Status)
+                    {
+                        IsUserExist = true;
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                        await _navigation.PopAsync();
+                    }
+                    else
+                    {
+                        //DependencyService.Get<IProgressBar>().Hide();
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(loginInfo.Message);
+                        IsUserExist = false;
+                    }
                 }
-                else
-                {
-                    DependencyService.Get<IProgressBar>().Hide();
-                    //await CommonMethods.ShowPopup(loginInfo.Message);
-                    await MaterialDialog.Instance.SnackbarAsync(message: loginInfo.Message,
-                         msDuration: MaterialSnackbar.DurationLong);
-                    IsUserExist = false;
-                }
+                //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+
+               
             }
             catch (Exception ex)
             {
-                DependencyService.Get<IProgressBar>().Hide();
+                //DependencyService.Get<IProgressBar>().Hide();
                 IsUserExist = false;
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                         msDuration: MaterialSnackbar.DurationLong);
-                
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
                 IsUserExist = false;
                 IsEnabledSubmitButton = true;
-                DependencyService.Get<IProgressBar>().Hide();
+                //DependencyService.Get<IProgressBar>().Hide();
             }
         }
 
@@ -300,8 +300,8 @@ namespace AttendanceApp.ViewModels
                     }
                     else
                     {
-                        await MaterialDialog.Instance.SnackbarAsync(message: "Please get Reason atleast first in net connectivity.",
-                          msDuration: MaterialSnackbar.DurationLong);
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync("Please get Reason atleast first in net connectivity.");
+                         
                     }
                     return;
                 }
@@ -336,15 +336,13 @@ namespace AttendanceApp.ViewModels
                 }
                 else
                 {
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.ErrorLoadingData);
                 }
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                            msDuration: MaterialSnackbar.DurationLong);
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
@@ -497,137 +495,218 @@ namespace AttendanceApp.ViewModels
         {
             try
             {
+               
                 if (!HttpRequest.CheckConnection())
                 {
                     var objUser = App.Database.GetCheckinCheckoutLocation();
-                    DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
-                    if (objUser != null)
+                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                     {
-                        var locator = CrossGeolocator.Current;
-                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
+                        //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                        lstmessage = new List<clsMessages>();
+                        if (objUser != null && objUser.Count > 0)
                         {
-                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
-
-                            if (sourceLocation != null)
+                            try
                             {
-
-                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
-                                LatLongLocation = sourceCoordinates;
-                                Location destinationCoordinates = new Location(objUser.lat, objUser.lng);
-                                double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
-                                double distanceMeter = distance * 1000;
-                                Radius = distanceMeter;
-                                if (distanceMeter < objUser.radius)
+                                foreach (var item in objUser)
                                 {
+                                    var msg = new clsMessages();
+                                    try
+                                    {
+                                        var locator = CrossGeolocator.Current;
+                                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
+                                        {
+                                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
 
-                                    DependencyService.Get<IProgressBar>().Hide();
-                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
-                                    IsUserExist = true;
-                                    IsAccordianOpen = !IsAccordianOpen;
+                                            if (sourceLocation != null)
+                                            {
+
+                                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                                                LatLongLocation = sourceCoordinates;
+                                                Location destinationCoordinates = new Location(item.lat, item.lng);
+                                                double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
+                                                double distanceMeter = distance * 1000;
+                                                Radius = distanceMeter;
+                                                if (distanceMeter < item.radius)
+                                                {
+                                                    msg.Status = true;
+
+                                                    //DependencyService.Get<IProgressBar>().Hide();
+                                                    ////await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
+                                                    //IsUserExist = true;
+                                                    //IsAccordianOpen = !IsAccordianOpen;
+                                                }
+                                                else
+                                                {
+                                                    //DependencyService.Get<IProgressBar>().Hide();
+                                                    //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreOutOfLocation);
+                                                    //IsUserExist = false;
+                                                    msg.Status = false;
+                                                    msg.Message = Resx.AppResources.youAreOutOfLocation;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            msg.Status = false;
+                                            msg.Message = Resx.AppResources.pleaseEnableYourLocationService;
+                                            //DependencyService.Get<IProgressBar>().Hide();
+                                            //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
+                                            return;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        msg.Status = false;
+                                        msg.Message = ex.Message;
+                                    }
+                                    lstmessage.Add(msg);
                                 }
-                                else
-                                {
-                                    DependencyService.Get<IProgressBar>().Hide();
-                                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreOutOfLocation,
-                                        msDuration: MaterialSnackbar.DurationLong);
-                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreOutOfLocation, Resx.AppResources.ok);
-                                    IsUserExist = false;
-                                }
+
                             }
-                        }
-                        
-                    }
-                    else
-                    {
-                        DependencyService.Get<IProgressBar>().Hide();
-                        await MaterialDialog.Instance.SnackbarAsync(message: "Please checkIn/checkOut atleast first in net connectivity.",
-                          msDuration: MaterialSnackbar.DurationLong);
-                    }
-
-                    return;
-
-                }
-                DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
-                var menuItem = await CommonMethods.GetLocations();
-
-                if (menuItem.locationData != null)
-                {
-                    DBLocationData dbdata = new DBLocationData();
-                    dbdata.lat = menuItem.locationData.lat;
-                    dbdata.lng = menuItem.locationData.lng;
-                    dbdata.radius = menuItem.locationData.radius;
-                    App.Database.SaveCheckinCheckoutLocation(dbdata);
-
-                    try
-                    {
-                        var locator = CrossGeolocator.Current;
-                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
-                        {
-                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
-
-                            if (sourceLocation != null)
+                            catch (Exception ex)
                             {
-
-                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
-                                LatLongLocation = sourceCoordinates;
-                                Location destinationCoordinates = new Location(menuItem.locationData.lat, menuItem.locationData.lng);
-                                double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
-                                double distanceMeter = distance * 1000;
-                                Radius = distanceMeter;
-                                if (distanceMeter < menuItem.locationData.radius)
+                                IsUserExist = false;
+                                //DependencyService.Get<IProgressBar>().Hide();
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
+                            }
+                            finally
+                            {
+                                //DependencyService.Get<IProgressBar>().Hide();
+                                if (lstmessage != null && lstmessage.Count > 0)
                                 {
-                                    DependencyService.Get<IProgressBar>().Hide();
+                                    if (lstmessage.Any(x => x.Status))
+                                    {
+                                        IsUserExist = true;
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in lstmessage)
+                                        {
+                                            await DependencyService.Get<IXSnack>().ShowMessageAsync(item.Message);
+                                        }
+                                    }
+                                }
 
-                                    //await App.Current.MainPage.DisplayAlert("AttendanceApp", Resx.AppResources.youAreInLocation, Resx.AppResources.ok);
-                                    IsUserExist = true;
-                                    IsAccordianOpen = !IsAccordianOpen;
-                                }
-                                else
-                                {
-                                    DependencyService.Get<IProgressBar>().Hide();
-                                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.youAreOutOfLocation,
-                                        msDuration: MaterialSnackbar.DurationLong);
-                                    IsUserExist = false;
-                                }
                             }
                         }
                         else
                         {
-                            //await CommonMethods.ShowPopup(Resx.AppResources.pleaseEnableYourLocationService);
-                            DependencyService.Get<IProgressBar>().Hide();
-                            await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.pleaseEnableYourLocationService,
-                                        msDuration: MaterialSnackbar.DurationLong);
-                            return;
+                            //DependencyService.Get<IProgressBar>().Hide();
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync("Please checkIn/checkOut atleast first in net connectivity.");
+                        }
+                    }
+                   
+
+                    return;
+
+                }
+
+                using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
+                {
+                    //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    App.Database.ClearCheckinCheckoutDetails();
+                    var menuItem = await CommonMethods.GetLocations();
+
+                    if (menuItem.locationData != null)
+                    {
+                        foreach (var item in menuItem.locationData)
+                        {
+                            DBLocationData dbdata = new DBLocationData();
+                            var msg = new clsMessages();
+                            dbdata.lat = item.lat;
+                            dbdata.lng = item.lng;
+                            dbdata.radius = item.radius;
+                            App.Database.SaveCheckinCheckoutLocation(dbdata);
+
+                            try
+                            {
+                                var locator = CrossGeolocator.Current;
+                                if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
+                                {
+                                    var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+                                    if (sourceLocation != null)
+                                    {
+                                        Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                                        LatLongLocation = sourceCoordinates;
+                                        Location destinationCoordinates = new Location(item.lat, item.lng);
+                                        double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
+                                        double distanceMeter = distance * 1000;
+                                        Radius = distanceMeter;
+                                        if (distanceMeter < item.radius)
+                                        {
+                                            //DependencyService.Get<IProgressBar>().Hide();
+                                            //IsUserExist = true;
+                                            //IsAccordianOpen = !IsAccordianOpen;
+
+                                            msg.Status = true;
+                                        }
+                                        else
+                                        {
+                                            //DependencyService.Get<IProgressBar>().Hide();
+                                            //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreOutOfLocation);
+                                            //IsUserExist = false;
+                                            msg.Status = false;
+                                            msg.Message = Resx.AppResources.youAreOutOfLocation;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    msg.Status = false;
+                                    msg.Message = Resx.AppResources.pleaseEnableYourLocationService;
+                                    //DependencyService.Get<IProgressBar>().Hide();
+                                    //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
+                                    return;
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                msg.Status = false;
+                                msg.Message = ex.Message;
+                                //DependencyService.Get<IProgressBar>().Hide();
+                                //IsUserExist = false;
+                                //await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
+                            }
+                            lstmessage.Add(msg);
                         }
 
+
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        DependencyService.Get<IProgressBar>().Hide();
                         IsUserExist = false;
-                        await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                        msDuration: MaterialSnackbar.DurationLong);
+                        //DependencyService.Get<IProgressBar>().Hide();
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.ErrorLoadingData);
                     }
                 }
-                else
-                {
-                    IsUserExist = false;
-                    DependencyService.Get<IProgressBar>().Hide();
-                    await MaterialDialog.Instance.SnackbarAsync(message: Resx.AppResources.ErrorLoadingData,
-                                        msDuration: MaterialSnackbar.DurationLong);
-                    //await CommonMethods.ShowPopup(Resx.AppResources.ErrorLoadingData);
-                }
+               
             }
             catch (Exception ex)
             {
                 IsUserExist = false;
-                DependencyService.Get<IProgressBar>().Hide();
-                await MaterialDialog.Instance.SnackbarAsync(message: ex.Message,
-                                           msDuration: MaterialSnackbar.DurationLong);
+                //DependencyService.Get<IProgressBar>().Hide();
+                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
-                DependencyService.Get<IProgressBar>().Hide();
+                //DependencyService.Get<IProgressBar>().Hide();
+                if (lstmessage!=null && lstmessage.Count>0)
+                {
+                    if (lstmessage.Any(x=>x.Status))
+                    {
+                        IsUserExist = true;
+                    }
+                    else
+                    {
+                        foreach (var item in lstmessage)
+                        {
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync(item.Message);
+                        }
+                    }
+                }
+                
             }
         }
     }
