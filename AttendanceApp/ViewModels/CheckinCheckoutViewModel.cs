@@ -32,6 +32,7 @@ namespace AttendanceApp.ViewModels
         private Location _latlonglocation;
         private double _radius = 0, _lablefontsize = 0, _gridheaderrowfontsize = 0;
         private ObservableCollection<RadioOption> _radiooptionlist;
+        private DateTime _gpsdatetime;
         List<clsMessages> lstmessage = new List<clsMessages>();
         public ObservableCollection<RadioOption> RadioOptionsList
         {
@@ -55,6 +56,16 @@ namespace AttendanceApp.ViewModels
             }
         }
 
+        public DateTime GPSDateTime
+        {
+            get { return _gpsdatetime; }
+            set
+            {
+
+                _gpsdatetime = value;
+                OnPropertyChanged(nameof(GPSDateTime));
+            }
+        }
         public RadioOption SelectedHappinessOption
         {
             get { return _selectedHappinessOption; }
@@ -142,95 +153,132 @@ namespace AttendanceApp.ViewModels
             IsEnabledSubmitButton = false;
             try
             {
-                if (!Validate())
-                {
-                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Error);
-                    return;
-                }
+                //if (!Validate())
+                //{
+                //    await DependencyService.Get<IXSnack>().ShowMessageAsync(Error);
+                //    return;
+                //}
                 if (!HttpRequest.CheckConnection())
                 {
                     //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                     using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                     {
-                        var locationDataOfflone = new LocationData()
+                        var locator = CrossGeolocator.Current;
+                        if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                         {
-                            lat = LatLongLocation.Latitude,
-                            lng = LatLongLocation.Longitude,
-                            radius = Radius
-                        };
-                        var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
+                            var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
 
-                        var postDataOfflone = new List<BookingModel>()
-                    {
-                        new BookingModel()
-                        {
-                            DateTime=DateTime.Now,
-                            Direction=Direction,
-                            Location=locjsonStringOfflone,
-                            HappinessOption=SelectedHappinessOption?.HappynessCode,
-                            ReasonCode=SelectedReason?.code
+                            if (sourceLocation != null)
+                            {
+
+                                Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                                double distance = Location.CalculateDistance(sourceCoordinates, LatLongLocation, DistanceUnits.Kilometers);
+                                double distanceMeter = distance * 1000;
+
+                                var locationDataOfflone = new LocationData()
+                                {
+                                    lat = sourceCoordinates.Latitude,
+                                    lng = sourceCoordinates.Longitude,
+                                    radius = distanceMeter
+                                };
+                                var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
+
+                                var postDataOfflone = new List<BookingModel>()
+                                 {
+                                    new BookingModel()
+                                        {
+                                            DateTime=GPSDateTime,
+                                            Direction=Direction,
+                                            Location=locjsonStringOfflone,
+                                            HappinessOption=SelectedHappinessOption?.HappynessCode,
+                                            ReasonCode=SelectedReason?.code
+                                        }
+                                  };
+                                foreach (var item in postDataOfflone)
+                                {
+                                    DBBookingModel dbdata = new DBBookingModel();
+                                    dbdata.DateTime = item.DateTime;
+                                    dbdata.Direction = item.Direction;
+                                    dbdata.HappinessOption = item.HappinessOption;
+                                    dbdata.Location = item.Location;
+                                    dbdata.ReasonCode = item.ReasonCode;
+                                    App.Database.SaveBooking(dbdata);
+                                }
+
+
+                                IsUserExist = true;
+                                await _navigation.PopAsync();
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+
+                            }
                         }
-                    };
-                        foreach (var item in postDataOfflone)
+                        else
                         {
-                            DBBookingModel dbdata = new DBBookingModel();
-                            dbdata.DateTime = item.DateTime;
-                            dbdata.Direction = item.Direction;
-                            dbdata.HappinessOption = item.HappinessOption;
-                            dbdata.Location = item.Location;
-                            dbdata.ReasonCode = item.ReasonCode;
-                            App.Database.SaveBooking(dbdata);
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
                         }
-
-
-                        IsUserExist = true;
-                        //DependencyService.Get<IProgressBar>().Hide();
-
-                       
+                        
                     }
-                    await _navigation.PopAsync();
-                    await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
-
+                    
                     return;
                 }
 
 
                 using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                 {
-                    var locationData = new LocationData()
-                    {
-                        lat = LatLongLocation.Latitude,
-                        lng = LatLongLocation.Longitude,
-                        radius = Radius
-                    };
-                    var locjsonString = Newtonsoft.Json.JsonConvert.SerializeObject(locationData);
 
-                    var postData = new List<BookingModel>()
+                    var locator = CrossGeolocator.Current;
+                    if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
+                    {
+                        var sourceLocation = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+                        if (sourceLocation != null)
+                        {
+
+                            Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
+                            double distance = Location.CalculateDistance(sourceCoordinates, LatLongLocation, DistanceUnits.Kilometers);
+                            double distanceMeter = distance * 1000;
+
+                            var locationData = new LocationData()
+                            {
+                                lat = sourceCoordinates.Latitude,
+                                lng = sourceCoordinates.Longitude,
+                                radius = distanceMeter
+                            };
+                            var locjsonString = Newtonsoft.Json.JsonConvert.SerializeObject(locationData);
+
+                            var postData = new List<BookingModel>()
                 {
                     new BookingModel()
                     {
-                        DateTime=DateTime.Now,
+                        DateTime=GPSDateTime,
                         Direction=Direction,
                         Location=locjsonString,
                         HappinessOption=SelectedHappinessOption?.HappynessCode,
                         ReasonCode=SelectedReason?.code
                     }
                 };
-                    var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
+                            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
 
-                    var loginInfo = await CommonMethods.BookingAttendance(jsonString);
-                    if (loginInfo.Status)
-                    {
-                        IsUserExist = true;
-                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
-                        await _navigation.PopAsync();
+                            var loginInfo = await CommonMethods.BookingAttendance(jsonString);
+                            if (loginInfo.Status)
+                            {
+                                IsUserExist = true;
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.youAreChecked + " " + Direction + " " + Resx.AppResources.successfully);
+                                await _navigation.PopAsync();
+                            }
+                            else
+                            {
+                                //DependencyService.Get<IProgressBar>().Hide();
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync(loginInfo.Message);
+                                IsUserExist = false;
+                            }
+                        }
                     }
                     else
                     {
-                        //DependencyService.Get<IProgressBar>().Hide();
-                        await DependencyService.Get<IXSnack>().ShowMessageAsync(loginInfo.Message);
-                        IsUserExist = false;
+                        await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
                     }
+                   
                 }
                 //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
 
@@ -521,11 +569,12 @@ namespace AttendanceApp.ViewModels
                                             {
 
                                                 Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
-                                                LatLongLocation = sourceCoordinates;
+                                                //LatLongLocation = sourceCoordinates;
                                                 Location destinationCoordinates = new Location(item.lat, item.lng);
+                                                LatLongLocation = destinationCoordinates;
                                                 double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
                                                 double distanceMeter = distance * 1000;
-                                                Radius = distanceMeter;
+                                                //Radius = distanceMeter;
                                                 if (distanceMeter < item.radius)
                                                 {
                                                     msg.Status = true;
@@ -551,7 +600,7 @@ namespace AttendanceApp.ViewModels
                                             msg.Message = Resx.AppResources.pleaseEnableYourLocationService;
                                             //DependencyService.Get<IProgressBar>().Hide();
                                             //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
-                                            return;
+                                            //return;
                                         }
                                     }
                                     catch (Exception ex)
@@ -610,11 +659,13 @@ namespace AttendanceApp.ViewModels
                                     if (sourceLocation != null)
                                     {
                                         Location sourceCoordinates = new Location(sourceLocation.Latitude, sourceLocation.Longitude);
-                                        LatLongLocation = sourceCoordinates;
+                                        //LatLongLocation = sourceCoordinates;
+                                        
                                         Location destinationCoordinates = new Location(item.lat, item.lng);
+                                        LatLongLocation = destinationCoordinates;
                                         double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
                                         double distanceMeter = distance * 1000;
-                                        Radius = distanceMeter;
+                                        //Radius = distanceMeter;
                                         if (distanceMeter < item.radius)
                                         {
                                             //DependencyService.Get<IProgressBar>().Hide();
@@ -639,7 +690,7 @@ namespace AttendanceApp.ViewModels
                                     msg.Message = Resx.AppResources.pleaseEnableYourLocationService;
                                     //DependencyService.Get<IProgressBar>().Hide();
                                     //await DependencyService.Get<IXSnack>().ShowMessageAsync(Resx.AppResources.pleaseEnableYourLocationService);
-                                    return;
+                                    //return;
                                 }
 
                             }

@@ -136,7 +136,7 @@ namespace AttendanceApp
                                             {
                                                 new BookingModel()
                                                     {
-                                                        DateTime=DateTime.Now,
+                                                        DateTime=item.DateTime,
                                                         Direction=item.Direction,
                                                         Location=locjsonString,
                                                         HappinessOption=item.HappinessOption,
