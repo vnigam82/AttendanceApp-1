@@ -569,26 +569,7 @@ namespace AttendanceApp.ViewModels
                                 //DependencyService.Get<IProgressBar>().Hide();
                                 await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
                             }
-                            finally
-                            {
-                                //DependencyService.Get<IProgressBar>().Hide();
-                                if (lstmessage != null && lstmessage.Count > 0)
-                                {
-                                    if (lstmessage.Any(x => x.Status))
-                                    {
-                                        IsUserExist = true;
-                                        MessagingCenter.Send<string>(type, "NotifyMsg");
-                                    }
-                                    else
-                                    {
-                                        foreach (var item in lstmessage)
-                                        {
-                                            await DependencyService.Get<IXSnack>().ShowMessageAsync(item.Message);
-                                        }
-                                    }
-                                }
-
-                            }
+                       
                         }
                         else
                         {

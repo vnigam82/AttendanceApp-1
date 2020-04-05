@@ -22,8 +22,24 @@ namespace AttendanceApp.Views
         {
             InitializeComponent();
             Shell.SetNavBarIsVisible(this, false);
-         
+
             //headerView.BindingContext = _checkincheckoutViewmodel;
+
+            MessagingCenter.Subscribe<string>("AttendanceApp", "NotifyMsg", (msg) =>
+            {
+                if (msg == "In")
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "In";
+                }
+                else
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "Out";
+                }
+
+            });
+
         }
         protected override void OnAppearing()
         {
@@ -41,21 +57,7 @@ namespace AttendanceApp.Views
 
 
 
-            MessagingCenter.Subscribe<string>("AttendanceApp", "NotifyMsg", (msg) =>
-            {
-                if (msg == "In")
-                {
-                    ac2.IsOpen = !ac2.IsOpen;
-                    _checkincheckoutViewmodel.Direction = "In";
-                }
-                else
-                {
-                    ac2.IsOpen = !ac2.IsOpen;
-                    _checkincheckoutViewmodel.Direction = "Out";
-                }
-
-            });
-
+          
 
         }
 
