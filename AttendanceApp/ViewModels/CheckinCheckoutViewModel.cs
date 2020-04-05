@@ -491,11 +491,11 @@ namespace AttendanceApp.ViewModels
 
             }
         }
-        public async void CheckLocation()
+        public async void CheckLocation(string type)
         {
             try
             {
-               
+                lstmessage.Clear();
                 if (!HttpRequest.CheckConnection())
                 {
                     var objUser = App.Database.GetCheckinCheckoutLocation();
@@ -577,6 +577,7 @@ namespace AttendanceApp.ViewModels
                                     if (lstmessage.Any(x => x.Status))
                                     {
                                         IsUserExist = true;
+                                        MessagingCenter.Send<string>(type, "NotifyMsg");
                                     }
                                     else
                                     {
@@ -669,6 +670,7 @@ namespace AttendanceApp.ViewModels
                                 //IsUserExist = false;
                                 //await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
                             }
+                          
                             lstmessage.Add(msg);
                         }
 
@@ -697,6 +699,7 @@ namespace AttendanceApp.ViewModels
                     if (lstmessage.Any(x=>x.Status))
                     {
                         IsUserExist = true;
+                        MessagingCenter.Send<string>(type, "NotifyMsg");
                     }
                     else
                     {

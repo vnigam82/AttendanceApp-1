@@ -39,6 +39,24 @@ namespace AttendanceApp.Views
             _checkincheckoutViewmodel.GetReasonList();
             BindingContext = _checkincheckoutViewmodel;
 
+
+
+            MessagingCenter.Subscribe<string>("AttendanceApp", "NotifyMsg", (msg) =>
+            {
+                if (msg == "In")
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "In";
+                }
+                else
+                {
+                    ac2.IsOpen = !ac2.IsOpen;
+                    _checkincheckoutViewmodel.Direction = "Out";
+                }
+
+            });
+
+
         }
 
         public void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -66,29 +84,16 @@ namespace AttendanceApp.Views
 
         void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
         {
-           
-            _checkincheckoutViewmodel.CheckLocation();
-            
             if (sender == materialCheckin)
-             {
-                if (_checkincheckoutViewmodel.IsUserExist)
-                        {
-                             
-                             ac2.IsOpen = !ac2.IsOpen;
-                            _checkincheckoutViewmodel.Direction = "In";
-                        }
-                    }
-                    else
-                    {
-                if (_checkincheckoutViewmodel.IsUserExist)
-                        {
-                           
-                             ac2.IsOpen = !ac2.IsOpen;
-                            _checkincheckoutViewmodel.Direction = "Out";
-                        }
-                    }
-
-
+            {
+                _checkincheckoutViewmodel.CheckLocation("In");
+                
+            }
+            else
+            {
+                _checkincheckoutViewmodel.CheckLocation("Out");
+               
+            }
         }
 
         void btnClose_Clicked(System.Object sender, System.EventArgs e)
