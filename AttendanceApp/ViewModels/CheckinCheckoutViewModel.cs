@@ -526,7 +526,7 @@ namespace AttendanceApp.ViewModels
                                                 double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
                                                 double distanceMeter = distance * 1000;
                                                 Radius = distanceMeter;
-                                                if (distanceMeter < item.radius)
+                                                if (distanceMeter > item.radius)
                                                 {
                                                     msg.Status = true;
 
@@ -634,7 +634,7 @@ namespace AttendanceApp.ViewModels
                                         double distance = Location.CalculateDistance(sourceCoordinates, destinationCoordinates, DistanceUnits.Kilometers);
                                         double distanceMeter = distance * 1000;
                                         Radius = distanceMeter;
-                                        if (distanceMeter < item.radius)
+                                        if (distanceMeter > item.radius)
                                         {
                                             //DependencyService.Get<IProgressBar>().Hide();
                                             //IsUserExist = true;

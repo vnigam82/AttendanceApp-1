@@ -76,12 +76,12 @@ namespace AttendanceApp.ViewModels
                     {
                         if (menuItem.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
+                            //await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
                             App.Current.MainPage = new Login();
                         }
                         else
                         {
-                            await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
+                            //await DependencyService.Get<IXSnack>().ShowMessageAsync(menuItem.Message);
                         }
                     }
                 }
@@ -90,7 +90,7 @@ namespace AttendanceApp.ViewModels
             }
             catch (Exception ex)
             {
-                await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
+                //await DependencyService.Get<IXSnack>().ShowMessageAsync(ex.Message);
             }
             finally
             {
