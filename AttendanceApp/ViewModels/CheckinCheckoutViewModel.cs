@@ -44,7 +44,7 @@ namespace AttendanceApp.ViewModels
             }
         }
 
-        private ObservableCollection<clsReasons> _reasonlist;
+        private ObservableCollection<clsReasons> _reasonlist,_selectedreasonlist;
         public ObservableCollection<clsReasons> ReasonList
         {
             get { return _reasonlist; }
@@ -55,7 +55,16 @@ namespace AttendanceApp.ViewModels
                 OnPropertyChanged(nameof(ReasonList));
             }
         }
+        public ObservableCollection<clsReasons> SelectedReasonList
+        {
+            get { return _selectedreasonlist; }
+            set
+            {
 
+                _selectedreasonlist = value;
+                OnPropertyChanged(nameof(SelectedReasonList));
+            }
+        }
         public DateTime GPSDateTime
         {
             get { return _gpsdatetime; }
@@ -331,6 +340,8 @@ namespace AttendanceApp.ViewModels
             try
             {
                 ReasonList = new ObservableCollection<clsReasons>();
+                SelectedReasonList = new ObservableCollection<clsReasons>();
+
                 if (!HttpRequest.CheckConnection())
                 {
                     var objReason = App.Database.GetReason();
@@ -341,9 +352,12 @@ namespace AttendanceApp.ViewModels
                             var data = new clsReasons();
                             data.code = item.code;
                             data.name = item.name;
+                            data.imageUrl = item.imageUrl;
+                            data.reasonDirection = item.reasonDirection;
                             var name = "{" + item.name + "}";
                             data.langData = JsonConvert.DeserializeObject<ReasonLanguage>(name);
                             ReasonList.Add(data);
+                            SelectedReasonList.Add(data);
                         }
                     }
                     else
@@ -369,13 +383,18 @@ namespace AttendanceApp.ViewModels
                             var data = new clsReasons();
                             data.code = item.code;
                             data.name = item.name;
+                            data.imageUrl = item.imageUrl;
+                            data.reasonDirection = item.reasonDirection;
                             var name = "{" + item.name + "}";
                             data.langData = JsonConvert.DeserializeObject<ReasonLanguage>(name);
                             ReasonList.Add(data);
+                            SelectedReasonList.Add(data);
 
                             DBReasonLanguage dbdata = new DBReasonLanguage();
                             dbdata.code = data.code;
                             dbdata.name = data.name;
+                            dbdata.imageUrl = data.imageUrl;
+                            dbdata.reasonDirection = data.reasonDirection;
                             App.Database.SaveReason(dbdata);
 
                         }
@@ -538,6 +557,28 @@ namespace AttendanceApp.ViewModels
                 });
 
             }
+        }
+        public void SetReasonListBasedOnDirection(string direction)
+        {
+            if (SelectedReasonList != null && SelectedReasonList.Count>0)
+            {
+                var reasonlist = SelectedReasonList.Where(x => x.reasonDirection.Equals(direction)).ToList();
+                ReasonList = new ObservableCollection<clsReasons>();
+                foreach (var item in reasonlist)
+                {
+                    var data = new clsReasons();
+                    data.code = item.code;
+                    data.name = item.name;
+                    data.imageUrl = item.imageUrl;
+                    data.reasonDirection = item.reasonDirection;
+                    var name = "{" + item.name + "}";
+                    data.langData = JsonConvert.DeserializeObject<ReasonLanguage>(name);
+                    ReasonList.Add(data);
+                }
+               
+            }
+            
+
         }
         public async void CheckLocation(string type)
         {

@@ -93,12 +93,13 @@ namespace AttendanceApp.Views
             if (sender == materialCheckin)
             {
                 _checkincheckoutViewmodel.CheckLocation("In");
-               
+                _checkincheckoutViewmodel.SetReasonListBasedOnDirection("In");
                 _checkincheckoutViewmodel.GPSDateTime = UAE;
             }
             else
             {
                 _checkincheckoutViewmodel.CheckLocation("Out");
+                _checkincheckoutViewmodel.SetReasonListBasedOnDirection("Out");
                 _checkincheckoutViewmodel.GPSDateTime = UAE;
             }
         }

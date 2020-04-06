@@ -71,7 +71,9 @@ namespace AttendanceApp.Database
         public int ID { get; set; }
         public int code { get; set; }
         public string name { get; set; }
-         
+        public string imageUrl { get; set; }
+        public string reasonDirection { get; set; }
+
     }
     public class DBBookingModel
     {
