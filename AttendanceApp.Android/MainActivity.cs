@@ -16,11 +16,15 @@ namespace AttendanceApp.Droid
     {
         const string permissionAF = Manifest.Permission.AccessFineLocation;
         const string permissionAC = Manifest.Permission.AccessCoarseLocation;
+        const string permissionTZ = Manifest.Permission.SetTimeZone;
+        const string permissionAM = Manifest.Permission.AccessMockLocation;
         const int RequestLocationId = 0;
         readonly string[] permissions =
     {
          Manifest.Permission.AccessFineLocation,
          Manifest.Permission.AccessCoarseLocation,
+         Manifest.Permission.SetTimeZone,
+         Manifest.Permission.AccessMockLocation,
     };
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,6 +47,15 @@ namespace AttendanceApp.Droid
             {
                 RequestPermissions(permissions, RequestLocationId);
             }
+            if ((int)Build.VERSION.SdkInt >= 23 && CheckSelfPermission(permissionTZ) != (int)Permission.Granted)
+            {
+                RequestPermissions(permissions, RequestLocationId);
+            }
+            if ((int)Build.VERSION.SdkInt >= 23 && CheckSelfPermission(permissionAM) != (int)Permission.Granted)
+            {
+                RequestPermissions(permissions, RequestLocationId);
+            }
+
 
             LoadApplication(new App());
         }
