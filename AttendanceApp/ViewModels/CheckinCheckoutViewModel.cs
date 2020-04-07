@@ -124,6 +124,7 @@ namespace AttendanceApp.ViewModels
             this._navigation = navigation;
             lstmessage = new List<clsMessages>();
             LabelFontSize = CommonMethods.GetFontSizeBasedOnScreenHeight();
+
         }
 
         public Command SubmitCommand
@@ -167,11 +168,22 @@ namespace AttendanceApp.ViewModels
                 //    await DependencyService.Get<IXSnack>().ShowMessageAsync(Error);
                 //    return;
                 //}
+                
                 if (!HttpRequest.CheckConnection())
                 {
                     //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
                     using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                     {
+                        var request = new GeolocationRequest(GeolocationAccuracy.High);
+                        var fakelocation = await Geolocation.GetLocationAsync(request);
+                        if (fakelocation != null)
+                        {
+                            if (fakelocation.IsFromMockProvider)
+                            {
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync("You are using Fake Location.");
+                                return;
+                            }
+                        }
                         var locator = CrossGeolocator.Current;
                         if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                         {
@@ -234,7 +246,16 @@ namespace AttendanceApp.ViewModels
 
                 using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                 {
-
+                    var request = new GeolocationRequest(GeolocationAccuracy.High);
+                    var fakelocation = await Geolocation.GetLocationAsync(request);
+                    if (fakelocation != null)
+                    {
+                        if (fakelocation.IsFromMockProvider)
+                        {
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync("You are using Fake Location.");
+                            return;
+                        }
+                    }
                     var locator = CrossGeolocator.Current;
                     if (locator.IsGeolocationAvailable && locator.IsGeolocationEnabled)
                     {
@@ -585,12 +606,23 @@ namespace AttendanceApp.ViewModels
             try
             {
                 lstmessage.Clear();
+
                 if (!HttpRequest.CheckConnection())
                 {
                     var objUser = App.Database.GetCheckinCheckoutLocation();
                     using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                     {
                         //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                        var request = new GeolocationRequest(GeolocationAccuracy.High);
+                        var fakelocation = await Geolocation.GetLocationAsync(request);
+                        if (fakelocation != null)
+                        {
+                            if (fakelocation.IsFromMockProvider)
+                            {
+                                await DependencyService.Get<IXSnack>().ShowMessageAsync("You are using Fake Location.");
+                                return;
+                            }
+                        }
                         lstmessage = new List<clsMessages>();
                         if (objUser != null && objUser.Count > 0)
                         {
@@ -676,6 +708,16 @@ namespace AttendanceApp.ViewModels
                 using (await MaterialDialog.Instance.LoadingDialogAsync(message: Resx.AppResources.pleaseWait))
                 {
                     //DependencyService.Get<IProgressBar>().Show(Resx.AppResources.pleaseWait);
+                    var request = new GeolocationRequest(GeolocationAccuracy.High);
+                    var fakelocation = await Geolocation.GetLocationAsync(request);
+                    if (fakelocation != null)
+                    {
+                        if (fakelocation.IsFromMockProvider)
+                        {
+                            await DependencyService.Get<IXSnack>().ShowMessageAsync("You are using Fake Location.");
+                            return;
+                        }
+                    }
                     App.Database.ClearCheckinCheckoutDetails();
                     var menuItem = await CommonMethods.GetLocations();
 
