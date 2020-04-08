@@ -86,21 +86,25 @@ namespace AttendanceApp.Views
 
         void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
         {
-            TimeZoneInfo localZone = TimeZoneInfo.Local;
-            DateTime utc = DateTime.UtcNow;
-            DateTime UAE = TimeZoneInfo.ConvertTimeFromUtc(utc, localZone);
+
+
+            DateTime date = DateTime.UtcNow;
+            var test = date.ToLocalTime();
+           
+
+           
 
             if (sender == materialCheckin)
             {
                 _checkincheckoutViewmodel.CheckLocation("In");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("In");
-                _checkincheckoutViewmodel.GPSDateTime = UAE;
+                _checkincheckoutViewmodel.GPSDateTime = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.Utc);
             }
             else
             {
                 _checkincheckoutViewmodel.CheckLocation("Out");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("Out");
-                _checkincheckoutViewmodel.GPSDateTime = UAE;
+                _checkincheckoutViewmodel.GPSDateTime = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.Utc);
             }
         }
 
