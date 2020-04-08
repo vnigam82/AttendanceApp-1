@@ -18,7 +18,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
-namespace AttendanceApp.ViewModels
+namespace AttendanceApp.ViewModels 
 {
     public class CheckinCheckoutViewModel : BaseViewModel
     {
