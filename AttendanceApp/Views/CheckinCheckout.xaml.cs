@@ -88,6 +88,8 @@ namespace AttendanceApp.Views
 
         void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
         {
+
+
             var zoneIds = TzdbDateTimeZoneSource.Default.ZoneLocations
       .Where(x => x.CountryCode == App.countryCode)
       .Select(x => x.ZoneId);
@@ -98,10 +100,6 @@ namespace AttendanceApp.Views
 
 
 
-            var test = date.ToLocalTime();
-
-
-            DisplayAlert("", estTime.ToString(), "OK"); ;
 
             if (sender == materialCheckin)
             {
