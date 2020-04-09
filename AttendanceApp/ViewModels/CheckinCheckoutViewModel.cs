@@ -11,6 +11,7 @@ using AttendanceApp.Helpers;
 using AttendanceApp.Models;
 using AttendanceApp.ServiceConfigration;
 using AttendanceApp.Utils;
+using GeoTimeZone;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Plugin.Geolocator;
@@ -203,7 +204,9 @@ namespace AttendanceApp.ViewModels
                                     radius = distanceMeter
                                 };
                                 var locjsonStringOfflone = Newtonsoft.Json.JsonConvert.SerializeObject(locationDataOfflone);
-
+                                var tzIana = TimeZoneLookup.GetTimeZone(sourceCoordinates.Latitude, sourceCoordinates.Longitude).Result;
+                                var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(tzIana);
+                                GPSDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzInfo);
                                 var postDataOfflone = new List<BookingModel>()
                                  {
                                     new BookingModel()
@@ -275,7 +278,9 @@ namespace AttendanceApp.ViewModels
                                 radius = distanceMeter
                             };
                             var locjsonString = Newtonsoft.Json.JsonConvert.SerializeObject(locationData);
-
+                            var tzIana = TimeZoneLookup.GetTimeZone(sourceCoordinates.Latitude, sourceCoordinates.Longitude).Result;
+                            var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(tzIana);
+                            GPSDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzInfo);
                             var postData = new List<BookingModel>()
                 {
                     new BookingModel()

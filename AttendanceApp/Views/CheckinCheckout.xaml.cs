@@ -90,13 +90,13 @@ namespace AttendanceApp.Views
         {
 
 
-            var zoneIds = TzdbDateTimeZoneSource.Default.ZoneLocations
-      .Where(x => x.CountryCode == App.countryCode)
-      .Select(x => x.ZoneId);
+      //      var zoneIds = TzdbDateTimeZoneSource.Default.ZoneLocations
+      //.Where(x => x.CountryCode == App.countryCode)
+      //.Select(x => x.ZoneId);
 
-            DateTime date = DateTime.UtcNow;
-            TimeZoneInfo tZone = TimeZoneInfo.FindSystemTimeZoneById(zoneIds.FirstOrDefault());
-            DateTime estTime = TimeZoneInfo.ConvertTimeFromUtc(date, tZone);
+      //      DateTime date = DateTime.UtcNow;
+      //      TimeZoneInfo tZone = TimeZoneInfo.FindSystemTimeZoneById(zoneIds.FirstOrDefault());
+      //      DateTime estTime = TimeZoneInfo.ConvertTimeFromUtc(date, tZone);
 
 
 
@@ -105,13 +105,13 @@ namespace AttendanceApp.Views
             {
                 _checkincheckoutViewmodel.CheckLocation("In");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("In");
-                _checkincheckoutViewmodel.GPSDateTime = estTime;
+                //_checkincheckoutViewmodel.GPSDateTime = estTime;
             }
             else
             {
                 _checkincheckoutViewmodel.CheckLocation("Out");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("Out");
-                _checkincheckoutViewmodel.GPSDateTime = estTime;
+                //_checkincheckoutViewmodel.GPSDateTime = estTime;
             }
         }
 
