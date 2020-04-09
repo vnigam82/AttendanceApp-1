@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AttendanceApp.CustomControls.RadioButton;
@@ -7,6 +8,7 @@ using AttendanceApp.Dependency;
 using AttendanceApp.Helpers;
 using AttendanceApp.Utils;
 using AttendanceApp.ViewModels;
+using NodaTime.TimeZones;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using XF.Material.Forms.UI.Dialogs;
@@ -14,7 +16,7 @@ using XF.Material.Forms.UI.Dialogs;
 
 namespace AttendanceApp.Views
 {
-    public partial class CheckinCheckout : ContentPage,IDisposable
+    public partial class CheckinCheckout : ContentPage, IDisposable
     {
         CheckinCheckoutViewModel _checkincheckoutViewmodel;
         public static RadioOption GetSelectedRadio { get; set; }
@@ -57,7 +59,7 @@ namespace AttendanceApp.Views
 
 
 
-          
+
 
         }
 
@@ -86,25 +88,32 @@ namespace AttendanceApp.Views
 
         void materialCheckin_Clicked(System.Object sender, System.EventArgs e)
         {
-
+            var zoneIds = TzdbDateTimeZoneSource.Default.ZoneLocations
+      .Where(x => x.CountryCode == App.countryCode)
+      .Select(x => x.ZoneId);
 
             DateTime date = DateTime.UtcNow;
-            var test = date.ToLocalTime();
-           
+            TimeZoneInfo tZone = TimeZoneInfo.FindSystemTimeZoneById(zoneIds.FirstOrDefault());
+            DateTime estTime = TimeZoneInfo.ConvertTimeFromUtc(date, tZone);
 
-           
+
+
+            var test = date.ToLocalTime();
+
+
+            DisplayAlert("", estTime.ToString(), "OK"); ;
 
             if (sender == materialCheckin)
             {
                 _checkincheckoutViewmodel.CheckLocation("In");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("In");
-                _checkincheckoutViewmodel.GPSDateTime = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.Utc);
+                _checkincheckoutViewmodel.GPSDateTime = estTime;
             }
             else
             {
                 _checkincheckoutViewmodel.CheckLocation("Out");
                 _checkincheckoutViewmodel.SetReasonListBasedOnDirection("Out");
-                _checkincheckoutViewmodel.GPSDateTime = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.Utc);
+                _checkincheckoutViewmodel.GPSDateTime = estTime;
             }
         }
 

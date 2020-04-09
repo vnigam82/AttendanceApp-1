@@ -23,6 +23,7 @@ namespace AttendanceApp
     public partial class App : Application
     {
         public static string lang = "";
+        public static string countryCode = "";
         List<clsMessages> lstMessage = new List<clsMessages>();
         public App()
         {

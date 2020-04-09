@@ -13,6 +13,7 @@ namespace AttendanceApp.Droid.Dependency
         {
 
             var androidLocale = Java.Util.Locale.Default; // user's preferred locale
+            App.countryCode = androidLocale.Country;
             var netLocale = androidLocale.ToString().Replace("_", "-");
             var ci = new System.Globalization.CultureInfo(netLocale);
             Thread.CurrentThread.CurrentCulture = ci;
